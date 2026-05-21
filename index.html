@@ -424,7 +424,8 @@
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const json = await res.json();
                 githubFileSha = json.sha;
-                const csvText = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
+                const csvBytes = Uint8Array.from(atob(json.content.replace(/\n/g, '')), c => c.charCodeAt(0));
+                const csvText = new TextDecoder('utf-8').decode(csvBytes);
                 radioaficionados = csvText.trim().split('\n').map(line => {
                     const [i, ...rest] = line.split(',').map(s => s.trim());
                     return { indicativo: i, nombre: rest.join(',').trim() };
@@ -447,7 +448,8 @@
                 });
                 const jsonGet = await resGet.json();
                 githubFileSha = jsonGet.sha;
-                const currentContent = decodeURIComponent(escape(atob(jsonGet.content.replace(/\n/g, ''))));
+                const curBytes = Uint8Array.from(atob(jsonGet.content.replace(/\n/g, '')), c => c.charCodeAt(0));
+                const currentContent = new TextDecoder('utf-8').decode(curBytes);
                 const newContent = currentContent.trimEnd() + `\n${indicativo},${nombre}`;
                 const encoded = btoa(unescape(encodeURIComponent(newContent)));
                 await fetch(GITHUB_API, {
