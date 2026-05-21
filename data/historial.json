@@ -2,20 +2,23 @@
   {
     "fecha": "21/5/2026",
     "emision": "7795",
-    "revista": "Revista Nocturna",
+    "revista": "Revista Matutina",
     "operador": "TI3WTI",
     "nombreOp": "William.",
-    "totalEstaciones": 1,
-    "duracion": "14s",
-    "tempProm": "27.1",
+    "totalEstaciones": 4,
+    "duracion": "21min 10s",
+    "tempProm": "22.6",
     "masLejano": {
-      "indicativo": "HP3CPU",
-      "nombre": "Carlos Alberto Andrade",
-      "dist": 200,
-      "grilla": "EJ88NH"
+      "indicativo": "TI7JCC",
+      "nombre": "Jose Luis Corrales",
+      "dist": 237,
+      "grilla": "EK71EB"
     },
-    "zonaActiva": null,
-    "timestamp": "2026-05-21T13:47:11.313Z"
+    "zonaActiva": [
+      "EJ89",
+      2
+    ],
+    "timestamp": "2026-05-21T14:08:07.875Z"
   },
   {
     "fecha": "21/5/2026",
