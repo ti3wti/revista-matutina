@@ -13,7 +13,9 @@
         .header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; border-bottom: 1px solid #30363d; padding-bottom: 20px; }
         .header h1 { font-size: 1.6rem; color: #58a6ff; }
         .header h2 { font-size: 1rem; color: #8b949e; font-weight: normal; }
-        .flag { font-size: 2rem; }
+        .header h3 { font-size: 0.8rem; color: #8b949e; font-weight: normal; margin-top: 4px; }
+        .header h3 a { color: #58a6ff; text-decoration: none; }
+        .header h3 a:hover { text-decoration: underline; }
         .stats-bar { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 25px; }
         .stat-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 15px 20px; min-width: 140px; }
         .stat-card .val { font-size: 1.8rem; font-weight: bold; color: #58a6ff; }
@@ -42,10 +44,10 @@
     <div style="margin-bottom:20px;"></div>
 
     <div class="header">
-        <span class="flag">🇨🇷</span>
         <div>
             <h1>Historial de Emisiones</h1>
-            <h2>Revista Matutina Tango India</h2>
+            <h2>Sistema de Reportes Tango India</h2>
+            <h3>Desarrollado por <a href="https://www.qrz.com/db/TI3WTI" target="_blank">TI3WTI</a></h3>
         </div>
     </div>
 
@@ -82,12 +84,12 @@
             if (historial.length === 0) return;
             const totalEmisiones = historial.length;
             const totalEstaciones = historial.reduce((a,b) => a + (b.totalEstaciones||0), 0);
-            const promEstaciones = (totalEstaciones / totalEmisiones).toFixed(1);
+            const promEstaciones = Math.ceil(totalEstaciones / totalEmisiones);
             const operadores = [...new Set(historial.map(h => h.operador))].length;
             document.getElementById('stats-bar').innerHTML = `
                 <div class="stat-card"><div class="val">${totalEmisiones}</div><div class="lbl">Emisiones</div></div>
                 <div class="stat-card"><div class="val">${totalEstaciones}</div><div class="lbl">Total estaciones</div></div>
-                <div class="stat-card"><div class="val">${promEstaciones}</div><div class="lbl">Prom. por emisión</div></div>
+                <div class="stat-card"><div class="val">${promEstaciones}</div><div class="lbl">Prom. estaciones/emisión</div></div>
                 <div class="stat-card"><div class="val">${operadores}</div><div class="lbl">Operadores</div></div>
             `;
         }
@@ -115,8 +117,8 @@
                 <table>
                     <thead><tr>
                         <th>Emisión</th><th>Revista</th><th>Operador</th>
-                        <th>Estaciones</th><th>Duración</th><th>Temp. Prom.</th>
-                        <th>Más lejana</th><th>Zona activa</th>
+                        <th style="text-align:center;">Estaciones</th><th>Duración</th><th>Temp. Prom.</th>
+                        <th>Estación más lejana</th><th>Zona más activa</th>
                     </tr></thead>
                     <tbody>${filas}</tbody>
                 </table>`;
