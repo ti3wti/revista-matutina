@@ -383,13 +383,42 @@
             document.getElementById('searchTableHeader').style.display = 'none';
             document.getElementById('searchInput').value = ''; 
             document.getElementById('reportForm').style.display = "block";
-            // Cargar grilla y localidad desde la base de datos si existen
             document.getElementById('rep-grilla').value = g;
             document.getElementById('rep-localidad').value = l;
+            // Limpiar campos meteorológicos
+            ['temperatura','viento','presion','rep-veloc-viento'].forEach(id => document.getElementById(id).value = '');
             setTimeout(() => document.getElementById('rep-grilla').focus(), 100); 
             sendToPublic('SELECCION', { indicativo: i, nombre: n, grid: g, localidad: l });
             // Si no tiene grilla o localidad en el CSV, consultar QRZ
             if (!g || !l) fetchQrzGridAndLocalidad(i, g, l);
+            // Precargar clima si tiene grilla
+            if (g) fetchWeatherForGrid(g);
+        }
+
+        async function fetchWeatherForGrid(grilla) {
+            try {
+                const coords = gridToLatLonControl(grilla);
+                if (!coords) return;
+                const res = await fetch(`https://qrz-proxy.wmarincr.workers.dev/?weather=1&lat=${coords.lat}&lon=${coords.lon}`);
+                const data = await res.json();
+                const cur = data.current;
+                // Solo precargar si el campo está vacío
+                const setIfEmpty = (id, val) => { const el = document.getElementById(id); if (!el.value) el.value = val; };
+                setIfEmpty('temperatura', cur.temperature_2m);
+                setIfEmpty('viento', cur.relative_humidity_2m);
+                setIfEmpty('presion', cur.surface_pressure);
+                setIfEmpty('rep-veloc-viento', cur.wind_speed_10m);
+            } catch(e) {}
+        }
+
+        function gridToLatLonControl(grid) {
+            grid = grid.toUpperCase();
+            if (!/^[A-R]{2}[0-9]{2}([A-X]{2})?$/.test(grid)) return null;
+            let lon = (grid.charCodeAt(0)-65)*20-180+(grid.charCodeAt(2)-48)*2;
+            let lat = (grid.charCodeAt(1)-65)*10-90+(grid.charCodeAt(3)-48)*1;
+            if (grid.length>=6) { lon+=(grid.charCodeAt(4)-65)*5/60+2.5/60; lat+=(grid.charCodeAt(5)-65)*2.5/60+1.25/60; }
+            else { lon+=1; lat+=0.5; }
+            return { lat, lon };
         }
 
         async function fetchQrzGridAndLocalidad(indicativo, grillaActual, localidadActual) {
@@ -410,6 +439,8 @@
                 if (!grillaActual && qrzGrid) {
                     document.getElementById('rep-grilla').value = qrzGrid;
                     checkGridAndMoveMap();
+                    // Precargar clima con la grilla de QRZ
+                    fetchWeatherForGrid(qrzGrid);
                 }
                 if (!localidadActual && qrzLoc) {
                     document.getElementById('rep-localidad').value = qrzLoc;
