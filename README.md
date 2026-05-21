@@ -18,11 +18,13 @@ Sistema de bitácora en vivo para la **Revista Matutina Tango India**, diseñado
 
 ## Características
 
--Base de datos de radioaficionados siempre actualizada!!, con los colegas que añada cada control
-- Base de datos de radioaficionados alojada en GitHub — se actualiza automáticamente al registrar un nuevo indicativo
+- Base de datos de radioaficionados siempre actualizada — crece automáticamente con cada nuevo colega que se reporte
+- La base de datos está alojada en GitHub y es compartida entre todos los operadores de control
 - Al seleccionar un radioaficionado, carga automáticamente su grilla Maidenhead y localidad desde la base de datos
 - Si la grilla o localidad no están en la base de datos, las consulta automáticamente en QRZ.com
 - Los datos meteorológicos (temperatura, humedad, presión y velocidad del viento) se precargan automáticamente desde open-meteo según la grilla del reportante
+- Número de emisión calculado automáticamente según la fecha del día, basado en el calendario histórico de la revista
+- Lista de espera para gestionar pile-ups — permite acumular varias estaciones y atenderlas en orden
 - Ventana pública optimizada para transmisiones en vivo por Facebook, con mapa interactivo en tiempo real
 - La ventana pública muestra la fotografía del reportante obtenida automáticamente desde QRZ.com
 - La ventana pública muestra la grilla, localidad y distancia desde la estación control al reportante
@@ -34,5 +36,5 @@ Sistema de bitácora en vivo para la **Revista Matutina Tango India**, diseñado
 - Historial de emisiones consultable, con búsqueda por fecha, operador o número de emisión
 - Condiciones meteorológicas de la estación control con actualización cada 5 minutos
 - Compatibilidad con múltiples operadores de control — cada uno personaliza su indicativo, nombre, grilla y título de revista
-- Datos de clima obtenidos con corrección de altitud automática según el terreno (elevation=NaN)
+- Datos de clima con corrección de altitud automática según el terreno para mayor precisión
 - Desarrollado por [TI3WTI](https://www.qrz.com/db/TI3WTI)
