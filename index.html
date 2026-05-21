@@ -446,20 +446,26 @@
             // Duración = tiempo transcurrido
             let duracion = '';
             try {
-                const hoy = new Date().toLocaleDateString();
-                const t1 = new Date(`${hoy} ${primerHora}`);
-                const t2 = new Date(`${hoy} ${ultimaHora}`);
-                const diffMs = Math.abs(t2 - t1);
-                const diffMin = Math.floor(diffMs / 60000);
-                const diffSec = Math.floor((diffMs % 60000) / 1000);
-                if (diffMin >= 60) {
-                    const h = Math.floor(diffMin / 60);
-                    const m = diffMin % 60;
-                    duracion = `${h}h ${String(m).padStart(2,'0')}min`;
-                } else if (diffMin > 0) {
-                    duracion = `${diffMin}min ${diffSec}s`;
-                } else {
-                    duracion = `${diffSec}s`;
+                const parseHora = (str) => {
+                    // Formato: "1:32:01 a. m." o "11:32:01 p. m."
+                    const clean = str.replace(/\s/g,'').replace('a.m.','AM').replace('p.m.','PM');
+                    const match = clean.match(/(\d+):(\d+):(\d+)(AM|PM)/i);
+                    if (!match) return null;
+                    let h = parseInt(match[1]), m = parseInt(match[2]), s = parseInt(match[3]);
+                    const pm = match[4].toUpperCase() === 'PM';
+                    if (pm && h !== 12) h += 12;
+                    if (!pm && h === 12) h = 0;
+                    return h * 3600 + m * 60 + s;
+                };
+                const s1 = parseHora(primerHora), s2 = parseHora(ultimaHora);
+                if (s1 !== null && s2 !== null) {
+                    let diffSec = Math.abs(s2 - s1);
+                    const h = Math.floor(diffSec / 3600);
+                    const m = Math.floor((diffSec % 3600) / 60);
+                    const s = diffSec % 60;
+                    if (h > 0) duracion = `${h}h ${String(m).padStart(2,'0')}min`;
+                    else if (m > 0) duracion = `${m}min ${String(s).padStart(2,'0')}s`;
+                    else duracion = `${s}s`;
                 }
             } catch(e) {}
             const temps = reportes.map(r => parseFloat(r.temperatura)).filter(t => !isNaN(t));
