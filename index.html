@@ -395,13 +395,8 @@
                 const res = await fetch(`https://qrz-proxy.wmarincr.workers.dev/?callsign=${baseCall}`);
                 const xmlText = await res.text();
                 const parser = new DOMParser();
-                const xml = parser.parseFromString(xmlText, 'application/xml');
-                const get = tag => {
-                    const ns = 'http://xmldata.qrz.com';
-                    let el = xml.getElementsByTagNameNS(ns, tag)[0];
-                    if (!el) el = xml.getElementsByTagName(tag)[0];
-                    return el ? el.textContent.trim() : '';
-                };
+                const xml = parser.parseFromString(xmlText, 'text/xml');
+                const get = tag => { const el = xml.getElementsByTagName(tag)[0]; return el ? el.textContent.trim() : ''; };
                 const qrzGrid = get('grid').substring(0, 6);
                 const addr2 = get('addr2');
                 const state = get('state');
