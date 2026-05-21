@@ -537,7 +537,7 @@
                     <span>${reporte.id}. ${indDisplay} ${iconStr}</span>
                     <span style="font-size: 0.8rem; color:#8b949e">${reporte.fechaHora}</span>
                 </div>
-                <div style="font-size: 0.95rem; margin-top:3px;">${reporte.nombre}</div>
+                <div style="font-size: 0.95rem; margin-top:3px;">${reporte.nombre}${(reporte.grillaReporte && reporte.grillaReporte !== 'N/I' && reporte.grillaReporte !== '') ? ' - ' + reporte.grillaReporte : ''}${(reporte.localidad && reporte.localidad !== '') ? ' - ' + reporte.localidad : ''}</div>
                 ${reportDataHtml}
             `;
             if (prepend) list.prepend(card);
