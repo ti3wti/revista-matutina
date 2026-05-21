@@ -190,6 +190,7 @@
                 <div class="callsign"><span id="lbl-callsign">--</span></div>
                 <div class="caller-name" id="lbl-name">Esperando contacto</div>
                 <div id="lbl-localidad" style="font-size: 0.85rem; color: #f0c040; margin-top: 4px; text-align: center; min-height: 1.1em;"></div>
+                <div id="lbl-grilla-dist" style="font-size: 0.78rem; color: #8b949e; margin-top: 3px; text-align: center; min-height: 1em; font-family: monospace;"></div>
                 <div id="qrz-pic-container" style="display:none; flex-direction: column; align-items: center; justify-content: center; margin-top: 15px; border-top: 1px dashed #30363d; padding-top: 15px;">
                     <img id="qrz-pic" src="" style="width: 150px; height: 200px; object-fit: cover; border-radius: 8px; border: 2px solid #30363d; background-color: #161b22; padding: 2px;">
                     <div id="qrz-pic-lbl" style="font-size: 0.75rem; color: #8b949e; margin-top: 8px; text-transform: uppercase; font-weight: bold; text-align: center;"></div>
@@ -312,6 +313,20 @@
                 lat += (grid.charCodeAt(5) - 65) * 2.5 / 60 + 1.25 / 60;
             } else { lon += 1; lat += 0.5; }
             return { lat, lon };
+        }
+
+        function calcDistanceBearing(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
+            const dist = Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+            const y = Math.sin(dLon*Math.PI/180) * Math.cos(lat2*Math.PI/180);
+            const x = Math.cos(lat1*Math.PI/180)*Math.sin(lat2*Math.PI/180) - Math.sin(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.cos(dLon*Math.PI/180);
+            const brng = (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+            const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'];
+            const dir = dirs[Math.round(brng / 22.5) % 16];
+            return { dist, dir };
         }
 
         function drawControlMarker() {
@@ -659,6 +674,17 @@
                 document.getElementById('lbl-callsign').innerText = msg.indicativo;
                 document.getElementById('lbl-name').innerText = msg.nombre;
                 document.getElementById('lbl-localidad').innerText = (msg.localidad && msg.localidad !== '') ? msg.localidad : '';
+                // Grilla + distancia desde control
+                const grillaDisp = (msg.grid && msg.grid !== '') ? msg.grid.toUpperCase() : '';
+                let distStr = '';
+                if (grillaDisp) {
+                    const dest = gridToLatLon(grillaDisp);
+                    if (dest) {
+                        const { dist, dir } = calcDistanceBearing(operatorCoords[0], operatorCoords[1], dest.lat, dest.lon);
+                        distStr = ` · ${dist} km ${dir}`;
+                    }
+                }
+                document.getElementById('lbl-grilla-dist').innerText = grillaDisp ? grillaDisp + distStr : '';
 
                 // Lógica de QRZ.com para avatar
                 const qrzContainer = document.getElementById('qrz-pic-container');
@@ -719,6 +745,7 @@
             } else if (msg.type === 'LIMPIAR') {
                 window.currentQrzCall = null; // Reiniciar estado
                 document.getElementById('lbl-localidad').innerText = '';
+                document.getElementById('lbl-grilla-dist').innerText = '';
                 document.getElementById('current-caller').style.display = 'none';
                 document.getElementById('idle-panel').style.display = 'block';
                 
