@@ -283,8 +283,8 @@
                 const idx = radioaficionados.findIndex(r => r.indicativo === selectedRadioaficionado.indicativo);
                 if (idx >= 0) {
                     let changed = false;
-                    if (!radioaficionados[idx].grilla && grilla) { radioaficionados[idx].grilla = grilla; changed = true; }
-                    if (!radioaficionados[idx].localidad && localidad) { radioaficionados[idx].localidad = localidad; changed = true; }
+                    if (grilla && grilla !== "N/I" && radioaficionados[idx].grilla !== grilla) { radioaficionados[idx].grilla = grilla; changed = true; }
+                    if (localidad && radioaficionados[idx].localidad !== localidad) { radioaficionados[idx].localidad = localidad; changed = true; }
                     if (changed) updateGitHubEntry(radioaficionados[idx]);
                 }
             }
