@@ -18,6 +18,7 @@ Sistema de bitácora en vivo para la **Revista Matutina Tango India**, diseñado
 
 ## Características
 
+-Base de datos de radioaficionados siempre actualizada!!, con los colegas que añada cada control
 - Base de datos de radioaficionados alojada en GitHub — se actualiza automáticamente al registrar un nuevo indicativo
 - Al seleccionar un radioaficionado, carga automáticamente su grilla Maidenhead y localidad desde la base de datos
 - Si la grilla o localidad no están en la base de datos, las consulta automáticamente en QRZ.com
