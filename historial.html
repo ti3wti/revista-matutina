@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Historial de Emisiones — Revista Matutina</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; padding: 30px 20px; }
+        .header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; border-bottom: 1px solid #30363d; padding-bottom: 20px; }
+        .header h1 { font-size: 1.6rem; color: #58a6ff; }
+        .header h2 { font-size: 1rem; color: #8b949e; font-weight: normal; }
+        .flag { font-size: 2rem; }
+        .stats-bar { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 25px; }
+        .stat-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 15px 20px; min-width: 140px; }
+        .stat-card .val { font-size: 1.8rem; font-weight: bold; color: #58a6ff; }
+        .stat-card .lbl { font-size: 0.75rem; color: #8b949e; margin-top: 3px; text-transform: uppercase; }
+        .search-bar { margin-bottom: 20px; }
+        .search-bar input { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 14px; border-radius: 6px; width: 280px; font-size: 0.9rem; outline: none; }
+        .search-bar input:focus { border-color: #58a6ff; }
+        table { width: 100%; border-collapse: collapse; background: #161b22; border-radius: 8px; overflow: hidden; border: 1px solid #30363d; }
+        thead { background: #1f6feb; }
+        th { padding: 10px 14px; text-align: left; font-size: 0.85rem; font-weight: 600; color: white; }
+        td { padding: 10px 14px; font-size: 0.85rem; border-bottom: 1px solid #21262d; vertical-align: top; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #1c2128; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
+        .badge-blue { background: #1f6feb22; color: #58a6ff; border: 1px solid #1f6feb44; }
+        .badge-green { background: #23863622; color: #3fb950; border: 1px solid #23863644; }
+        .loading { text-align: center; padding: 60px; color: #8b949e; font-size: 1.1rem; }
+        .empty { text-align: center; padding: 60px; color: #8b949e; }
+        .empty .icon { font-size: 3rem; margin-bottom: 15px; }
+        .detail { font-size: 0.78rem; color: #8b949e; margin-top: 3px; }
+        .back-btn { display: inline-flex; align-items: center; gap: 6px; color: #58a6ff; text-decoration: none; font-size: 0.9rem; margin-bottom: 20px; }
+        .back-btn:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div style="margin-bottom:20px;"></div>
+
+    <div class="header">
+        <span class="flag">🇨🇷</span>
+        <div>
+            <h1>Historial de Emisiones</h1>
+            <h2>Revista Matutina Tango India</h2>
+        </div>
+    </div>
+
+    <div class="stats-bar" id="stats-bar"></div>
+
+    <div class="search-bar">
+        <input type="text" id="buscar" placeholder="Buscar por emisión, operador, fecha..." oninput="filtrar()">
+    </div>
+
+    <div id="contenido"><div class="loading">⏳ Cargando historial...</div></div>
+
+    <script>
+        const GITHUB_RAW = 'https://raw.githubusercontent.com/ti3wti/revista-matutina/main/data/historial.json';
+        let historial = [];
+
+        async function cargar() {
+            try {
+                const res = await fetch(GITHUB_RAW + '?_t=' + Date.now());
+                if (!res.ok) throw new Error('No encontrado');
+                historial = await res.json();
+                renderStats();
+                renderTabla(historial);
+            } catch(e) {
+                document.getElementById('contenido').innerHTML = `
+                    <div class="empty">
+                        <div class="icon">📋</div>
+                        <div>Aún no hay emisiones registradas.</div>
+                        <div style="margin-top:8px; font-size:0.85rem; color:#8b949e;">El historial se crea automáticamente al exportar la primera bitácora.</div>
+                    </div>`;
+            }
+        }
+
+        function renderStats() {
+            if (historial.length === 0) return;
+            const totalEmisiones = historial.length;
+            const totalEstaciones = historial.reduce((a,b) => a + (b.totalEstaciones||0), 0);
+            const promEstaciones = (totalEstaciones / totalEmisiones).toFixed(1);
+            const operadores = [...new Set(historial.map(h => h.operador))].length;
+            document.getElementById('stats-bar').innerHTML = `
+                <div class="stat-card"><div class="val">${totalEmisiones}</div><div class="lbl">Emisiones</div></div>
+                <div class="stat-card"><div class="val">${totalEstaciones}</div><div class="lbl">Total estaciones</div></div>
+                <div class="stat-card"><div class="val">${promEstaciones}</div><div class="lbl">Prom. por emisión</div></div>
+                <div class="stat-card"><div class="val">${operadores}</div><div class="lbl">Operadores</div></div>
+            `;
+        }
+
+        function renderTabla(data) {
+            if (data.length === 0) {
+                document.getElementById('contenido').innerHTML = '<div class="empty"><div class="icon">🔍</div><div>Sin resultados.</div></div>';
+                return;
+            }
+            const filas = data.map(h => {
+                const lejano = h.masLejano ? `${h.masLejano.indicativo} — ${h.masLejano.dist} km` : '--';
+                const zona = h.zonaActiva ? `${h.zonaActiva[0]} (${h.zonaActiva[1]})` : '--';
+                return `<tr>
+                    <td><span class="badge badge-blue"># ${h.emision}</span><div class="detail">${h.fecha}</div></td>
+                    <td>${h.revista}</td>
+                    <td>${h.operador}<div class="detail">${h.nombreOp}</div></td>
+                    <td style="text-align:center;"><span class="badge badge-green">${h.totalEstaciones}</span></td>
+                    <td>${h.duracion || '--'}</td>
+                    <td>${h.tempProm ? h.tempProm + '°C' : '--'}</td>
+                    <td>${lejano}</td>
+                    <td>${zona}</td>
+                </tr>`;
+            }).join('');
+            document.getElementById('contenido').innerHTML = `
+                <table>
+                    <thead><tr>
+                        <th>Emisión</th><th>Revista</th><th>Operador</th>
+                        <th>Estaciones</th><th>Duración</th><th>Temp. Prom.</th>
+                        <th>Más lejana</th><th>Zona activa</th>
+                    </tr></thead>
+                    <tbody>${filas}</tbody>
+                </table>`;
+        }
+
+        function filtrar() {
+            const term = document.getElementById('buscar').value.toLowerCase();
+            if (!term) { renderTabla(historial); return; }
+            const filtrado = historial.filter(h =>
+                (h.emision||'').toLowerCase().includes(term) ||
+                (h.operador||'').toLowerCase().includes(term) ||
+                (h.nombreOp||'').toLowerCase().includes(term) ||
+                (h.fecha||'').toLowerCase().includes(term) ||
+                (h.revista||'').toLowerCase().includes(term)
+            );
+            renderTabla(filtrado);
+        }
+
+        cargar();
+    </script>
+</body>
+</html>
