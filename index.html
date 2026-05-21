@@ -196,11 +196,20 @@
             }
         });
 
+        function calcEmisionMatutina() {
+            // Base: 21/mayo/2026 = emisión 7832
+            const BASE_FECHA = new Date(2026, 4, 21); // mes 4 = mayo (0-indexed)
+            const BASE_EMISION = 7832;
+            const hoy = new Date();
+            const hoyMidnight = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+            const diasDiff = Math.round((hoyMidnight - BASE_FECHA) / (1000 * 60 * 60 * 24));
+            return BASE_EMISION + diasDiff;
+        }
+
         function loadConfig() {
             const saved = localStorage.getItem('revista_config');
             if (saved) {
                 const cfg = JSON.parse(saved);
-                document.getElementById('cfg-emision').value = cfg.emision || '';
                 document.getElementById('cfg-indicativo').value = cfg.ind || 'TI3WTI';
                 document.getElementById('cfg-nombre').value = cfg.nom || 'William';
                 document.getElementById('cfg-grid').value = cfg.grid || 'EJ89bt';
@@ -212,6 +221,8 @@
                 document.getElementById('cfg-aprskey').value = '149248.FiKMjEqrNNWgniq';
                 document.getElementById('cfg-map-type').value = 'gray';
             }
+            // Calcular número de emisión automáticamente según la fecha
+            document.getElementById('cfg-emision').value = calcEmisionMatutina();
             document.getElementById('textoBorrador').value = localStorage.getItem('borrador_texto') || "";
         }
 
