@@ -443,11 +443,10 @@
             if (reportes.length === 0) return null;
             const primerHora = reportes[0].fechaHora;
             const ultimaHora = reportes[reportes.length - 1].fechaHora;
-            // Duración = tiempo transcurrido
+            // Duración = desde primer reporte hasta ahora
             let duracion = '';
             try {
                 const parseHora = (str) => {
-                    // Formato: "1:32:01 a. m." o "11:32:01 p. m."
                     const clean = str.replace(/\s/g,'').replace('a.m.','AM').replace('p.m.','PM');
                     const match = clean.match(/(\d+):(\d+):(\d+)(AM|PM)/i);
                     if (!match) return null;
@@ -457,8 +456,10 @@
                     if (!pm && h === 12) h = 0;
                     return h * 3600 + m * 60 + s;
                 };
-                const s1 = parseHora(primerHora), s2 = parseHora(ultimaHora);
-                if (s1 !== null && s2 !== null) {
+                const s1 = parseHora(primerHora);
+                const ahora = new Date();
+                const s2 = ahora.getHours() * 3600 + ahora.getMinutes() * 60 + ahora.getSeconds();
+                if (s1 !== null) {
                     let diffSec = Math.abs(s2 - s1);
                     const h = Math.floor(diffSec / 3600);
                     const m = Math.floor((diffSec % 3600) / 60);
@@ -534,7 +535,7 @@
             doc.text(splitHeader, margin, 12);
             const headerHeight = splitHeader.length * 5;
             doc.setFontSize(9);
-            doc.text(`Número de reportes: ${reportes.length}`, 14, 12 + headerHeight + 2);
+            doc.text(`Número de estaciones: ${reportes.length}`, 14, 12 + headerHeight + 2);
             // Estadísticas al inicio
             const s = calcStats();
             let statsY = 12 + headerHeight + 8;
