@@ -186,6 +186,7 @@
                 <h3 style="color: #58a6ff;">Recibiendo Reporte...</h3>
                 <div class="callsign"><span id="lbl-callsign">--</span></div>
                 <div class="caller-name" id="lbl-name">Esperando contacto</div>
+                <div id="lbl-localidad" style="font-size: 0.85rem; color: #f0c040; margin-top: 4px; text-align: center; min-height: 1.1em;"></div>
                 <div id="qrz-pic-container" style="display:none; flex-direction: column; align-items: center; justify-content: center; margin-top: 15px; border-top: 1px dashed #30363d; padding-top: 15px;">
                     <img id="qrz-pic" src="" style="width: 150px; height: 200px; object-fit: cover; border-radius: 8px; border: 2px solid #30363d; background-color: #161b22; padding: 2px;">
                     <div id="qrz-pic-lbl" style="font-size: 0.75rem; color: #8b949e; margin-top: 8px; text-transform: uppercase; font-weight: bold; text-align: center;"></div>
@@ -654,6 +655,7 @@
                 
                 document.getElementById('lbl-callsign').innerText = msg.indicativo;
                 document.getElementById('lbl-name').innerText = msg.nombre;
+                document.getElementById('lbl-localidad').innerText = (msg.localidad && msg.localidad !== '') ? msg.localidad : '';
 
                 // Lógica de QRZ.com para avatar
                 const qrzContainer = document.getElementById('qrz-pic-container');
@@ -713,6 +715,7 @@
 
             } else if (msg.type === 'LIMPIAR') {
                 window.currentQrzCall = null; // Reiniciar estado
+                document.getElementById('lbl-localidad').innerText = '';
                 document.getElementById('current-caller').style.display = 'none';
                 document.getElementById('idle-panel').style.display = 'block';
                 
