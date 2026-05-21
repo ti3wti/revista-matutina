@@ -16,7 +16,7 @@
         h1 { margin: 0; font-size: 1.6rem; color: #333; cursor: pointer; white-space: nowrap; }
         #cfg-nombre-revista { font-size: 1.6rem; font-weight: bold; color: #0d6efd; border: none; border-bottom: 2px dashed #ccc; background: transparent; width: 100%; outline: none; padding: 0 5px; }
         #cfg-nombre-revista:focus { border-bottom-color: #0d6efd; background: #f0f7ff; }
- 
+
         .config-bar { background: #e9ecef; padding: 8px 12px; border-radius: 4px; margin-bottom: 10px; border: 1px solid #ced4da; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px; font-size: 0.9rem; }
         .config-items { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 12px; flex-grow: 1; }
         .config-group { display: flex; flex-direction: column; gap: 3px; justify-content: flex-end; }
@@ -48,7 +48,7 @@
         .btn-action { padding: 4px 8px; font-size: 0.9rem; cursor: pointer; border-radius: 4px; border: none; color: white; margin: 0 2px; }
         .btn-edit { background-color: #ffc107; color: #333; }
         .btn-delete { background-color: #dc3545; }
- 
+
         .grid-shortcuts { display: flex; flex-direction: column; gap: 4px; margin-bottom: 5px; }
         .grid-row { display: flex; gap: 4px; flex-wrap: wrap; }
         .btn-grid { 
@@ -57,7 +57,7 @@
             color: #24292e; transition: 0.1s; font-family: monospace;
         }
         .btn-grid:hover { background: #0d6efd; color: white; border-color: #0056b3; }
- 
+
         .ee-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; color: white; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif; text-align: center; }
         .ee-overlay h1 { font-size: 4rem; color: #ffab70; margin-bottom: 20px; }
         .ee-overlay a { color: #58a6ff; font-size: 2rem; text-decoration: none; border: 2px solid #58a6ff; padding: 10px 20px; border-radius: 8px; transition: 0.3s; }
@@ -70,7 +70,7 @@
         <a href="https://www.qrz.com/db/ti3wti" target="_blank" onclick="event.stopPropagation()">https://www.qrz.com/db/ti3wti</a>
         <p style="margin-top: 30px; opacity: 0.6;">(Clic en el fondo para cerrar)</p>
     </div>
- 
+
     <div class="container">
         <div class="title-area">
             <h1 id="main-title">Bitácora de Reportes v3.0 - </h1>
@@ -99,13 +99,13 @@
                     <button type="button" onclick="document.getElementById('cfg-logo-upload').click()" style="background: #6c757d; color: white; border: none; padding: 0 8px; border-radius: 4px; font-weight: bold; cursor: pointer; margin: 0; height: 28px;">📸 FOTO/LOGO</button>
                 </div>
             </div>
- 
+
             <div class="conn-container">
                 <button onclick="abrirPantallaPublica()" style="background: #198754; font-weight: bold; color:white; margin:0; height: 28px; padding: 0 10px;">ABRIR VENTANA PÚBLICA 🖥️</button>
                 <span id="conn-status" style="color: red; font-weight: bold; font-size: 0.8rem; margin-top:3px; position: absolute; transform: translateY(18px);">Desconectado</span>
             </div>
         </div>
- 
+
         <div class="header-line">
             <div class="header-left"><strong>Base de Datos ➔</strong> <span id="dbStatus" style="font-size:0.85rem; color:#555;">Cargando desde GitHub...</span> <input type="file" id="csvFileInput" accept=".csv" style="margin-left:10px; font-size:0.75rem;" title="Cargar CSV externo (opcional)"/></div>
             <label style="margin-left: auto; margin-right: 20px; font-size: 0.85rem; color: #d32f2f; font-weight: bold; cursor: pointer;"><input type="checkbox" id="toggleBorrador" onchange="toggleBorrador()"> Habilitar borrador</label>
@@ -133,7 +133,7 @@
                     <button type="button" class="btn-grid" onclick="setQuickGrid('EJ89')">EJ89</button>
                 </div>
             </div>
- 
+
             <label>Grilla:</label> <input type="text" id="rep-grilla" style="width: 75px;" onkeydown="nextField(event, 'rep-localidad')" onchange="checkGridAndMoveMap()" />
             <label>Ubicación:</label> <input type="text" id="rep-localidad" placeholder="Localidad" style="width: 180px;" onkeydown="nextField(event, 'temperatura')" />
             <label>Temp (°C):</label> <input type="text" id="temperatura" style="width: 65px;" onkeydown="nextField(event, 'viento')" />
@@ -158,13 +158,13 @@
         </table>
         <div id="borradorFlotante"><div id="borradorHeader">📔 NOTAS / BORRADOR</div><textarea id="textoBorrador" placeholder="Escriba aquí..."></textarea></div>
     </div>
- 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script>
         let radioaficionados = []; let selectedRadioaficionado = null; let reportCount = 0; let reportes = []; let publicWin = null; let isPublicWinReady = false;
         let searchTimeout = null; 
- 
+
         function setQuickGrid(valor) {
             const input = document.getElementById('rep-grilla');
             input.value = valor;
@@ -172,7 +172,7 @@
             input.setSelectionRange(valor.length, valor.length);
             checkGridAndMoveMap();
         }
- 
+
         let eeClickCount = 0;
         document.getElementById('main-title').addEventListener('click', () => {
             eeClickCount++;
@@ -182,14 +182,14 @@
             }
             setTimeout(() => { eeClickCount = 0; }, 2000);
         });
- 
+
         window.addEventListener('message', (event) => {
             if (event.data.type === 'UPDATE_GRID') {
                 document.getElementById('cfg-grid').value = event.data.grid;
                 saveConfig();
             }
         });
- 
+
         function loadConfig() {
             const saved = localStorage.getItem('revista_config');
             if (saved) {
@@ -208,7 +208,7 @@
             }
             document.getElementById('textoBorrador').value = localStorage.getItem('borrador_texto') || "";
         }
- 
+
         function handleLogoUpload(event) {
             const file = event.target.files[0];
             if (file) {
@@ -223,7 +223,7 @@
                 reader.readAsDataURL(file);
             }
         }
- 
+
         function updateResultsTable() {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
@@ -247,7 +247,7 @@
             });
             sendToPublic('SYNC_REPORTES', { reportes: reportes });
         }
- 
+
         function editReport(index) {
             const r = reportes[index];
             const nG = prompt("Corregir Grilla:", r.grillaReporte); if (nG === null) return;
@@ -260,9 +260,9 @@
             r.grillaReporte = nG.toUpperCase() || "N/I"; r.localidad = nL || ""; r.temperatura = nT || "N/I"; r.viento = nH || "N/I"; r.presion = nP || "N/I"; r.velocViento = nV || "N/I"; r.comentarios = nC.toUpperCase() || "SIN REQ.";
             updateResultsTable();
         }
- 
+
         function deleteReport(index) { if (confirm(`¿Eliminar reporte de ${reportes[index].indicativo}?`)) { reportes.splice(index, 1); updateResultsTable(); } }
- 
+
         function addReport() {
             if (!selectedRadioaficionado) return;
             const method = document.querySelector('input[name="contact"]:checked').value;
@@ -291,9 +291,9 @@
                     if (changed) updateGitHubEntry(radioaficionados[idx]);
                 }
             }
-            reportes.push(nuevoReporte); updateResultsTable(); clearSearch(); document.getElementById('exportPdfButton').disabled = false;
+            reportes.push(nuevoReporte); updateResultsTable(); clearSearch(); document.getElementById('exportPdfButton').disabled = false; document.getElementById('statsButton').disabled = false;
         }
- 
+
         function addNewEntry() {
             const ind = document.getElementById('newIndicativo').value.trim().toUpperCase();
             const nom = document.getElementById('newNombre').value.trim().toUpperCase();
@@ -312,10 +312,10 @@
             document.getElementById('addNewEntryForm').style.display = "none";
             selectRadioaficionado(ind, nom, gri, loc);
         }
- 
+
         function toggleBorrador() { document.getElementById('borradorFlotante').style.display = document.getElementById('toggleBorrador').checked ? 'block' : 'none'; }
         document.getElementById('textoBorrador').addEventListener('input', (e) => localStorage.setItem('borrador_texto', e.target.value));
- 
+
         dragElement(document.getElementById("borradorFlotante"));
         function dragElement(elmnt) {
             var p1 = 0, p2 = 0, p3 = 0, p4 = 0;
@@ -325,7 +325,7 @@
                 document.onmousemove = (e) => { e.preventDefault(); p1 = p3 - e.clientX; p2 = p4 - e.clientY; p3 = e.clientX; p4 = e.clientY; elmnt.style.top = (elmnt.offsetTop - p2) + "px"; elmnt.style.left = (elmnt.offsetLeft - p1) + "px"; };
             }
         }
- 
+
         function saveConfig() {
             const cfg = { 
                 emision: document.getElementById('cfg-emision').value, ind: document.getElementById('cfg-indicativo').value, 
@@ -336,7 +336,7 @@
             localStorage.setItem('revista_config', JSON.stringify(cfg));
             if (publicWin && !publicWin.closed) { sendToPublic('CONFIG', cfg); }
         }
- 
+
         function abrirPantallaPublica() { if (publicWin && !publicWin.closed) publicWin.focus(); else { isPublicWinReady = false; publicWin = window.open('publico.html', 'PantallaPublica', 'width=1024,height=768'); } }
         setInterval(() => { const s = document.getElementById('conn-status'); if (publicWin && !publicWin.closed) { s.innerText = "Conectado ✅"; s.style.color = "green"; if (!isPublicWinReady) { isPublicWinReady = true; setTimeout(() => { saveConfig(); const savedLogo = localStorage.getItem('revista_logo'); if(savedLogo) sendToPublic('UPDATE_LOGO', { logoBase64: savedLogo }); updateResultsTable(); if (radioaficionados.length > 0) sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) }); }, 1500); } } else { s.innerText = "Desconectado"; s.style.color = "red"; isPublicWinReady = false; } }, 1000);
         function sendToPublic(type, payload = {}) { if (publicWin && !publicWin.closed) publicWin.postMessage({ type: type, ...payload }, '*'); }
@@ -391,7 +391,7 @@
             // Si no tiene grilla o localidad en el CSV, consultar QRZ
             if (!g || !l) fetchQrzGridAndLocalidad(i, g, l);
         }
- 
+
         async function fetchQrzGridAndLocalidad(indicativo, grillaActual, localidadActual) {
             try {
                 const baseCall = indicativo.replace(/-RF$|-EL$|-WA$/, '').split('/').pop();
@@ -423,7 +423,7 @@
             const locVal = document.getElementById('rep-localidad').value.trim();
             sendToPublic('SELECCION', { indicativo: selectedRadioaficionado.indicativo, nombre: selectedRadioaficionado.nombre, grid: gridVal, localidad: locVal });
         }
- 
+
         function clearSearch() { 
             document.getElementById('searchInput').value = ''; 
             document.getElementById('selectionDisplay').style.display = "none"; 
@@ -438,16 +438,32 @@
         
         function nextField(e, n) { if (e.key === "Enter") { e.preventDefault(); document.getElementById(n).focus(); } }
         function checkFinalEnter(e) { if (e.key === "Enter") { e.preventDefault(); addReport(); } }
- 
+
         function calcStats() {
             if (reportes.length === 0) return null;
-            // Duración
             const primerHora = reportes[0].fechaHora;
             const ultimaHora = reportes[reportes.length - 1].fechaHora;
-            // Temperatura promedio
+            // Duración = tiempo transcurrido
+            let duracion = '';
+            try {
+                const hoy = new Date().toLocaleDateString();
+                const t1 = new Date(`${hoy} ${primerHora}`);
+                const t2 = new Date(`${hoy} ${ultimaHora}`);
+                const diffMs = Math.abs(t2 - t1);
+                const diffMin = Math.floor(diffMs / 60000);
+                const diffSec = Math.floor((diffMs % 60000) / 1000);
+                if (diffMin >= 60) {
+                    const h = Math.floor(diffMin / 60);
+                    const m = diffMin % 60;
+                    duracion = `${h}h ${String(m).padStart(2,'0')}min`;
+                } else if (diffMin > 0) {
+                    duracion = `${diffMin}min ${diffSec}s`;
+                } else {
+                    duracion = `${diffSec}s`;
+                }
+            } catch(e) {}
             const temps = reportes.map(r => parseFloat(r.temperatura)).filter(t => !isNaN(t));
             const tempProm = temps.length > 0 ? (temps.reduce((a,b) => a+b, 0) / temps.length).toFixed(1) : null;
-            // Radio más lejano (requiere grilla del operador y del reporte)
             const grillaOp = document.getElementById('cfg-grid').value;
             let masLejano = null;
             if (grillaOp) {
@@ -465,13 +481,13 @@
                     });
                 }
             }
-            // Zona más activa (primeros 4 caracteres de la grilla)
             const zonas = {};
             reportes.forEach(r => { if (r.grillaReporte && r.grillaReporte !== 'N/I' && r.grillaReporte.length >= 4) { const z = r.grillaReporte.substring(0,4).toUpperCase(); zonas[z] = (zonas[z]||0)+1; }});
-            const zonaActiva = Object.keys(zonas).length > 0 ? Object.entries(zonas).sort((a,b)=>b[1]-a[1])[0] : null;
-            return { total: reportes.length, primerHora, ultimaHora, tempProm, masLejano, zonaActiva };
+            const zonaEntries = Object.entries(zonas).sort((a,b)=>b[1]-a[1]);
+            const zonaActiva = (zonaEntries.length > 0 && zonaEntries[0][1] > 1) ? zonaEntries[0] : null;
+            return { total: reportes.length, duracion, tempProm, masLejano, zonaActiva };
         }
- 
+
         function gridToLatLonStats(grid) {
             grid = grid.toUpperCase();
             if (!/^[A-R]{2}[0-9]{2}([A-X]{2})?$/.test(grid)) return null;
@@ -480,20 +496,20 @@
             if (grid.length>=6) { lon+=(grid.charCodeAt(4)-65)*5/60+2.5/60; lat+=(grid.charCodeAt(5)-65)*2.5/60+1.25/60; } else { lon+=1; lat+=0.5; }
             return { lat, lon };
         }
- 
+
         function calcDistStats(lat1, lon1, lat2, lon2) {
             const R = 6371;
             const dLat=(lat2-lat1)*Math.PI/180, dLon=(lon2-lon1)*Math.PI/180;
             const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
             return Math.round(R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
         }
- 
+
         function mostrarEstadisticas() {
             const s = calcStats();
             if (!s) return;
             sendToPublic('ESTADISTICAS', { stats: s });
         }
- 
+
         function exportPDF() { 
             const { jsPDF } = window.jspdf; 
             const doc = new jsPDF(); 
@@ -519,12 +535,13 @@
             if (s) {
                 doc.setFontSize(8);
                 doc.setTextColor(80, 80, 80);
-                let statsLines = [`Duración: ${s.primerHora} — ${s.ultimaHora}`];
+                let statsLines = [];
+                if (s.duracion) statsLines.push(`Duración: ${s.duracion}`);
                 if (s.tempProm) statsLines.push(`Temperatura promedio: ${s.tempProm}°C`);
                 if (s.masLejano) statsLines.push(`Radio más lejano: ${s.masLejano.indicativo} — ${s.masLejano.nombre} — ${s.masLejano.dist} km (${s.masLejano.grilla})`);
                 if (s.zonaActiva) statsLines.push(`Zona más activa: ${s.zonaActiva[0]} — ${s.zonaActiva[1]} reportes`);
                 statsLines.forEach((line, i) => { doc.text(line, margin, statsY + (i * 4.5)); });
-                statsY += statsLines.length * 4.5 + 3;
+                statsY += statsLines.length > 0 ? statsLines.length * 4.5 + 3 : 0;
                 doc.setTextColor(0, 0, 0);
             }
             doc.autoTable({ 
@@ -534,9 +551,9 @@
             }); 
             doc.save(`Bitacora_${nombreRevista}_${fechaActual}.pdf`); 
         }
- 
+
         function updateTime() { const now = new Date(); document.getElementById('current-time').value = now.toLocaleTimeString(); document.getElementById('current-time').style.backgroundColor = (now.getSeconds() % 2 === 0) ? "#ffffcc" : "#ffffff"; requestAnimationFrame(updateTime); }
- 
+
         // ── GITHUB CONFIG ──────────────────────────────────────────────
         const _a = "github_pat_11AU6IEOQ02x";
         const _b = "AB240ZVIyC_7mOeRIvQUiC3";
@@ -547,9 +564,9 @@
         const GITHUB_REPO   = "revista-matutina";
         const GITHUB_FILE   = "data/radioaficionados.csv";
         const GITHUB_API    = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
- 
+
         let githubFileSha = null;
- 
+
         async function loadCSVFromGitHub() {
             const dbStatus = document.getElementById('dbStatus');
             try {
@@ -574,7 +591,7 @@
                 dbStatus.style.color = 'red';
             }
         }
- 
+
         async function getGitHubContent() {
             const resGet = await fetch(GITHUB_API, {
                 headers: { 'Authorization': `Bearer ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github+json' }
@@ -585,7 +602,7 @@
             const currentContent = new TextDecoder('utf-8').decode(curBytes);
             return { sha: jsonGet.sha, content: currentContent };
         }
- 
+
         async function appendToGitHubCSV(indicativo, nombre, grilla, localidad) {
             try {
                 const { sha, content } = await getGitHubContent();
@@ -599,7 +616,7 @@
                 });
             } catch(e) { console.warn('No se pudo escribir en GitHub:', e.message); }
         }
- 
+
         async function updateGitHubEntry(radioaficionado) {
             try {
                 const { sha, content } = await getGitHubContent();
@@ -620,7 +637,7 @@
                 });
             } catch(e) { console.warn('No se pudo actualizar en GitHub:', e.message); }
         }
- 
+
         window.onload = function() { loadConfig(); updateTime(); loadCSVFromGitHub(); };
     </script>
 </body>
