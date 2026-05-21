@@ -600,7 +600,54 @@
                     10: { cellWidth: 'auto' }
                 }
             }); 
-            doc.save(`Bitacora_${nombreRevista}_${fechaActual}.pdf`); 
+            doc.save(`Bitacora_${nombreRevista}_${fechaActual}.pdf`);
+            // Guardar en historial de GitHub
+            guardarHistorial(nombreRevista, emision, operador, nombreOp, fechaActual);
+        }
+
+        async function guardarHistorial(revista, emision, operador, nombreOp, fecha) {
+            try {
+                const s = calcStats();
+                const entrada = {
+                    fecha,
+                    emision,
+                    revista,
+                    operador,
+                    nombreOp,
+                    totalEstaciones: reportes.length,
+                    duracion: s ? s.duracion : '',
+                    tempProm: s ? s.tempProm : null,
+                    masLejano: s ? s.masLejano : null,
+                    zonaActiva: s ? s.zonaActiva : null,
+                    timestamp: new Date().toISOString()
+                };
+                // Leer historial actual
+                const HIST_API = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/data/historial.json`;
+                let historial = [];
+                let sha = null;
+                try {
+                    const res = await fetch(HIST_API, {
+                        headers: { 'Authorization': `Bearer ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github+json' }
+                    });
+                    if (res.ok) {
+                        const json = await res.json();
+                        sha = json.sha;
+                        const bytes = Uint8Array.from(atob(json.content.replace(/\n/g,'')), c => c.charCodeAt(0));
+                        historial = JSON.parse(new TextDecoder('utf-8').decode(bytes));
+                    }
+                } catch(e) {}
+                // Agregar nueva entrada al inicio
+                historial.unshift(entrada);
+                const content = JSON.stringify(historial, null, 2);
+                const encoded = btoa(unescape(encodeURIComponent(content)));
+                const body = { message: `Historial emisión #${emision}`, content: encoded };
+                if (sha) body.sha = sha;
+                await fetch(HIST_API, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+            } catch(e) { console.warn('No se pudo guardar historial:', e); }
         }
 
         function updateTime() { const now = new Date(); document.getElementById('current-time').value = now.toLocaleTimeString(); document.getElementById('current-time').style.backgroundColor = (now.getSeconds() % 2 === 0) ? "#ffffcc" : "#ffffff"; requestAnimationFrame(updateTime); }
