@@ -13,7 +13,7 @@
         h1 { margin: 0; font-size: 1.6rem; color: #333; cursor: pointer; white-space: nowrap; }
         #cfg-nombre-revista { font-size: 1.6rem; font-weight: bold; color: #0d6efd; border: none; border-bottom: 2px dashed #ccc; background: transparent; width: 100%; outline: none; padding: 0 5px; }
         #cfg-nombre-revista:focus { border-bottom-color: #0d6efd; background: #f0f7ff; }
-
+ 
         .config-bar { background: #e9ecef; padding: 8px 12px; border-radius: 4px; margin-bottom: 10px; border: 1px solid #ced4da; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px; font-size: 0.9rem; }
         .config-items { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 12px; flex-grow: 1; }
         .config-group { display: flex; flex-direction: column; gap: 3px; justify-content: flex-end; }
@@ -45,7 +45,7 @@
         .btn-action { padding: 4px 8px; font-size: 0.9rem; cursor: pointer; border-radius: 4px; border: none; color: white; margin: 0 2px; }
         .btn-edit { background-color: #ffc107; color: #333; }
         .btn-delete { background-color: #dc3545; }
-
+ 
         .grid-shortcuts { display: flex; flex-direction: column; gap: 4px; margin-bottom: 5px; }
         .grid-row { display: flex; gap: 4px; flex-wrap: wrap; }
         .btn-grid { 
@@ -54,7 +54,7 @@
             color: #24292e; transition: 0.1s; font-family: monospace;
         }
         .btn-grid:hover { background: #0d6efd; color: white; border-color: #0056b3; }
-
+ 
         .ee-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; color: white; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif; text-align: center; }
         .ee-overlay h1 { font-size: 4rem; color: #ffab70; margin-bottom: 20px; }
         .ee-overlay a { color: #58a6ff; font-size: 2rem; text-decoration: none; border: 2px solid #58a6ff; padding: 10px 20px; border-radius: 8px; transition: 0.3s; }
@@ -67,7 +67,7 @@
         <a href="https://www.qrz.com/db/ti3wti" target="_blank" onclick="event.stopPropagation()">https://www.qrz.com/db/ti3wti</a>
         <p style="margin-top: 30px; opacity: 0.6;">(Clic en el fondo para cerrar)</p>
     </div>
-
+ 
     <div class="container">
         <div class="title-area">
             <h1 id="main-title">Bitácora de Reportes v3.0 - </h1>
@@ -96,13 +96,13 @@
                     <button type="button" onclick="document.getElementById('cfg-logo-upload').click()" style="background: #6c757d; color: white; border: none; padding: 0 8px; border-radius: 4px; font-weight: bold; cursor: pointer; margin: 0; height: 28px;">📸 FOTO/LOGO</button>
                 </div>
             </div>
-
+ 
             <div class="conn-container">
                 <button onclick="abrirPantallaPublica()" style="background: #198754; font-weight: bold; color:white; margin:0; height: 28px; padding: 0 10px;">ABRIR VENTANA PÚBLICA 🖥️</button>
                 <span id="conn-status" style="color: red; font-weight: bold; font-size: 0.8rem; margin-top:3px; position: absolute; transform: translateY(18px);">Desconectado</span>
             </div>
         </div>
-
+ 
         <div class="header-line">
             <div class="header-left"><strong>Base de Datos ➔</strong> <span id="dbStatus" style="font-size:0.85rem; color:#555;">Cargando desde GitHub...</span> <input type="file" id="csvFileInput" accept=".csv" style="margin-left:10px; font-size:0.75rem;" title="Cargar CSV externo (opcional)"/></div>
             <label style="margin-left: auto; margin-right: 20px; font-size: 0.85rem; color: #d32f2f; font-weight: bold; cursor: pointer;"><input type="checkbox" id="toggleBorrador" onchange="toggleBorrador()"> Habilitar borrador</label>
@@ -130,7 +130,7 @@
                     <button type="button" class="btn-grid" onclick="setQuickGrid('EJ89')">EJ89</button>
                 </div>
             </div>
-
+ 
             <label>Grilla:</label> <input type="text" id="rep-grilla" style="width: 75px;" onkeydown="nextField(event, 'rep-localidad')" onchange="checkGridAndMoveMap()" />
             <label>Ubicación:</label> <input type="text" id="rep-localidad" placeholder="Localidad" style="width: 180px;" onkeydown="nextField(event, 'temperatura')" />
             <label>Temp (°C):</label> <input type="text" id="temperatura" style="width: 65px;" onkeydown="nextField(event, 'viento')" />
@@ -155,13 +155,13 @@
         </table>
         <div id="borradorFlotante"><div id="borradorHeader">📔 NOTAS / BORRADOR</div><textarea id="textoBorrador" placeholder="Escriba aquí..."></textarea></div>
     </div>
-
+ 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script>
         let radioaficionados = []; let selectedRadioaficionado = null; let reportCount = 0; let reportes = []; let publicWin = null; let isPublicWinReady = false;
         let searchTimeout = null; 
-
+ 
         function setQuickGrid(valor) {
             const input = document.getElementById('rep-grilla');
             input.value = valor;
@@ -169,7 +169,7 @@
             input.setSelectionRange(valor.length, valor.length);
             checkGridAndMoveMap();
         }
-
+ 
         let eeClickCount = 0;
         document.getElementById('main-title').addEventListener('click', () => {
             eeClickCount++;
@@ -179,14 +179,14 @@
             }
             setTimeout(() => { eeClickCount = 0; }, 2000);
         });
-
+ 
         window.addEventListener('message', (event) => {
             if (event.data.type === 'UPDATE_GRID') {
                 document.getElementById('cfg-grid').value = event.data.grid;
                 saveConfig();
             }
         });
-
+ 
         function loadConfig() {
             const saved = localStorage.getItem('revista_config');
             if (saved) {
@@ -205,7 +205,7 @@
             }
             document.getElementById('textoBorrador').value = localStorage.getItem('borrador_texto') || "";
         }
-
+ 
         function handleLogoUpload(event) {
             const file = event.target.files[0];
             if (file) {
@@ -220,7 +220,7 @@
                 reader.readAsDataURL(file);
             }
         }
-
+ 
         function updateResultsTable() {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
@@ -244,7 +244,7 @@
             });
             sendToPublic('SYNC_REPORTES', { reportes: reportes });
         }
-
+ 
         function editReport(index) {
             const r = reportes[index];
             const nG = prompt("Corregir Grilla:", r.grillaReporte); if (nG === null) return;
@@ -257,9 +257,9 @@
             r.grillaReporte = nG.toUpperCase() || "N/I"; r.localidad = nL || ""; r.temperatura = nT || "N/I"; r.viento = nH || "N/I"; r.presion = nP || "N/I"; r.velocViento = nV || "N/I"; r.comentarios = nC.toUpperCase() || "SIN REQ.";
             updateResultsTable();
         }
-
+ 
         function deleteReport(index) { if (confirm(`¿Eliminar reporte de ${reportes[index].indicativo}?`)) { reportes.splice(index, 1); updateResultsTable(); } }
-
+ 
         function addReport() {
             if (!selectedRadioaficionado) return;
             const method = document.querySelector('input[name="contact"]:checked').value;
@@ -290,7 +290,7 @@
             }
             reportes.push(nuevoReporte); updateResultsTable(); clearSearch(); document.getElementById('exportPdfButton').disabled = false;
         }
-
+ 
         function addNewEntry() {
             const ind = document.getElementById('newIndicativo').value.trim().toUpperCase();
             const nom = document.getElementById('newNombre').value.trim().toUpperCase();
@@ -309,10 +309,10 @@
             document.getElementById('addNewEntryForm').style.display = "none";
             selectRadioaficionado(ind, nom, gri, loc);
         }
-
+ 
         function toggleBorrador() { document.getElementById('borradorFlotante').style.display = document.getElementById('toggleBorrador').checked ? 'block' : 'none'; }
         document.getElementById('textoBorrador').addEventListener('input', (e) => localStorage.setItem('borrador_texto', e.target.value));
-
+ 
         dragElement(document.getElementById("borradorFlotante"));
         function dragElement(elmnt) {
             var p1 = 0, p2 = 0, p3 = 0, p4 = 0;
@@ -322,7 +322,7 @@
                 document.onmousemove = (e) => { e.preventDefault(); p1 = p3 - e.clientX; p2 = p4 - e.clientY; p3 = e.clientX; p4 = e.clientY; elmnt.style.top = (elmnt.offsetTop - p2) + "px"; elmnt.style.left = (elmnt.offsetLeft - p1) + "px"; };
             }
         }
-
+ 
         function saveConfig() {
             const cfg = { 
                 emision: document.getElementById('cfg-emision').value, ind: document.getElementById('cfg-indicativo').value, 
@@ -333,7 +333,7 @@
             localStorage.setItem('revista_config', JSON.stringify(cfg));
             if (publicWin && !publicWin.closed) { sendToPublic('CONFIG', cfg); }
         }
-
+ 
         function abrirPantallaPublica() { if (publicWin && !publicWin.closed) publicWin.focus(); else { isPublicWinReady = false; publicWin = window.open('publico.html', 'PantallaPublica', 'width=1024,height=768'); } }
         setInterval(() => { const s = document.getElementById('conn-status'); if (publicWin && !publicWin.closed) { s.innerText = "Conectado ✅"; s.style.color = "green"; if (!isPublicWinReady) { isPublicWinReady = true; setTimeout(() => { saveConfig(); const savedLogo = localStorage.getItem('revista_logo'); if(savedLogo) sendToPublic('UPDATE_LOGO', { logoBase64: savedLogo }); updateResultsTable(); if (radioaficionados.length > 0) sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) }); }, 1500); } } else { s.innerText = "Desconectado"; s.style.color = "red"; isPublicWinReady = false; } }, 1000);
         function sendToPublic(type, payload = {}) { if (publicWin && !publicWin.closed) publicWin.postMessage({ type: type, ...payload }, '*'); }
@@ -384,7 +384,39 @@
             document.getElementById('rep-grilla').value = g;
             document.getElementById('rep-localidad').value = l;
             setTimeout(() => document.getElementById('rep-grilla').focus(), 100); 
-            sendToPublic('SELECCION', { indicativo: i, nombre: n, grid: g, localidad: l }); 
+            sendToPublic('SELECCION', { indicativo: i, nombre: n, grid: g, localidad: l });
+            // Si no tiene grilla o localidad en el CSV, consultar QRZ
+            if (!g || !l) fetchQrzGridAndLocalidad(i, g, l);
+        }
+ 
+        async function fetchQrzGridAndLocalidad(indicativo, grillaActual, localidadActual) {
+            try {
+                const baseCall = indicativo.replace(/-RF$|-EL$|-WA$/, '').split('/').pop();
+                const res = await fetch(`https://qrz-proxy.wmarincr.workers.dev/?callsign=${baseCall}`);
+                const xmlText = await res.text();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(xmlText, 'application/xml');
+                const get = tag => {
+                    const ns = 'http://xmldata.qrz.com';
+                    let el = xml.getElementsByTagNameNS(ns, tag)[0];
+                    if (!el) el = xml.getElementsByTagName(tag)[0];
+                    return el ? el.textContent.trim() : '';
+                };
+                const qrzGrid = get('grid').substring(0, 6);
+                const addr2 = get('addr2');
+                const state = get('state');
+                const country = get('country');
+                let qrzLoc = addr2;
+                if (state && state !== addr2) qrzLoc += (qrzLoc ? ', ' : '') + state;
+                if (country && country.toUpperCase() !== 'COSTA RICA') qrzLoc += (qrzLoc ? ' - ' : '') + country;
+                if (!grillaActual && qrzGrid) {
+                    document.getElementById('rep-grilla').value = qrzGrid;
+                    checkGridAndMoveMap();
+                }
+                if (!localidadActual && qrzLoc) {
+                    document.getElementById('rep-localidad').value = qrzLoc;
+                }
+            } catch(e) {}
         }
         
         function checkGridAndMoveMap() {
@@ -393,7 +425,7 @@
             const locVal = document.getElementById('rep-localidad').value.trim();
             sendToPublic('SELECCION', { indicativo: selectedRadioaficionado.indicativo, nombre: selectedRadioaficionado.nombre, grid: gridVal, localidad: locVal });
         }
-
+ 
         function clearSearch() { 
             document.getElementById('searchInput').value = ''; 
             document.getElementById('selectionDisplay').style.display = "none"; 
@@ -408,7 +440,7 @@
         
         function nextField(e, n) { if (e.key === "Enter") { e.preventDefault(); document.getElementById(n).focus(); } }
         function checkFinalEnter(e) { if (e.key === "Enter") { e.preventDefault(); addReport(); } }
-
+ 
         function exportRadioaficionadosCSV() { 
             const d = new Date();
             let content = "Indicativo,Nombre,Grilla,Localidad\n" + radioaficionados.map(r => `${r.indicativo},${r.nombre},${r.grilla||''},${r.localidad||''}`).join('\n'); 
@@ -418,7 +450,7 @@
             link.href = window.URL.createObjectURL(blob); 
             link.click(); 
         }
-
+ 
         function exportPDF() { 
             const { jsPDF } = window.jspdf; 
             const doc = new jsPDF(); 
@@ -445,9 +477,9 @@
             }); 
             doc.save(`Bitacora_${nombreRevista}_${fechaActual}.pdf`); 
         }
-
+ 
         function updateTime() { const now = new Date(); document.getElementById('current-time').value = now.toLocaleTimeString(); document.getElementById('current-time').style.backgroundColor = (now.getSeconds() % 2 === 0) ? "#ffffcc" : "#ffffff"; requestAnimationFrame(updateTime); }
-
+ 
         // ── GITHUB CONFIG ──────────────────────────────────────────────
         const _a = "github_pat_11AU6IEOQ02x";
         const _b = "AB240ZVIyC_7mOeRIvQUiC3";
@@ -458,9 +490,9 @@
         const GITHUB_REPO   = "revista-matutina";
         const GITHUB_FILE   = "data/radioaficionados.csv";
         const GITHUB_API    = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
-
+ 
         let githubFileSha = null;
-
+ 
         async function loadCSVFromGitHub() {
             const dbStatus = document.getElementById('dbStatus');
             try {
@@ -485,7 +517,7 @@
                 dbStatus.style.color = 'red';
             }
         }
-
+ 
         async function getGitHubContent() {
             const resGet = await fetch(GITHUB_API, {
                 headers: { 'Authorization': `Bearer ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github+json' }
@@ -496,7 +528,7 @@
             const currentContent = new TextDecoder('utf-8').decode(curBytes);
             return { sha: jsonGet.sha, content: currentContent };
         }
-
+ 
         async function appendToGitHubCSV(indicativo, nombre, grilla, localidad) {
             try {
                 const { sha, content } = await getGitHubContent();
@@ -510,7 +542,7 @@
                 });
             } catch(e) { console.warn('No se pudo escribir en GitHub:', e.message); }
         }
-
+ 
         async function updateGitHubEntry(radioaficionado) {
             try {
                 const { sha, content } = await getGitHubContent();
@@ -531,7 +563,7 @@
                 });
             } catch(e) { console.warn('No se pudo actualizar en GitHub:', e.message); }
         }
-
+ 
         window.onload = function() { loadConfig(); updateTime(); loadCSVFromGitHub(); };
     </script>
 </body>
