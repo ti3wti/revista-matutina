@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "fecha": "21/5/2026",
+    "emision": "7832",
+    "revista": "Revista Matutina",
+    "operador": "EJ89DV",
+    "nombreOp": "",
+    "totalEstaciones": 2,
+    "duracion": "10min 03s",
+    "tempProm": "24.1",
+    "masLejano": null,
+    "zonaActiva": [
+      "EJ89",
+      2
+    ],
+    "timestamp": "2026-05-21T17:33:55.746Z"
+  }
+]
