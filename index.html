@@ -6,7 +6,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>-Bitácora de Reportes v3.0- Revista Matutina.</title>
+    <title>Bitácora de Reportes v3.0- Revista Matutina</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.2; background: #f4f4f9; }
@@ -565,18 +565,18 @@
             const splitHeader = doc.splitTextToSize(headerText, maxWidth);
             doc.text(splitHeader, margin, 12);
             const headerHeight = splitHeader.length * 5;
-            doc.setFontSize(9);
-            doc.text(`Número de estaciones: ${reportes.length}`, 14, 12 + headerHeight + 2);
+            doc.setFontSize(11);
+            doc.text(`Total de estaciones reportadas: ${reportes.length}`, 14, 12 + headerHeight + 2);
             // Estadísticas al inicio
             const s = calcStats();
-            let statsY = 12 + headerHeight + 8;
+            let statsY = 12 + headerHeight + 9;
             if (s) {
                 doc.setFontSize(8);
                 doc.setTextColor(80, 80, 80);
                 let statsLines = [];
                 if (s.duracion) statsLines.push(`Duración: ${s.duracion}`);
                 if (s.tempProm) statsLines.push(`Temperatura promedio: ${s.tempProm}°C`);
-                if (s.masLejano) statsLines.push(`Radio más lejano: ${s.masLejano.indicativo} — ${s.masLejano.nombre} — ${s.masLejano.dist} km (${s.masLejano.grilla})`);
+                if (s.masLejano) statsLines.push(`Estación más lejana: ${s.masLejano.indicativo} — ${s.masLejano.nombre} — ${s.masLejano.dist} km (${s.masLejano.grilla})`);
                 if (s.zonaActiva) statsLines.push(`Zona más activa: ${s.zonaActiva[0]} — ${s.zonaActiva[1]} reportes`);
                 statsLines.forEach((line, i) => { doc.text(line, margin, statsY + (i * 4.5)); });
                 statsY += statsLines.length > 0 ? statsLines.length * 4.5 + 3 : 0;
@@ -585,7 +585,20 @@
             doc.autoTable({ 
                 head: [["#", "Hora", "Indicativo", "Nombre", "Grilla", "Ubicación", "Temp", "Hum", "Pres", "Viento", "Comentarios"]], 
                 body: reportes.map(r => [r.id, r.fechaHora, r.indicativo, r.nombre, (r.grillaReporte === "N/I" ? "--" : r.grillaReporte), (r.localidad || "--"), (r.temperatura === "N/I" ? "--" : r.temperatura), (r.viento === "N/I" ? "--" : r.viento), (r.presion === "N/I" ? "--" : r.presion), (r.velocViento === "N/I" ? "--" : r.velocViento), r.comentarios]), 
-                startY: statsY
+                startY: statsY,
+                columnStyles: {
+                    0: { cellWidth: 8 },
+                    1: { cellWidth: 28 },
+                    2: { cellWidth: 22 },
+                    3: { cellWidth: 28 },
+                    4: { cellWidth: 16 },
+                    5: { cellWidth: 30 },
+                    6: { cellWidth: 12 },
+                    7: { cellWidth: 10 },
+                    8: { cellWidth: 14 },
+                    9: { cellWidth: 13 },
+                    10: { cellWidth: 'auto' }
+                }
             }); 
             doc.save(`Bitacora_${nombreRevista}_${fechaActual}.pdf`); 
         }
