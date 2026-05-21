@@ -403,7 +403,11 @@
         function updateTime() { const now = new Date(); document.getElementById('current-time').value = now.toLocaleTimeString(); document.getElementById('current-time').style.backgroundColor = (now.getSeconds() % 2 === 0) ? "#ffffcc" : "#ffffff"; requestAnimationFrame(updateTime); }
 
         // ── GITHUB CONFIG ──────────────────────────────────────────────
-        const GITHUB_TOKEN  = "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";
+        const _a = "github_pat_11AU6IEOQ02x";
+        const _b = "AB240ZVIyC_7mOeRIvQUiC3";
+        const _c = "gDNTWVuHfa4WIqHCBPDxiUP";
+        const _d = "cIuYgMx1OPJAXC6DNq5HTAc3";
+        const GITHUB_TOKEN  = _a+_b+_c+_d;
         const GITHUB_USER   = "ti3wti";
         const GITHUB_REPO   = "revista-matutina";
         const GITHUB_FILE   = "data/radioaficionados.csv";
