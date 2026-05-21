@@ -757,7 +757,7 @@
             } else if (msg.type === 'ESTADISTICAS') {
                 const s = msg.stats;
                 const emision = document.getElementById('pub-emision') ? document.getElementById('pub-emision').innerText : '';
-                document.getElementById('stats-emision').innerText = `${s.total} reportes · ${s.duracion}`;
+                document.getElementById('stats-emision').innerText = `${s.total} estaciones · ${s.duracion}`;
                 let html = '';
                 if (s.tempProm) html += `<div style="display:flex;align-items:center;gap:12px;padding:10px;background:#0d1117;border-radius:8px;"><span style="font-size:1.5rem;">🌡️</span><div><div style="color:#8b949e;font-size:0.8rem;">Temperatura promedio</div><div style="color:white;font-size:1.1rem;font-weight:bold;">${s.tempProm}°C</div></div></div>`;
                 if (s.masLejano) html += `<div style="display:flex;align-items:center;gap:12px;padding:10px;background:#0d1117;border-radius:8px;"><span style="font-size:1.5rem;">📡</span><div><div style="color:#8b949e;font-size:0.8rem;">Radio más lejano</div><div style="color:white;font-size:1.1rem;font-weight:bold;">${s.masLejano.indicativo} — ${s.masLejano.nombre}</div><div style="color:#58a6ff;font-size:0.9rem;">${s.masLejano.dist} km · ${s.masLejano.grilla}</div></div></div>`;
