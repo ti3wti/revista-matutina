@@ -764,6 +764,7 @@
                 if (s.zonaActiva) html += `<div style="display:flex;align-items:center;gap:12px;padding:10px;background:#0d1117;border-radius:8px;"><span style="font-size:1.5rem;">🗺️</span><div><div style="color:#8b949e;font-size:0.8rem;">Zona más activa</div><div style="color:white;font-size:1.1rem;font-weight:bold;">${s.zonaActiva[0]}</div><div style="color:#58a6ff;font-size:0.9rem;">${s.zonaActiva[1]} reportes</div></div></div>`;
                 document.getElementById('stats-content').innerHTML = html;
                 const overlay = document.getElementById('stats-overlay');
+                if (overlay.style.display === 'flex') { overlay.style.display = 'none'; return; }
                 overlay.style.display = 'flex';
             }
         });
@@ -773,7 +774,7 @@
             <div style="font-size:1.2rem; color:#8b949e; margin-bottom:8px; text-transform:uppercase; letter-spacing:2px;">Estadísticas de la Emisión</div>
             <div id="stats-emision" style="font-size:1.5rem; color:#58a6ff; font-weight:bold; margin-bottom:25px;"></div>
             <div id="stats-content" style="display:flex; flex-direction:column; gap:14px; text-align:left;"></div>
-            <div style="margin-top:30px; font-size:0.8rem; color:#8b949e;">(clic en cualquier lugar para cerrar)</div>
+            <div style="margin-top:30px; font-size:0.8rem; color:#8b949e;">(clic fuera del panel para cerrar)</div>
         </div>
     </div>
 </body>
