@@ -1,6 +1,24 @@
 [
   {
     "fecha": "21/5/2026",
+    "emision": "7795",
+    "revista": "Revista Nocturna",
+    "operador": "TI3WTI",
+    "nombreOp": "William.",
+    "totalEstaciones": 1,
+    "duracion": "14s",
+    "tempProm": "27.1",
+    "masLejano": {
+      "indicativo": "HP3CPU",
+      "nombre": "Carlos Alberto Andrade",
+      "dist": 200,
+      "grilla": "EJ88NH"
+    },
+    "zonaActiva": null,
+    "timestamp": "2026-05-21T13:47:11.313Z"
+  },
+  {
+    "fecha": "21/5/2026",
     "emision": "7780",
     "revista": "Revista Vespertina",
     "operador": "TI3WTI",
