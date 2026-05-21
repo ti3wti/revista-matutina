@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitácora de Reportes v2.5- Revista Matutina</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.2; background: #f4f4f9; }
+        .container { width: 95%; max-width: 1200px; margin: 0 auto; background: white; padding: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 4px; position: relative; }
+        
+        /* Título con input personalizable */
+        .title-area { display: flex; align-items: center; gap: 10px; margin: 10px 0 5px 0; }
+        h1 { margin: 0; font-size: 1.6rem; color: #333; cursor: pointer; white-space: nowrap; }
+        #cfg-nombre-revista { font-size: 1.6rem; font-weight: bold; color: #333; border: none; border-bottom: 2px dashed #ccc; background: transparent; width: 100%; outline: none; padding: 0 5px; }
+        #cfg-nombre-revista:focus { border-bottom-color: #0d6efd; background: #f0f7ff; }
+
+        .config-bar { background: #e9ecef; padding: 8px 12px; border-radius: 4px; margin-bottom: 10px; border: 1px solid #ced4da; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px; font-size: 0.9rem; }
+        .config-items { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 12px; flex-grow: 1; }
+        .config-group { display: flex; flex-direction: column; gap: 3px; justify-content: flex-end; }
+        .config-group label.lbl-top { font-size: 0.75rem; font-weight: bold; color: #555; text-transform: uppercase; min-height: 14px;}
+        .config-bar input[type="text"], .config-bar input[type="password"], .config-bar select { padding: 5px; border: 1px solid #ccc; border-radius: 4px; height: 28px; box-sizing: border-box; }
+        
+        .header-line { display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; padding: 5px 10px; border-radius: 4px; margin-bottom: 10px; border: 1px solid #ddd; }
+        .header-left { display: flex; align-items: center; gap: 10px; flex-grow: 1; }
+        #current-time { width: 135px; text-align: center; font-weight: bold; font-size: 1.1rem; padding: 5px; border: 2px solid #333; transition: background-color 0.5s; }
+        input[type="file"], input[type="number"] { padding: 8px; margin: 3px 0; border: 1px solid #ccc; border-radius: 4px; }
+        
+        #csvFileInput { width: 400px; }
+        #searchInput { padding: 8px; width: 85%; border: 1px solid #ccc; border-radius: 4px; }
+        #clearButton { padding: 8px; background-color: #dc3545; color: white; border: none; cursor: pointer; margin-left: 5px; border-radius: 4px;}
+        table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        th, td { padding: 6px; text-align: left; border-bottom: 1px solid #ddd; }
+        button { padding: 8px 12px; margin: 2px; background-color: #0d6efd; color: white; border: none; cursor: pointer; border-radius: 4px;}
+        button:disabled { background-color: gray; cursor: not-allowed; }
+        #selectionDisplay { margin: 5px 0; padding: 8px; background-color: #e7f3fe; border-left: 6px solid #2196F3; display: none; font-weight: bold; }
+        .input-row { display: flex; align-items: center; gap: 10px; margin: 5px 0; flex-wrap: wrap; }
+        .radio-group { display: flex; align-items: center; gap: 5px; border: 1px solid #ddd; padding: 5px 10px; border-radius: 4px; background-color: #f9f9f9; }
+        .button-group { display: flex; gap: 10px; margin-top: 10px; margin-bottom: 15px; }
+        #addNewEntryForm { background: #fff3cd; padding: 15px; border-radius: 5px; margin: 10px 0; border: 1px solid #ffeeba; }
+        
+        .conn-container { display: flex; flex-direction: column; align-items: center; margin-left: auto; justify-content: flex-end;}
+        #borradorFlotante { display: none; position: absolute; top: 250px; left: 850px; width: 300px; height: 200px; background-color: #fff9c4; border: 1px solid #fbc02d; box-shadow: 3px 3px 10px rgba(0,0,0,0.2); z-index: 9999; border-radius: 5px; resize: both; overflow: hidden; min-width: 150px; min-height: 100px; }
+        #borradorHeader { padding: 5px; cursor: move; background-color: #fbc02d; color: #333; font-size: 0.75rem; font-weight: bold; }
+        #textoBorrador { width: 100%; height: calc(100% - 30px); border: none; background: transparent; padding: 10px; box-sizing: border-box; resize: none; outline: none; }
+        .btn-action { padding: 4px 8px; font-size: 0.9rem; cursor: pointer; border-radius: 4px; border: none; color: white; margin: 0 2px; }
+        .btn-edit { background-color: #ffc107; color: #333; }
+        .btn-delete { background-color: #dc3545; }
+
+        /* Estilo para los botones de grilla rápida */
+        .grid-shortcuts { display: flex; flex-direction: column; gap: 4px; margin-bottom: 5px; }
+        .grid-row { display: flex; gap: 3px; flex-wrap: wrap; }
+        .btn-grid { 
+            background: #e1e4e8; border: 1px solid #d1d5da; border-radius: 3px;
+            padding: 2px 5px; font-size: 0.7rem; font-weight: bold; cursor: pointer;
+            color: #24292e; transition: 0.1s; font-family: monospace;
+        }
+        .btn-grid:hover { background: #0d6efd; color: white; border-color: #0056b3; }
+
+        .ee-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; color: white; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif; text-align: center; }
+        .ee-overlay h1 { font-size: 4rem; color: #ffab70; margin-bottom: 20px; }
+        .ee-overlay a { color: #58a6ff; font-size: 2rem; text-decoration: none; border: 2px solid #58a6ff; padding: 10px 20px; border-radius: 8px; transition: 0.3s; }
+        .ee-overlay a:hover { background: #58a6ff; color: white; }
+    </style>
+</head>
+<body>
+    <div id="ee-modal" class="ee-overlay" onclick="this.style.display='none'">
+        <h1>Elaborado por TI3WTI</h1>
+        <a href="https://www.qrz.com/db/ti3wti" target="_blank" onclick="event.stopPropagation()">https://www.qrz.com/db/ti3wti</a>
+        <p style="margin-top: 30px; opacity: 0.6;">(Clic en el fondo para cerrar)</p>
+    </div>
+
+    <div class="container">
+        <div class="title-area">
+            <h1 id="main-title">Bitácora de Reportes v2.5 - </h1>
+            <input type="text" id="cfg-nombre-revista" value="Revista Matutina" onchange="saveConfig()" title="Haga clic para editar el nombre de la revista" />
+        </div>
+        
+        <div class="config-bar">
+            <div class="config-items">
+                <strong style="font-size: 1.1rem; margin-right: 5px; padding-bottom: 4px;">⚙️ Ajustes:</strong>
+                <div class="config-group"><label class="lbl-top">Emisión</label><input type="text" id="cfg-emision" placeholder="#7758" style="width: 55px; font-weight:bold; color:blue;" onchange="saveConfig()"></div>
+                <div class="config-group"><label class="lbl-top">Operador</label><input type="text" id="cfg-indicativo" placeholder="TI3WTI" style="width: 65px;" onchange="saveConfig()"></div>
+                <div class="config-group"><label class="lbl-top">Nombre</label><input type="text" id="cfg-nombre" placeholder="William" style="width: 80px;" onchange="saveConfig()"></div>
+                <div class="config-group"><label class="lbl-top">Grilla</label><input type="text" id="cfg-grid" placeholder="EJ89bt" style="width: 55px;" onchange="saveConfig()"></div>
+                <div class="config-group"><label class="lbl-top">API Key</label><input type="password" id="cfg-aprskey" value="149248.FiKMjEqrNNWgniq" style="width: 120px;" onchange="saveConfig()"></div>
+                <div class="config-group"><label class="lbl-top">&nbsp;</label><label style="display:flex; align-items:center; gap:5px; font-weight:bold; cursor:pointer; color:#333; height: 28px; margin: 0;"><input type="checkbox" id="cfg-aprs-enable" checked onchange="saveConfig()"> APRS</label></div>
+                <div class="config-group"><label class="lbl-top">Mapa</label><select id="cfg-map-type" onchange="saveConfig()">
+                    <option value="gray">Gris Noche</option>
+                    <option value="dark">Oscuro Profundo</option>
+                    <option value="osm">Estándar Claro</option>
+                    <option value="topo">Topográfico</option>
+                    <option value="sat">Satélite</option>
+                </select></div>
+                <div class="config-group">
+                    <label class="lbl-top">&nbsp;</label>
+                    <input type="file" id="cfg-logo-upload" accept="image/*" style="display: none;" onchange="handleLogoUpload(event)">
+                    <button type="button" onclick="document.getElementById('cfg-logo-upload').click()" style="background: #6c757d; color: white; border: none; padding: 0 8px; border-radius: 4px; font-weight: bold; cursor: pointer; margin: 0; height: 28px;">📸 FOTO/LOGO</button>
+                </div>
+            </div>
+
+            <div class="conn-container">
+                <button onclick="abrirPantallaPublica()" style="background: #198754; font-weight: bold; color:white; margin:0; height: 28px; padding: 0 10px;">ABRIR VENTANA PÚBLICA 🖥️</button>
+                <span id="conn-status" style="color: red; font-weight: bold; font-size: 0.8rem; margin-top:3px; position: absolute; transform: translateY(18px);">Desconectado</span>
+            </div>
+        </div>
+
+        <div class="header-line">
+            <div class="header-left"><strong>Base de Datos ➔</strong> <span id="dbStatus" style="font-size:0.85rem; color:#555;">Cargando desde GitHub...</span> <input type="file" id="csvFileInput" accept=".csv" style="margin-left:10px; font-size:0.75rem;" title="Cargar CSV externo (opcional)"/></div>
+            <label style="margin-left: auto; margin-right: 20px; font-size: 0.85rem; color: #d32f2f; font-weight: bold; cursor: pointer;"><input type="checkbox" id="toggleBorrador" onchange="toggleBorrador()"> Habilitar borrador</label>
+            <input type="text" id="current-time" readonly>
+        </div>
+        <div style="display: flex; align-items: center;"><input type="text" id="searchInput" placeholder="Escriba indicativo o nombre para filtrar..." oninput="searchIndicativos()" disabled /><button id="clearButton" onclick="clearSearch()">Borrar búsqueda</button></div>
+        
+        <h2 id="searchTitle">Resultados de la búsqueda</h2>
+        <div id="selectionDisplay"></div>
+        <table id="searchResultsTable"><thead id="searchTableHeader"><tr><th>Indicativo</th><th>Nombre</th><th>Seleccionar</th></tr></thead><tbody id="searchTableBody"></tbody></table>
+        <div id="addNewEntryForm" style="display:none;"><h3>Colega no encontrado. ¿Desea agregarlo?</h3><input type="text" id="newIndicativo" placeholder="Indicativo" style="width: 120px;" /><input type="text" id="newNombre" placeholder="Nombre completo" style="width: 350px !important;" /><button type="button" onclick="addNewEntry()" style="background-color: green; font-weight: bold;">GUARDAR</button></div>
+        
+        <div id="reportForm" style="display:none;">
+            <h3>Ingresar reporte meteorológico</h3>
+            
+            <div class="grid-shortcuts">
+                <div class="grid-row">
+                    <button type="button" class="btn-grid" onclick="setQuickGrid('EJ79')">EJ79</button>
+                    <button type="button" class="btn-grid" onclick="setQuickGrid('EJ88')">EJ88</button>
+                    <button type="button" class="btn-grid" onclick="setQuickGrid('EJ89')">EJ89</button>
+                </div>
+                <div class="grid-row">
+                    <button type="button" class="btn-grid" onclick="setQuickGrid('EK70')">EK70</button>
+                    <button type="button" class="btn-grid" onclick="setQuickGrid('EK71')">EK71</button>
+                    <button type="button" class="btn-grid" onclick="setQuickGrid('EK80')">EK80</button>
+                </div>
+            </div>
+
+            <label>Grilla:</label> <input type="text" id="rep-grilla" style="width: 75px;" onkeydown="nextField(event, 'temperatura')" onchange="checkGridAndMoveMap()" />
+            <label>Temp (°C):</label> <input type="text" id="temperatura" style="width: 65px;" onkeydown="nextField(event, 'viento')" />
+            <label>Hum (%):</label> <input type="text" id="viento" style="width: 65px;" onkeydown="nextField(event, 'presion')" />
+            <label>Pres (hPa):</label> <input type="text" id="presion" style="width: 85px;" onkeydown="nextField(event, 'rep-veloc-viento')" />
+            <label>Vel. Viento:</label> <input type="text" id="rep-veloc-viento" style="width: 85px;" onkeydown="nextField(event, 'comentarios')" />
+            <div class="input-row">
+                <div style="display: flex; flex-direction: column;">
+                    <div class="radio-group"><input type="radio" id="contactapor1" name="contact" value="RF" checked/><label>RF</label><input type="radio" id="contactapor2" name="contact" value="EchoLink" /><label>EL</label><input type="radio" id="contactapor3" name="contact" value="Whatsapp" /><label>WA</label></div>
+                    <span style="font-size: 0.65rem; font-weight: bold; color: #777; margin-top: 3px; text-align: center;"><i class="fa-solid fa-walkie-talkie"></i> RF: Radiofrecuencia &nbsp; <i class="fa-solid fa-mobile-screen-button"></i> EL: EchoLink &nbsp; <i class="fa-brands fa-whatsapp" style="color: #25D366; font-size: 0.75rem;"></i> WA: Whatsapp</span>
+                </div>
+                <input type="text" id="comentarios" placeholder="Comentarios / Requerimientos" style="flex-grow: 1;" onkeydown="checkFinalEnter(event)" />
+            </div>
+            <button id="addReportButton" onclick="addReport()" style="width: 100%; margin-top: 10px; background-color: #0d6efd; font-size: 1.1rem; font-weight: bold;">AÑADIR REPORTE</button>
+        </div>
+        <div class="button-group"><button id="exportCsvButton" onclick="exportRadioaficionadosCSV()" disabled>Exportar base de datos</button><button id="exportPdfButton" onclick="exportPDF()" disabled>Exportar Bitácora a PDF</button></div>
+        
+        <h2>Reporte acumulativo</h2>
+        <table id="resultsTable">
+            <thead><tr><th>#</th><th>Indicativo</th><th>Nombre</th><th>Temp</th><th>Hum</th><th>Pres</th><th>Grilla</th><th>Viento</th><th>Comentarios</th><th>Hora</th><th>Acciones</th></tr></thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+        <div id="borradorFlotante"><div id="borradorHeader">📔 NOTAS / BORRADOR</div><textarea id="textoBorrador" placeholder="Escriba aquí..."></textarea></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script>
+        let radioaficionados = []; let selectedRadioaficionado = null; let reportCount = 0; let reportes = []; let publicWin = null; let isPublicWinReady = false;
+        let searchTimeout = null; 
+
+        // Función para activar grilla desde botones rápidos
+        function setQuickGrid(valor) {
+            const input = document.getElementById('rep-grilla');
+            input.value = valor;
+            input.focus();
+            input.setSelectionRange(valor.length, valor.length);
+            checkGridAndMoveMap();
+        }
+
+        // Easter Egg Logic
+        let eeClickCount = 0;
+        document.getElementById('main-title').addEventListener('click', () => {
+            eeClickCount++;
+            if (eeClickCount === 5) {
+                document.getElementById('ee-modal').style.display = 'flex';
+                eeClickCount = 0;
+            }
+            setTimeout(() => { eeClickCount = 0; }, 2000);
+        });
+
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'UPDATE_GRID') {
+                document.getElementById('cfg-grid').value = event.data.grid;
+                saveConfig();
+            }
+        });
+
+        function loadConfig() {
+            const saved = localStorage.getItem('revista_config');
+            if (saved) {
+                const cfg = JSON.parse(saved);
+                document.getElementById('cfg-emision').value = cfg.emision || '';
+                document.getElementById('cfg-indicativo').value = cfg.ind || 'TI3WTI';
+                document.getElementById('cfg-nombre').value = cfg.nom || 'William';
+                document.getElementById('cfg-grid').value = cfg.grid || 'EJ89bt';
+                document.getElementById('cfg-aprskey').value = (cfg.aprsKey && cfg.aprsKey.trim() !== "") ? cfg.aprsKey : '149248.FiKMjEqrNNWgniq';
+                document.getElementById('cfg-aprs-enable').checked = cfg.aprsEnable !== false; 
+                document.getElementById('cfg-map-type').value = cfg.mapType || 'gray';
+                document.getElementById('cfg-nombre-revista').value = cfg.nombreRevista || 'Revista Matutina';
+            } else {
+                document.getElementById('cfg-aprskey').value = '149248.FiKMjEqrNNWgniq';
+                document.getElementById('cfg-map-type').value = 'gray';
+            }
+            document.getElementById('textoBorrador').value = localStorage.getItem('borrador_texto') || "";
+        }
+
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64Image = e.target.result;
+                    localStorage.setItem('revista_logo', base64Image);
+                    if (publicWin && !publicWin.closed) {
+                        sendToPublic('UPDATE_LOGO', { logoBase64: base64Image });
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function updateResultsTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            reportes.forEach((rep, index) => {
+                rep.id = index + 1;
+                
+                let iconStr = "";
+                if (rep.indicativo.endsWith("-RF")) {
+                    iconStr = ' <i class="fa-solid fa-walkie-talkie" style="color: #777;" title="Radiofrecuencia"></i>';
+                } else if (rep.indicativo.endsWith("-EL")) {
+                    iconStr = ' <i class="fa-solid fa-mobile-screen-button" style="color: #777;" title="EchoLink"></i>';
+                } else if (rep.indicativo.endsWith("-WA")) {
+                    iconStr = ' <i class="fa-brands fa-whatsapp" style="color: #25D366;" title="WhatsApp"></i>';
+                }
+
+                const tTemp = rep.temperatura === "N/I" ? "--" : rep.temperatura;
+                const tViento = rep.viento === "N/I" ? "--" : rep.viento;
+                const tPresion = rep.presion === "N/I" ? "--" : rep.presion;
+                const tGrilla = rep.grillaReporte === "N/I" ? "--" : rep.grillaReporte;
+                const tVelocViento = rep.velocViento === "N/I" ? "--" : rep.velocViento;
+                tbody.insertAdjacentHTML('beforeend', `<tr><td>${rep.id}</td><td style="white-space:nowrap;">${rep.indicativo}${iconStr}</td><td>${rep.nombre}</td><td>${tTemp}</td><td>${tViento}</td><td>${tPresion}</td><td>${tGrilla}</td><td>${tVelocViento}</td><td>${rep.comentarios}</td><td>${rep.fechaHora}</td><td style="white-space:nowrap;"><button class="btn-action btn-edit" title="Editar" onclick="editReport(${index})">✏️</button><button class="btn-action btn-delete" title="Eliminar" onclick="deleteReport(${index})">🗑️</button></td></tr>`);
+            });
+            sendToPublic('SYNC_REPORTES', { reportes: reportes });
+        }
+
+        function editReport(index) {
+            const r = reportes[index];
+            const nT = prompt("Corregir Temp (°C):", r.temperatura); if (nT === null) return;
+            const nH = prompt("Corregir Hum (%):", r.viento); if (nH === null) return;
+            const nP = prompt("Corregir Pres (hPa):", r.presion); if (nP === null) return;
+            const nG = prompt("Corregir Grilla:", r.grillaReporte); if (nG === null) return;
+            const nV = prompt("Corregir Vel. Viento:", r.velocViento); if (nV === null) return;
+            const nC = prompt("Corregir Comentarios:", r.comentarios); if (nC === null) return;
+            r.temperatura = nT || "N/I"; r.viento = nH || "N/I"; r.presion = nP || "N/I"; r.grillaReporte = nG.toUpperCase() || "N/I"; r.velocViento = nV || "N/I"; r.comentarios = nC.toUpperCase() || "SIN REQ.";
+            updateResultsTable();
+        }
+
+        function deleteReport(index) { if (confirm(`¿Eliminar reporte de ${reportes[index].indicativo}?`)) { reportes.splice(index, 1); updateResultsTable(); } }
+
+        function addReport() {
+            if (!selectedRadioaficionado) return;
+            const method = document.querySelector('input[name="contact"]:checked').value;
+            const nuevoReporte = { id: 0, indicativo: `${selectedRadioaficionado.indicativo}-${method === "RF" ? "RF" : (method === "EchoLink" ? "EL" : "WA")}`, nombre: selectedRadioaficionado.nombre, temperatura: document.getElementById('temperatura').value || "N/I", viento: document.getElementById('viento').value || "N/I", presion: document.getElementById('presion').value || "N/I", grillaReporte: document.getElementById('rep-grilla').value.toUpperCase() || "N/I", velocViento: document.getElementById('rep-veloc-viento').value || "N/I", comentarios: document.getElementById('comentarios').value.toUpperCase() || "SIN REQ.", fechaHora: document.getElementById('current-time').value };
+            reportes.push(nuevoReporte); updateResultsTable(); clearSearch(); document.getElementById('exportPdfButton').disabled = false;
+        }
+
+        function addNewEntry() {
+            const ind = document.getElementById('newIndicativo').value.trim().toUpperCase();
+            const nom = document.getElementById('newNombre').value.trim().toUpperCase();
+            if (ind === "" || nom === "") return;
+            radioaficionados.push({ indicativo: ind, nombre: nom });
+            document.getElementById('exportCsvButton').disabled = false;
+            sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) });
+            appendToGitHubCSV(ind, nom);
+            document.getElementById('newIndicativo').value = '';
+            document.getElementById('newNombre').value = '';
+            document.getElementById('searchInput').value = ''; 
+            document.getElementById('addNewEntryForm').style.display = "none";
+            selectRadioaficionado(ind, nom);
+        }
+
+        function toggleBorrador() { document.getElementById('borradorFlotante').style.display = document.getElementById('toggleBorrador').checked ? 'block' : 'none'; }
+        document.getElementById('textoBorrador').addEventListener('input', (e) => localStorage.setItem('borrador_texto', e.target.value));
+
+        dragElement(document.getElementById("borradorFlotante"));
+        function dragElement(elmnt) {
+            var p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+            document.getElementById("borradorHeader").onmousedown = (e) => {
+                e.preventDefault(); p3 = e.clientX; p4 = e.clientY;
+                document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
+                document.onmousemove = (e) => { e.preventDefault(); p1 = p3 - e.clientX; p2 = p4 - e.clientY; p3 = e.clientX; p4 = e.clientY; elmnt.style.top = (elmnt.offsetTop - p2) + "px"; elmnt.style.left = (elmnt.offsetLeft - p1) + "px"; };
+            }
+        }
+
+        function saveConfig() {
+            const cfg = { 
+                emision: document.getElementById('cfg-emision').value, ind: document.getElementById('cfg-indicativo').value, 
+                nom: document.getElementById('cfg-nombre').value, grid: document.getElementById('cfg-grid').value, 
+                aprsKey: document.getElementById('cfg-aprskey').value, aprsEnable: document.getElementById('cfg-aprs-enable').checked, 
+                mapType: document.getElementById('cfg-map-type').value, nombreRevista: document.getElementById('cfg-nombre-revista').value
+            };
+            localStorage.setItem('revista_config', JSON.stringify(cfg));
+            if (publicWin && !publicWin.closed) { sendToPublic('CONFIG', cfg); }
+        }
+
+        function abrirPantallaPublica() { if (publicWin && !publicWin.closed) publicWin.focus(); else { isPublicWinReady = false; publicWin = window.open('publico.html', 'PantallaPublica', 'width=1024,height=768'); } }
+        setInterval(() => { const s = document.getElementById('conn-status'); if (publicWin && !publicWin.closed) { s.innerText = "Conectado ✅"; s.style.color = "green"; if (!isPublicWinReady) { isPublicWinReady = true; setTimeout(() => { saveConfig(); const savedLogo = localStorage.getItem('revista_logo'); if(savedLogo) sendToPublic('UPDATE_LOGO', { logoBase64: savedLogo }); updateResultsTable(); if (radioaficionados.length > 0) sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) }); }, 1500); } } else { s.innerText = "Desconectado"; s.style.color = "red"; isPublicWinReady = false; } }, 1000);
+        function sendToPublic(type, payload = {}) { if (publicWin && !publicWin.closed) publicWin.postMessage({ type: type, ...payload }, '*'); }
+        document.getElementById('csvFileInput').addEventListener('change', function (e) { const reader = new FileReader(); reader.onload = function (e) { radioaficionados = e.target.result.trim().split('\n').map(line => { const [i, n] = line.split(',').map(item => item.trim()); return { indicativo: i, nombre: n }; }).filter(r => r.indicativo); document.getElementById('searchInput').disabled = false; sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) }); }; reader.readAsText(e.target.files[0]); });
+        
+        function searchIndicativos() { 
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                document.getElementById('addNewEntryForm').style.display = "none";
+                const term = document.getElementById('searchInput').value.toLowerCase(); 
+                const tbody = document.getElementById('searchTableBody'); 
+                if (term === "") { tbody.innerHTML = ''; return; }
+                const res = radioaficionados.filter(r => r.indicativo.toLowerCase().includes(term) || r.nombre.toLowerCase().includes(term)); 
+                if (res.length > 0) {
+                    tbody.innerHTML = res.slice(0, 50).map(r => `<tr><td>${r.indicativo}</td><td>${r.nombre}</td><td><button onclick="selectRadioaficionado('${r.indicativo}', '${r.nombre}')">Seleccionar</button></td></tr>`).join('');
+                } else {
+                    tbody.innerHTML = '';
+                    document.getElementById('addNewEntryForm').style.display = "block"; 
+                    document.getElementById('newIndicativo').value = term.toUpperCase();
+                }
+            }, 200);
+        }
+        
+        function selectRadioaficionado(i, n) { 
+            selectedRadioaficionado = { indicativo: i, nombre: n }; 
+            document.getElementById('selectionDisplay').innerHTML = `SELECCIONADO: ${i} - ${n}`; 
+            document.getElementById('selectionDisplay').style.display = "block"; 
+            document.getElementById('searchTableBody').innerHTML = ''; 
+            document.getElementById('searchInput').value = ''; 
+            document.getElementById('reportForm').style.display = "block"; 
+            setTimeout(() => document.getElementById('rep-grilla').focus(), 100); 
+            sendToPublic('SELECCION', { indicativo: i, nombre: n }); 
+        }
+        
+        function checkGridAndMoveMap() {
+            if (!selectedRadioaficionado) return;
+            const gridVal = document.getElementById('rep-grilla').value.trim();
+            sendToPublic('SELECCION', { indicativo: selectedRadioaficionado.indicativo, nombre: selectedRadioaficionado.nombre, grid: gridVal });
+        }
+
+        function clearSearch() { 
+            document.getElementById('searchInput').value = ''; 
+            document.getElementById('selectionDisplay').style.display = "none"; 
+            document.getElementById('reportForm').style.display = "none"; 
+            document.getElementById('searchTableBody').innerHTML = ''; 
+            document.getElementById('addNewEntryForm').style.display = "none";
+            ['temperatura', 'viento', 'presion', 'rep-grilla', 'rep-veloc-viento', 'comentarios'].forEach(id => document.getElementById(id).value = ''); 
+            document.getElementById('contactapor1').checked = true;
+            sendToPublic('LIMPIAR'); 
+        }
+        
+        function nextField(e, n) { if (e.key === "Enter") { e.preventDefault(); document.getElementById(n).focus(); } }
+        function checkFinalEnter(e) { if (e.key === "Enter") { e.preventDefault(); addReport(); } }
+
+        function exportRadioaficionadosCSV() { 
+            const d = new Date();
+            let content = "Indicativo,Nombre\n" + radioaficionados.map(r => `${r.indicativo},${r.nombre}`).join('\n'); 
+            const blob = new Blob([content], { type: 'text/csv' }); 
+            const link = document.createElement('a'); 
+            link.download = `Radioaficionados_TI_actualizado_${d.toLocaleDateString()}.csv`; 
+            link.href = window.URL.createObjectURL(blob); 
+            link.click(); 
+        }
+
+        function exportPDF() { 
+            const { jsPDF } = window.jspdf; 
+            const doc = new jsPDF(); 
+            const nombreRevista = document.getElementById('cfg-nombre-revista').value;
+            const emision = document.getElementById('cfg-emision').value || "";
+            const operador = document.getElementById('cfg-indicativo').value;
+            const nombreOp = document.getElementById('cfg-nombre').value;
+            const grillaOp = document.getElementById('cfg-grid').value;
+            const fechaActual = new Date().toLocaleDateString();
+            const headerText = `"${nombreRevista}" - # ${emision} - Operador: ${operador}, ${nombreOp}, ${grillaOp} . ${fechaActual}`;
+            doc.setFontSize(10);
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const margin = 14;
+            const maxWidth = pageWidth - margin * 2;
+            const splitHeader = doc.splitTextToSize(headerText, maxWidth);
+            doc.text(splitHeader, margin, 12);
+            const headerHeight = splitHeader.length * 5;
+            doc.setFontSize(9);
+            doc.text(`Número de reportes: ${reportes.length}`, 14, 12 + headerHeight + 2);
+            doc.autoTable({ 
+                head: [["ID", "Indicativo", "Nombre", "Temp", "Hum", "Pres", "Grilla", "Viento", "Comentarios", "Hora"]], 
+                body: reportes.map(r => [r.id, r.indicativo, r.nombre, (r.temperatura === "N/I" ? "--" : r.temperatura), (r.viento === "N/I" ? "--" : r.viento), (r.presion === "N/I" ? "--" : r.presion), (r.grillaReporte === "N/I" ? "--" : r.grillaReporte), (r.velocViento === "N/I" ? "--" : r.velocViento), r.comentarios, r.fechaHora]), 
+                startY: 12 + headerHeight + 7 
+            }); 
+            doc.save(`Bitacora_${nombreRevista}_${fechaActual}.pdf`); 
+        }
+
+        function updateTime() { const now = new Date(); document.getElementById('current-time').value = now.toLocaleTimeString(); document.getElementById('current-time').style.backgroundColor = (now.getSeconds() % 2 === 0) ? "#ffffcc" : "#ffffff"; requestAnimationFrame(updateTime); }
+
+        // ── GITHUB CONFIG ──────────────────────────────────────────────
+        const GITHUB_TOKEN  = "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";
+        const GITHUB_USER   = "ti3wti";
+        const GITHUB_REPO   = "revista-matutina";
+        const GITHUB_FILE   = "data/radioaficionados.csv";
+        const GITHUB_API    = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+
+        let githubFileSha = null; // SHA necesario para actualizar el archivo
+
+        async function loadCSVFromGitHub() {
+            const dbStatus = document.getElementById('dbStatus');
+            try {
+                const res = await fetch(GITHUB_API, {
+                    headers: { 'Authorization': `Bearer ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github+json' }
+                });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const json = await res.json();
+                githubFileSha = json.sha;
+                const csvText = atob(json.content.replace(/\n/g, ''));
+                radioaficionados = csvText.trim().split('\n').map(line => {
+                    const [i, ...rest] = line.split(',').map(s => s.trim());
+                    return { indicativo: i, nombre: rest.join(',').trim() };
+                }).filter(r => r.indicativo && r.indicativo !== 'Indicativo');
+                document.getElementById('searchInput').disabled = false;
+                sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) });
+                dbStatus.innerText = `✅ ${radioaficionados.length} registros cargados`;
+                dbStatus.style.color = 'green';
+            } catch(e) {
+                dbStatus.innerText = `⚠️ Error cargando desde GitHub: ${e.message}`;
+                dbStatus.style.color = 'red';
+            }
+        }
+
+        async function appendToGitHubCSV(indicativo, nombre) {
+            try {
+                // Recargar SHA actualizado antes de escribir
+                const resGet = await fetch(GITHUB_API, {
+                    headers: { 'Authorization': `Bearer ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github+json' }
+                });
+                const jsonGet = await resGet.json();
+                githubFileSha = jsonGet.sha;
+                const currentContent = atob(jsonGet.content.replace(/\n/g, ''));
+                const newContent = currentContent.trimEnd() + `\n${indicativo},${nombre}`;
+                const encoded = btoa(unescape(encodeURIComponent(newContent)));
+                await fetch(GITHUB_API, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: `Agrega ${indicativo}`, content: encoded, sha: githubFileSha })
+                });
+            } catch(e) {
+                console.warn('No se pudo escribir en GitHub:', e.message);
+            }
+        }
+
+        window.onload = function() { loadConfig(); updateTime(); loadCSVFromGitHub(); };
+    </script>
+</body>
+</html>
