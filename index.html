@@ -149,7 +149,7 @@
             </div>
             <button id="addReportButton" onclick="addReport()" style="width: 100%; margin-top: 10px; background-color: #0d6efd; font-size: 1.1rem; font-weight: bold;">AÑADIR REPORTE</button>
         </div>
-        <div class="button-group"><button id="statsButton" onclick="mostrarEstadisticas()" disabled>📊 Estadísticas</button><button id="exportPdfButton" onclick="exportPDF()" disabled>Exportar Bitácora a PDF</button></div>
+        <div class="button-group"><button id="statsButton" onclick="mostrarEstadisticas()" disabled>📊 Estadísticas</button><button id="exportPdfButton" onclick="exportPDF()" disabled>Exportar Bitácora a PDF</button><button onclick="window.open('historial.html','_blank')" style="background:#6c757d;">📋 Historial</button></div>
         
         <h2>Reporte acumulativo</h2>
         <table id="resultsTable">
@@ -638,8 +638,10 @@
                         historial = JSON.parse(new TextDecoder('utf-8').decode(bytes));
                     }
                 } catch(e) {}
-                // Agregar nueva entrada al inicio
-                historial.unshift(entrada);
+                // Si ya existe entrada con mismo # emisión, reemplazarla
+                const idx = historial.findIndex(h => h.emision === emision && h.fecha === fecha);
+                if (idx >= 0) historial[idx] = entrada;
+                else historial.unshift(entrada);
                 const content = JSON.stringify(historial, null, 2);
                 const encoded = btoa(unescape(encodeURIComponent(content)));
                 const body = { message: `Historial emisión #${emision}`, content: encoded };
