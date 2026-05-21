@@ -610,6 +610,16 @@
         async function guardarHistorial(revista, emision, operador, nombreOp, fecha) {
             try {
                 const s = calcStats();
+                // No guardar si la emisión duró menos de 10 minutos (es una prueba)
+                if (s && s.duracion) {
+                    const dur = s.duracion;
+                    const soloSegundos = /^\d+s$/.test(dur);
+                    const menosDeUnMin = /^(\d+)min/.test(dur) && parseInt(dur.match(/^(\d+)min/)[1]) < 10;
+                    const esMinutos = /^(\d+)min/.test(dur) && !dur.includes('h');
+                    if (soloSegundos || (esMinutos && menosDeUnMin)) return;
+                } else if (!s || !s.duracion) {
+                    return; // Sin duración calculable, no guardar
+                }
                 const entrada = {
                     fecha,
                     emision,
