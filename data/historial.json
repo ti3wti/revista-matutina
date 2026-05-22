@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "22/5/2026",
+    "emision": "7833",
+    "revista": "Revista Matutina",
+    "operador": "TI2OX",
+    "nombreOp": "Carlos Castillo",
+    "totalEstaciones": 40,
+    "duracion": "2h 14min",
+    "tempProm": "22.2",
+    "masLejano": {
+      "indicativo": "TI3JKS",
+      "nombre": "Juan Carlos",
+      "dist": 228,
+      "grilla": "EJ89XV"
+    },
+    "zonaActiva": [
+      "EJ79",
+      13
+    ],
+    "timestamp": "2026-05-22T14:48:46.097Z"
+  },
+  {
     "fecha": "21/5/2026",
     "emision": "009636",
     "revista": "RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ",
