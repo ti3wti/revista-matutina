@@ -245,8 +245,11 @@
         function updateResultsTable() {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
-            reportes.forEach((rep, index) => {
-                rep.id = index + 1;
+            // Asignar IDs primero
+            reportes.forEach((rep, index) => { rep.id = index + 1; });
+            // Mostrar en orden inverso (último primero)
+            [...reportes].reverse().forEach((rep, revIndex) => {
+                const index = reportes.length - 1 - revIndex;
                 let iconStr = "";
                 if (rep.indicativo.endsWith("-RF")) {
                     iconStr = ' <i class="fa-solid fa-walkie-talkie" style="color: #777;" title="Radiofrecuencia"></i>';
