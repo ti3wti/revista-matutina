@@ -152,16 +152,17 @@
         </div>
         <div class="button-group"><button id="statsButton" onclick="mostrarEstadisticas()" disabled>📊 Estadísticas</button><button id="exportPdfButton" onclick="exportPDF()" disabled>Exportar Bitácora a PDF</button><button onclick="window.open('historial.html','_blank')" style="background:#6c757d;">📋 Historial</button></div>
         
-        <h2>Reporte acumulativo</h2>
-        <table id="resultsTable">
-            <thead><tr><th>#</th><th>Hora</th><th>Indicativo</th><th>Nombre</th><th>Grilla</th><th>Ubicación</th><th>Temp</th><th>Hum</th><th>Pres</th><th>Viento</th><th>Comentarios</th><th>Acciones</th></tr></thead>
-            <tbody id="tableBody"></tbody>
-        </table>
         <div id="listaEsperaPanel" style="display:none; background:#e8f4fd; border:1px solid #0d6efd; border-radius:6px; padding:10px; margin-bottom:10px;">
             <div style="font-weight:bold; color:#0d6efd; margin-bottom:8px; font-size:0.9rem;">📋 Lista de Espera</div>
             <div id="listaEsperaItems" style="display:flex; flex-direction:column; gap:5px;"></div>
             <div id="listaEsperaVacia" style="color:#888; font-size:0.85rem; font-style:italic;">Sin estaciones en espera</div>
         </div>
+
+        <h2>Reporte acumulativo</h2>
+        <table id="resultsTable">
+            <thead><tr><th>#</th><th>Hora</th><th>Indicativo</th><th>Nombre</th><th>Grilla</th><th>Ubicación</th><th>Temp</th><th>Hum</th><th>Pres</th><th>Viento</th><th>Comentarios</th><th>Acciones</th></tr></thead>
+            <tbody id="tableBody"></tbody>
+        </table>
         <div id="borradorFlotante"><div id="borradorHeader">📔 NOTAS / BORRADOR</div><textarea id="textoBorrador" placeholder="Escriba aquí..."></textarea></div>
     </div>
 
@@ -340,7 +341,6 @@
         function toggleListaEspera() {
             const activo = document.getElementById('toggleListaEspera').checked;
             document.getElementById('listaEsperaPanel').style.display = activo ? 'block' : 'none';
-            if (!activo) { listaEspera = []; renderListaEspera(); }
         }
 
         function agregarListaEspera(ind, nom, gri, loc) {
