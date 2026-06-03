@@ -2,7 +2,7 @@
 
 Sistema de bitácora en vivo para la **Revista Matutina Tango India**, diseñado para registrar reportes meteorológicos de radioaficionados durante transmisiones en vivo por Facebook.
 
-🔗 **Acceso al sistema:** [ti3wti.github.io/revista-matutina](https://ti3wti.github.io/revista-matutina)
+🔗 **Acceso al sistema:** [ti3wti.github.io/revista-matutina](https://ti3wti.github.io/revista-matutina){:target="_blank"}
 
 ---
 
@@ -22,9 +22,10 @@ Sistema de bitácora en vivo para la **Revista Matutina Tango India**, diseñado
 - La base de datos está alojada en GitHub y es compartida entre todos los operadores de control
 - Al seleccionar un radioaficionado, carga automáticamente su grilla Maidenhead y localidad desde la base de datos
 - Si la grilla o localidad no están en la base de datos, las consulta automáticamente en QRZ.com
+- Si el colega no está en la base de datos, sus datos (nombre, grilla y localidad) se obtienen automáticamente desde QRZ.com al momento de agregarlo
 - Los datos meteorológicos (temperatura, humedad, presión y velocidad del viento) se precargan automáticamente desde open-meteo según la grilla del reportante
-- Número de emisión calculado automáticamente según la fecha del día, basado en el calendario histórico de la revista
-- Lista de espera para gestionar pile-ups — permite acumular varias estaciones y atenderlas en orden
+- Número de emisión calculado automáticamente según la fecha del día, basado en el calendario histórico de la revista — editable manualmente si es necesario
+- Lista de espera para gestionar pile-ups — permite acumular varias estaciones y atenderlas en orden, sin perder el contexto al cambiar de colega
 - Ventana pública optimizada para transmisiones en vivo por Facebook, con mapa interactivo en tiempo real
 - La ventana pública muestra la fotografía del reportante obtenida automáticamente desde QRZ.com
 - La ventana pública muestra la grilla, localidad y distancia desde la estación control al reportante
