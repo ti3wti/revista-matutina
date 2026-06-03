@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "3/6/2026",
+    "emision": "005582",
+    "revista": "03_005582_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI2GC",
+    "nombreOp": "GUILLERMO",
+    "totalEstaciones": 20,
+    "duracion": "1h 26min",
+    "tempProm": "19.6",
+    "masLejano": {
+      "indicativo": "OA4DQV",
+      "nombre": "EDGAR QUISPE CCOSCCO",
+      "dist": 2586,
+      "grilla": "FH18LB"
+    },
+    "zonaActiva": [
+      "EK70",
+      6
+    ],
+    "timestamp": "2026-06-03T23:25:12.317Z"
+  },
+  {
     "fecha": "2/6/2026",
     "emision": "005581",
     "revista": "02_005581_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
