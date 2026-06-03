@@ -2,7 +2,7 @@
 
 Sistema de bitácora en vivo para la **Revista Matutina Tango India**, diseñado para registrar reportes meteorológicos de radioaficionados durante transmisiones en vivo por Facebook.
 
-🔗 **Acceso al sistema:** [ti3wti.github.io/revista-matutina](https://ti3wti.github.io/revista-matutina){:target="_blank"}
+🔗 **Acceso al sistema:** [ti3wti.github.io/revista-matutina](https://ti3wti.github.io/revista-matutina)
 
 ---
 
