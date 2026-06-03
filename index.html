@@ -453,8 +453,9 @@
                 const state = get('state');
                 const country = get('country');
                 let qrzLoc = addr2;
-                if (state && state !== addr2) qrzLoc += (qrzLoc ? ', ' : '') + state;
+                if (state && state !== addr2) qrzLoc += (qrzLoc ? ' - ' : '') + state;
                 if (country && country.toUpperCase() !== 'COSTA RICA') qrzLoc += (qrzLoc ? ' - ' : '') + country;
+                if (qrzLoc) qrzLoc = qrzLoc.replace(/,/g, ' -');
                 const fname = get('fname');
                 const lname = get('name');
                 const fullName = [fname, lname].filter(Boolean).join(' ').toUpperCase();
@@ -523,8 +524,9 @@
                 const state = get('state');
                 const country = get('country');
                 let qrzLoc = addr2;
-                if (state && state !== addr2) qrzLoc += (qrzLoc ? ', ' : '') + state;
+                if (state && state !== addr2) qrzLoc += (qrzLoc ? ' - ' : '') + state;
                 if (country && country.toUpperCase() !== 'COSTA RICA') qrzLoc += (qrzLoc ? ' - ' : '') + country;
+                if (qrzLoc) qrzLoc = qrzLoc.replace(/,/g, ' -');
                 if (!grillaActual && qrzGrid) {
                     document.getElementById('rep-grilla').value = qrzGrid;
                     checkGridAndMoveMap();
