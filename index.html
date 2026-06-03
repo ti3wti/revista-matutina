@@ -198,8 +198,7 @@
         });
 
         function calcEmisionMatutina() {
-            // Base: 21/mayo/2026 = emisión 7832
-            const BASE_FECHA = new Date(2026, 4, 21); // mes 4 = mayo (0-indexed)
+            const BASE_FECHA = new Date(2026, 4, 21);
             const BASE_EMISION = 7832;
             const hoy = new Date();
             const hoyMidnight = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
@@ -222,7 +221,6 @@
                 document.getElementById('cfg-aprskey').value = '149248.FiKMjEqrNNWgniq';
                 document.getElementById('cfg-map-type').value = 'gray';
             }
-            // Calcular número de emisión automáticamente según la fecha
             document.getElementById('cfg-emision').value = calcEmisionMatutina();
             document.getElementById('textoBorrador').value = localStorage.getItem('borrador_texto') || "";
         }
@@ -245,9 +243,7 @@
         function updateResultsTable() {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
-            // Asignar IDs primero
             reportes.forEach((rep, index) => { rep.id = index + 1; });
-            // Mostrar en orden inverso (último primero)
             [...reportes].reverse().forEach((rep, revIndex) => {
                 const index = reportes.length - 1 - revIndex;
                 let iconStr = "";
@@ -300,7 +296,6 @@
                 comentarios: document.getElementById('comentarios').value.toUpperCase() || "SIN REQ.", 
                 fechaHora: document.getElementById('current-time').value 
             };
-            // Actualizar grilla y localidad en la base de datos si se ingresaron
             const grilla = nuevoReporte.grillaReporte;
             const localidad = nuevoReporte.localidad;
             if (grilla && grilla !== "N/I") {
@@ -313,7 +308,6 @@
                 }
             }
             reportes.push(nuevoReporte); updateResultsTable(); clearSearch(); document.getElementById('exportPdfButton').disabled = false; document.getElementById('statsButton').disabled = false;
-            // Eliminar de lista de espera si estaba ahí
             const idxLista = listaEspera.findIndex(r => r.indicativo === selectedRadioaficionado.indicativo);
             if (idxLista >= 0) { listaEspera.splice(idxLista, 1); renderListaEspera(); }
         }
@@ -347,7 +341,7 @@
         }
 
         function agregarListaEspera(ind, nom, gri, loc) {
-            if (listaEspera.find(r => r.indicativo === ind)) return; // evitar duplicados
+            if (listaEspera.find(r => r.indicativo === ind)) return;
             listaEspera.push({ indicativo: ind, nombre: nom, grilla: gri, localidad: loc });
             renderListaEspera();
             clearSearch();
@@ -436,10 +430,41 @@
                     }).join('');
                 } else {
                     tbody.innerHTML = '';
+                    const ind = term.toUpperCase();
                     document.getElementById('addNewEntryForm').style.display = "block"; 
-                    document.getElementById('newIndicativo').value = term.toUpperCase();
+                    document.getElementById('newIndicativo').value = ind;
+                    // Consultar QRZ automáticamente para el nuevo indicativo
+                    fetchQrzForNewEntry(ind);
                 }
             }, 200);
+        }
+
+        // Nueva función: consulta QRZ cuando el colega no está en la base de datos
+        async function fetchQrzForNewEntry(indicativo) {
+            try {
+                const baseCall = indicativo.replace(/-RF$|-EL$|-WA$/, '').split('/').pop();
+                const res = await fetch(`https://qrz-proxy.wmarincr.workers.dev/?callsign=${baseCall}`);
+                const xmlText = await res.text();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(xmlText, 'text/xml');
+                const get = tag => { const el = xml.getElementsByTagName(tag)[0]; return el ? el.textContent.trim() : ''; };
+                const qrzGrid = get('grid').substring(0, 6);
+                const addr2 = get('addr2');
+                const state = get('state');
+                const country = get('country');
+                let qrzLoc = addr2;
+                if (state && state !== addr2) qrzLoc += (qrzLoc ? ', ' : '') + state;
+                if (country && country.toUpperCase() !== 'COSTA RICA') qrzLoc += (qrzLoc ? ' - ' : '') + country;
+                const fname = get('fname');
+                const lname = get('name');
+                const fullName = [fname, lname].filter(Boolean).join(' ').toUpperCase();
+                // Solo rellenar si el formulario amarillo sigue visible (el usuario no cambió de búsqueda)
+                if (document.getElementById('addNewEntryForm').style.display !== 'none') {
+                    if (fullName) document.getElementById('newNombre').value = fullName;
+                    if (qrzGrid) document.getElementById('newGrilla').value = qrzGrid;
+                    if (qrzLoc) document.getElementById('newLocalidad').value = qrzLoc;
+                }
+            } catch(e) {}
         }
         
         function selectRadioaficionado(i, n, g, l) { 
@@ -453,13 +478,10 @@
             document.getElementById('reportForm').style.display = "block";
             document.getElementById('rep-grilla').value = g;
             document.getElementById('rep-localidad').value = l;
-            // Limpiar campos meteorológicos
             ['temperatura','viento','presion','rep-veloc-viento'].forEach(id => document.getElementById(id).value = '');
             setTimeout(() => document.getElementById('rep-grilla').focus(), 100); 
             sendToPublic('SELECCION', { indicativo: i, nombre: n, grid: g, localidad: l });
-            // Si no tiene grilla o localidad en el CSV, consultar QRZ
             if (!g || !l) fetchQrzGridAndLocalidad(i, g, l);
-            // Precargar clima si tiene grilla
             if (g) fetchWeatherForGrid(g);
         }
 
@@ -470,7 +492,6 @@
                 const res = await fetch(`https://qrz-proxy.wmarincr.workers.dev/?weather=1&lat=${coords.lat}&lon=${coords.lon}`);
                 const data = await res.json();
                 const cur = data.current;
-                // Solo precargar si el campo está vacío
                 const setIfEmpty = (id, val) => { const el = document.getElementById(id); if (!el.value) el.value = val; };
                 setIfEmpty('temperatura', cur.temperature_2m);
                 setIfEmpty('viento', cur.relative_humidity_2m);
@@ -507,7 +528,6 @@
                 if (!grillaActual && qrzGrid) {
                     document.getElementById('rep-grilla').value = qrzGrid;
                     checkGridAndMoveMap();
-                    // Precargar clima con la grilla de QRZ
                     fetchWeatherForGrid(qrzGrid);
                 }
                 if (!localidadActual && qrzLoc) {
@@ -542,7 +562,6 @@
             if (reportes.length === 0) return null;
             const primerHora = reportes[0].fechaHora;
             const ultimaHora = reportes[reportes.length - 1].fechaHora;
-            // Duración = desde primer reporte hasta ahora
             let duracion = '';
             try {
                 const parseHora = (str) => {
@@ -635,7 +654,6 @@
             const headerHeight = splitHeader.length * 5;
             doc.setFontSize(11);
             doc.text(`Total de estaciones reportadas: ${reportes.length}`, 14, 12 + headerHeight + 2);
-            // Estadísticas al inicio
             const s = calcStats();
             let statsY = 12 + headerHeight + 9;
             if (s) {
@@ -671,14 +689,12 @@
                 }
             }); 
             doc.save(`Bitacora_${nombreRevista}_${fechaActual}.pdf`);
-            // Guardar en historial de GitHub
             guardarHistorial(nombreRevista, emision, operador, nombreOp, fechaActual);
         }
 
         async function guardarHistorial(revista, emision, operador, nombreOp, fecha) {
             try {
                 const s = calcStats();
-                // No guardar si la emisión duró menos de 10 minutos (es una prueba)
                 if (s && s.duracion) {
                     const dur = s.duracion;
                     const soloSegundos = /^\d+s$/.test(dur);
@@ -686,7 +702,7 @@
                     const esMinutos = /^(\d+)min/.test(dur) && !dur.includes('h');
                     if (soloSegundos || (esMinutos && menosDeUnMin)) return;
                 } else if (!s || !s.duracion) {
-                    return; // Sin duración calculable, no guardar
+                    return;
                 }
                 const entrada = {
                     fecha,
@@ -701,7 +717,6 @@
                     zonaActiva: s ? s.zonaActiva : null,
                     timestamp: new Date().toISOString()
                 };
-                // Leer historial actual
                 const HIST_API = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/data/historial.json`;
                 let historial = [];
                 let sha = null;
@@ -716,7 +731,6 @@
                         historial = JSON.parse(new TextDecoder('utf-8').decode(bytes));
                     }
                 } catch(e) {}
-                // Si ya existe entrada con mismo # emisión, reemplazarla
                 const idx = historial.findIndex(h => h.emision === emision && h.fecha === fecha);
                 if (idx >= 0) historial[idx] = entrada;
                 else historial.unshift(entrada);
@@ -826,7 +840,6 @@
             loadConfig(); 
             updateTime(); 
             loadCSVFromGitHub();
-            // Bloquear comas y comillas en campos que van al CSV
             ['rep-localidad','newNombre','newLocalidad','comentarios'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.addEventListener('keydown', bloquearCaracteresCsv);
