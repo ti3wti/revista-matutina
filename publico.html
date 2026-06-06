@@ -187,7 +187,7 @@
 
             <div class="box" id="current-caller">
                 <h3 style="color: #58a6ff;">Recibiendo Reporte...</h3>
-                <div class="callsign"><span id="lbl-callsign">--</span></div>
+                <div class="callsign"><span id="lbl-callsign">--</span> <span id="lbl-method-icon" style="font-size:1.2rem; vertical-align:middle;"></span></div>
                 <div class="caller-name" id="lbl-name">Esperando contacto</div>
                 <div id="lbl-localidad" style="font-size: 1rem; color: #f0c040; margin-top: 4px; text-align: center; min-height: 1.1em;"></div>
                 <div id="lbl-grilla-dist" style="font-size: 1rem; color: #8b949e; margin-top: 3px; text-align: center; min-height: 1em; font-family: monospace;"></div>
@@ -535,6 +535,9 @@
             } else if (indDisplay.endsWith("-WA")) {
                 indDisplay = indDisplay.slice(0, -3);
                 iconStr = '<i class="fa-brands fa-whatsapp" style="margin-left: 5px; color: #25D366;" title="WhatsApp"></i>';
+            } else if (indDisplay.endsWith("-INF")) {
+                indDisplay = indDisplay.slice(0, -4);
+                iconStr = '<i class="fa-solid fa-circle-exclamation" style="margin-left: 5px; color: #dc3545;" title="Información"></i>';
             }
 
             let dataParts = [];
@@ -672,7 +675,16 @@
                 document.getElementById('idle-panel').style.display = 'none';
                 document.getElementById('current-caller').style.display = 'block';
                 
-                document.getElementById('lbl-callsign').innerText = msg.indicativo;
+                document.getElementById('lbl-callsign').innerText = msg.indicativo.replace(/-RF$|-EL$|-WA$|-INF$/,'');
+                // Ícono de método junto al indicativo
+                const methodIcons = {
+                    '-RF':  '<i class="fa-solid fa-walkie-talkie" style="color:#8b949e;" title="Radiofrecuencia"></i>',
+                    '-EL':  '<i class="fa-solid fa-mobile-screen-button" style="color:#8b949e;" title="EchoLink"></i>',
+                    '-WA':  '<i class="fa-brands fa-whatsapp" style="color:#25D366;" title="WhatsApp"></i>',
+                    '-INF': '<i class="fa-solid fa-circle-exclamation" style="color:#dc3545;" title="Información"></i>'
+                };
+                const suffix = ['-RF','-EL','-WA','-INF'].find(s => msg.indicativo.endsWith(s)) || '';
+                document.getElementById('lbl-method-icon').innerHTML = methodIcons[suffix] || '';
                 document.getElementById('lbl-name').innerText = msg.nombre;
                 document.getElementById('lbl-localidad').innerText = (msg.localidad && msg.localidad !== '') ? msg.localidad : '';
                 // Grilla + distancia desde control
@@ -747,6 +759,7 @@
                 window.currentQrzCall = null; // Reiniciar estado
                 document.getElementById('lbl-localidad').innerText = '';
                 document.getElementById('lbl-grilla-dist').innerText = '';
+                document.getElementById('lbl-method-icon').innerHTML = '';
                 document.getElementById('current-caller').style.display = 'none';
                 document.getElementById('idle-panel').style.display = 'block';
                 
