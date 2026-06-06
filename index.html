@@ -63,7 +63,7 @@
         .ee-overlay a { color: #58a6ff; font-size: 2rem; text-decoration: none; border: 2px solid #58a6ff; padding: 10px 20px; border-radius: 8px; transition: 0.3s; }
         .ee-overlay a:hover { background: #58a6ff; color: white; }
 
-        #calendarioFlotante { display: none; position: absolute; top: 150px; left: 50px; width: 860px; height: 600px; background: white; border: 2px solid #198754; box-shadow: 3px 3px 15px rgba(0,0,0,0.3); z-index: 9998; border-radius: 5px; overflow: hidden; min-width: 400px; min-height: 300px; }
+        #calendarioFlotante { display: none; position: absolute; top: 150px; left: 50px; width: 860px; height: 600px; background: white; border: 2px solid #198754; box-shadow: 3px 3px 15px rgba(0,0,0,0.3); z-index: 9998; border-radius: 5px; overflow: hidden; min-width: 400px; min-height: 300px; resize: both; }
         #calendarioHeader { padding: 5px 10px; cursor: move; background-color: #198754; color: white; font-size: 0.75rem; font-weight: bold; display: flex; justify-content: space-between; align-items: center; user-select: none; height: 26px; }
         #calendarioBody { position: relative; width: 100%; height: calc(100% - 26px); overflow: hidden; }
         #calendarioIframe { position: absolute; top: 0; left: 0; border: none; transform-origin: top left; }
@@ -444,7 +444,8 @@
             iframe.style.height = '574px';
         }
 
-        new ResizeObserver(scaleCalendarioIframe).observe(document.getElementById('calendarioFlotante') || document.body);
+        const calFlotante = document.getElementById('calendarioFlotante');
+        if (calFlotante) new ResizeObserver(scaleCalendarioIframe).observe(calFlotante);
 
         function saveConfig() {
             const cfg = { 
