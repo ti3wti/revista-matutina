@@ -62,6 +62,10 @@
         .ee-overlay h1 { font-size: 4rem; color: #ffab70; margin-bottom: 20px; }
         .ee-overlay a { color: #58a6ff; font-size: 2rem; text-decoration: none; border: 2px solid #58a6ff; padding: 10px 20px; border-radius: 8px; transition: 0.3s; }
         .ee-overlay a:hover { background: #58a6ff; color: white; }
+
+        #calendarioFlotante { display: none; position: absolute; top: 150px; left: 100px; width: 820px; height: 620px; background: white; border: 2px solid #198754; box-shadow: 3px 3px 15px rgba(0,0,0,0.3); z-index: 9998; border-radius: 5px; resize: both; overflow: hidden; min-width: 400px; min-height: 300px; }
+        #calendarioHeader { padding: 5px 10px; cursor: move; background-color: #198754; color: white; font-size: 0.75rem; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        #calendarioIframe { width: 100%; height: calc(100% - 26px); border: none; }
     </style>
 </head>
 <body>
@@ -107,9 +111,18 @@
         </div>
 
         <div class="header-line">
-            <div class="header-left"><strong>Base de Datos ➔</strong> <span id="dbStatus" style="font-size:0.85rem; color:#555;">Cargando desde GitHub...</span> <input type="file" id="csvFileInput" accept=".csv" style="margin-left:10px; font-size:0.75rem;" title="Cargar CSV externo (opcional)"/></div>
-            <label style="margin-left: auto; margin-right: 20px; font-size: 0.85rem; color: #d32f2f; font-weight: bold; cursor: pointer;"><input type="checkbox" id="toggleBorrador" onchange="toggleBorrador()"> Habilitar borrador</label>
-            <label style="margin-right: 20px; font-size: 0.85rem; color: #0d6efd; font-weight: bold; cursor: pointer;"><input type="checkbox" id="toggleListaEspera" onchange="toggleListaEspera()"> Lista de espera</label>
+            <div class="header-left">
+                <strong>Base de Datos ➔</strong>
+                <span id="dbStatus" style="font-size:0.85rem; color:#555; display:flex; flex-direction:column; align-items:center; line-height:1.2;">
+                    <span id="dbCount" style="font-weight:bold; color:green;"></span>
+                    <span id="dbLabel" style="color:#555;">cargando...</span>
+                </span>
+                <input type="file" id="csvFileInput" accept=".csv" style="display:none;" title="Cargar CSV externo"/>
+                <button onclick="document.getElementById('csvFileInput').click()" style="background:#6c757d; font-size:0.75rem; padding:4px 8px; height:28px; white-space:nowrap;">Base de datos externa</button>
+            </div>
+            <label style="margin-left: auto; margin-right: 15px; font-size: 0.85rem; color: #d32f2f; font-weight: bold; cursor: pointer; display:flex; align-items:center; gap:4px;"><input type="checkbox" id="toggleBorrador" onchange="toggleBorrador()"> Notas</label>
+            <label style="margin-right: 15px; font-size: 0.85rem; color: #0d6efd; font-weight: bold; cursor: pointer; display:flex; align-items:center; gap:4px;"><input type="checkbox" id="toggleListaEspera" onchange="toggleListaEspera()"> Lista de espera</label>
+            <label style="margin-right: 15px; font-size: 0.85rem; color: #198754; font-weight: bold; cursor: pointer; display:flex; align-items:center; gap:4px;"><input type="checkbox" id="toggleCalendario" onchange="toggleCalendario()"> Calendario</label>
             <input type="text" id="current-time" readonly>
         </div>
         <div style="display: flex; align-items: center;"><input type="text" id="searchInput" placeholder="Escriba indicativo o nombre para filtrar..." oninput="searchIndicativos()" disabled /><button id="clearButton" onclick="clearSearch()">Borrar búsqueda</button></div>
@@ -164,6 +177,18 @@
             <tbody id="tableBody"></tbody>
         </table>
         <div id="borradorFlotante"><div id="borradorHeader">📔 NOTAS / BORRADOR</div><textarea id="textoBorrador" placeholder="Escriba aquí..."></textarea></div>
+
+        <div id="calendarioFlotante">
+            <div id="calendarioHeader">
+                📅 CALENDARIO DE EMISIONES
+                <span onclick="document.getElementById('toggleCalendario').checked=false; toggleCalendario();" style="cursor:pointer; font-size:1rem; padding: 0 4px;">✕</span>
+            </div>
+            <iframe id="calendarioIframe" 
+                src="https://ti3wti.github.io/CALENDARIO-MATUTINA/" 
+                scrolling="no"
+                style="margin-top:-88px; height:calc(100% - 26px + 88px); clip-path: inset(88px 260px 80px 0px);">
+            </iframe>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
@@ -198,7 +223,8 @@
         });
 
         function calcEmisionMatutina() {
-            const BASE_FECHA = new Date(2026, 4, 21);
+            // Base: 21/mayo/2026 = emisión 7832
+            const BASE_FECHA = new Date(2026, 4, 21); // mes 4 = mayo (0-indexed)
             const BASE_EMISION = 7832;
             const hoy = new Date();
             const hoyMidnight = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
@@ -221,6 +247,7 @@
                 document.getElementById('cfg-aprskey').value = '149248.FiKMjEqrNNWgniq';
                 document.getElementById('cfg-map-type').value = 'gray';
             }
+            // Calcular número de emisión automáticamente según la fecha
             document.getElementById('cfg-emision').value = calcEmisionMatutina();
             document.getElementById('textoBorrador').value = localStorage.getItem('borrador_texto') || "";
         }
@@ -243,7 +270,9 @@
         function updateResultsTable() {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
+            // Asignar IDs primero
             reportes.forEach((rep, index) => { rep.id = index + 1; });
+            // Mostrar en orden inverso (último primero)
             [...reportes].reverse().forEach((rep, revIndex) => {
                 const index = reportes.length - 1 - revIndex;
                 let iconStr = "";
@@ -296,6 +325,7 @@
                 comentarios: document.getElementById('comentarios').value.toUpperCase() || "SIN REQ.", 
                 fechaHora: document.getElementById('current-time').value 
             };
+            // Actualizar grilla y localidad en la base de datos si se ingresaron
             const grilla = nuevoReporte.grillaReporte;
             const localidad = nuevoReporte.localidad;
             if (grilla && grilla !== "N/I") {
@@ -308,6 +338,7 @@
                 }
             }
             reportes.push(nuevoReporte); updateResultsTable(); clearSearch(); document.getElementById('exportPdfButton').disabled = false; document.getElementById('statsButton').disabled = false;
+            // Eliminar de lista de espera si estaba ahí
             const idxLista = listaEspera.findIndex(r => r.indicativo === selectedRadioaficionado.indicativo);
             if (idxLista >= 0) { listaEspera.splice(idxLista, 1); renderListaEspera(); }
         }
@@ -332,6 +363,10 @@
         }
 
         function toggleBorrador() { document.getElementById('borradorFlotante').style.display = document.getElementById('toggleBorrador').checked ? 'block' : 'none'; }
+
+        function toggleCalendario() {
+            document.getElementById('calendarioFlotante').style.display = document.getElementById('toggleCalendario').checked ? 'block' : 'none';
+        }
         
         let listaEspera = [];
 
@@ -341,7 +376,7 @@
         }
 
         function agregarListaEspera(ind, nom, gri, loc) {
-            if (listaEspera.find(r => r.indicativo === ind)) return;
+            if (listaEspera.find(r => r.indicativo === ind)) return; // evitar duplicados
             listaEspera.push({ indicativo: ind, nombre: nom, grilla: gri, localidad: loc });
             renderListaEspera();
             clearSearch();
@@ -372,10 +407,11 @@
         }
         document.getElementById('textoBorrador').addEventListener('input', (e) => localStorage.setItem('borrador_texto', e.target.value));
 
-        dragElement(document.getElementById("borradorFlotante"));
-        function dragElement(elmnt) {
+        dragElement(document.getElementById("borradorFlotante"), document.getElementById("borradorHeader"));
+        function dragElement(elmnt, header) {
+            if (!elmnt || !header) return;
             var p1 = 0, p2 = 0, p3 = 0, p4 = 0;
-            document.getElementById("borradorHeader").onmousedown = (e) => {
+            header.onmousedown = (e) => {
                 e.preventDefault(); p3 = e.clientX; p4 = e.clientY;
                 document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
                 document.onmousemove = (e) => { e.preventDefault(); p1 = p3 - e.clientX; p2 = p4 - e.clientY; p3 = e.clientX; p4 = e.clientY; elmnt.style.top = (elmnt.offsetTop - p2) + "px"; elmnt.style.left = (elmnt.offsetLeft - p1) + "px"; };
@@ -430,42 +466,10 @@
                     }).join('');
                 } else {
                     tbody.innerHTML = '';
-                    const ind = term.toUpperCase();
                     document.getElementById('addNewEntryForm').style.display = "block"; 
-                    document.getElementById('newIndicativo').value = ind;
-                    // Consultar QRZ automáticamente para el nuevo indicativo
-                    fetchQrzForNewEntry(ind);
+                    document.getElementById('newIndicativo').value = term.toUpperCase();
                 }
             }, 200);
-        }
-
-        // Nueva función: consulta QRZ cuando el colega no está en la base de datos
-        async function fetchQrzForNewEntry(indicativo) {
-            try {
-                const baseCall = indicativo.replace(/-RF$|-EL$|-WA$/, '').split('/').pop();
-                const res = await fetch(`https://qrz-proxy.wmarincr.workers.dev/?callsign=${baseCall}`);
-                const xmlText = await res.text();
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(xmlText, 'text/xml');
-                const get = tag => { const el = xml.getElementsByTagName(tag)[0]; return el ? el.textContent.trim() : ''; };
-                const qrzGrid = get('grid').substring(0, 6);
-                const addr2 = get('addr2');
-                const state = get('state');
-                const country = get('country');
-                let qrzLoc = addr2;
-                if (state && state !== addr2) qrzLoc += (qrzLoc ? ' - ' : '') + state;
-                if (country && country.toUpperCase() !== 'COSTA RICA') qrzLoc += (qrzLoc ? ' - ' : '') + country;
-                if (qrzLoc) qrzLoc = qrzLoc.replace(/,/g, ' -');
-                const fname = get('fname');
-                const lname = get('name');
-                const fullName = [fname, lname].filter(Boolean).join(' ').toUpperCase();
-                // Solo rellenar si el formulario amarillo sigue visible (el usuario no cambió de búsqueda)
-                if (document.getElementById('addNewEntryForm').style.display !== 'none') {
-                    if (fullName) document.getElementById('newNombre').value = fullName;
-                    if (qrzGrid) document.getElementById('newGrilla').value = qrzGrid;
-                    if (qrzLoc) document.getElementById('newLocalidad').value = qrzLoc;
-                }
-            } catch(e) {}
         }
         
         function selectRadioaficionado(i, n, g, l) { 
@@ -479,10 +483,13 @@
             document.getElementById('reportForm').style.display = "block";
             document.getElementById('rep-grilla').value = g;
             document.getElementById('rep-localidad').value = l;
+            // Limpiar campos meteorológicos
             ['temperatura','viento','presion','rep-veloc-viento'].forEach(id => document.getElementById(id).value = '');
             setTimeout(() => document.getElementById('rep-grilla').focus(), 100); 
             sendToPublic('SELECCION', { indicativo: i, nombre: n, grid: g, localidad: l });
+            // Si no tiene grilla o localidad en el CSV, consultar QRZ
             if (!g || !l) fetchQrzGridAndLocalidad(i, g, l);
+            // Precargar clima si tiene grilla
             if (g) fetchWeatherForGrid(g);
         }
 
@@ -493,6 +500,7 @@
                 const res = await fetch(`https://qrz-proxy.wmarincr.workers.dev/?weather=1&lat=${coords.lat}&lon=${coords.lon}`);
                 const data = await res.json();
                 const cur = data.current;
+                // Solo precargar si el campo está vacío
                 const setIfEmpty = (id, val) => { const el = document.getElementById(id); if (!el.value) el.value = val; };
                 setIfEmpty('temperatura', cur.temperature_2m);
                 setIfEmpty('viento', cur.relative_humidity_2m);
@@ -524,12 +532,12 @@
                 const state = get('state');
                 const country = get('country');
                 let qrzLoc = addr2;
-                if (state && state !== addr2) qrzLoc += (qrzLoc ? ' - ' : '') + state;
+                if (state && state !== addr2) qrzLoc += (qrzLoc ? ', ' : '') + state;
                 if (country && country.toUpperCase() !== 'COSTA RICA') qrzLoc += (qrzLoc ? ' - ' : '') + country;
-                if (qrzLoc) qrzLoc = qrzLoc.replace(/,/g, ' -');
                 if (!grillaActual && qrzGrid) {
                     document.getElementById('rep-grilla').value = qrzGrid;
                     checkGridAndMoveMap();
+                    // Precargar clima con la grilla de QRZ
                     fetchWeatherForGrid(qrzGrid);
                 }
                 if (!localidadActual && qrzLoc) {
@@ -564,6 +572,7 @@
             if (reportes.length === 0) return null;
             const primerHora = reportes[0].fechaHora;
             const ultimaHora = reportes[reportes.length - 1].fechaHora;
+            // Duración = desde primer reporte hasta ahora
             let duracion = '';
             try {
                 const parseHora = (str) => {
@@ -656,6 +665,7 @@
             const headerHeight = splitHeader.length * 5;
             doc.setFontSize(11);
             doc.text(`Total de estaciones reportadas: ${reportes.length}`, 14, 12 + headerHeight + 2);
+            // Estadísticas al inicio
             const s = calcStats();
             let statsY = 12 + headerHeight + 9;
             if (s) {
@@ -691,12 +701,14 @@
                 }
             }); 
             doc.save(`Bitacora_${nombreRevista}_${fechaActual}.pdf`);
+            // Guardar en historial de GitHub
             guardarHistorial(nombreRevista, emision, operador, nombreOp, fechaActual);
         }
 
         async function guardarHistorial(revista, emision, operador, nombreOp, fecha) {
             try {
                 const s = calcStats();
+                // No guardar si la emisión duró menos de 10 minutos (es una prueba)
                 if (s && s.duracion) {
                     const dur = s.duracion;
                     const soloSegundos = /^\d+s$/.test(dur);
@@ -704,7 +716,7 @@
                     const esMinutos = /^(\d+)min/.test(dur) && !dur.includes('h');
                     if (soloSegundos || (esMinutos && menosDeUnMin)) return;
                 } else if (!s || !s.duracion) {
-                    return;
+                    return; // Sin duración calculable, no guardar
                 }
                 const entrada = {
                     fecha,
@@ -719,6 +731,7 @@
                     zonaActiva: s ? s.zonaActiva : null,
                     timestamp: new Date().toISOString()
                 };
+                // Leer historial actual
                 const HIST_API = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/data/historial.json`;
                 let historial = [];
                 let sha = null;
@@ -733,6 +746,7 @@
                         historial = JSON.parse(new TextDecoder('utf-8').decode(bytes));
                     }
                 } catch(e) {}
+                // Si ya existe entrada con mismo # emisión, reemplazarla
                 const idx = historial.findIndex(h => h.emision === emision && h.fecha === fecha);
                 if (idx >= 0) historial[idx] = entrada;
                 else historial.unshift(entrada);
@@ -780,11 +794,11 @@
                 }).filter(r => r.indicativo && r.indicativo !== 'Indicativo');
                 document.getElementById('searchInput').disabled = false;
                 sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) });
-                dbStatus.innerText = `✅ ${radioaficionados.length} registros cargados`;
-                dbStatus.style.color = 'green';
+                document.getElementById('dbCount').innerText = `✅ ${radioaficionados.length}`;
+                document.getElementById('dbLabel').innerText = 'estaciones cargadas';
             } catch(e) {
-                dbStatus.innerText = `⚠️ Error cargando desde GitHub: ${e.message}`;
-                dbStatus.style.color = 'red';
+                document.getElementById('dbCount').innerText = '⚠️';
+                document.getElementById('dbLabel').innerText = `Error: ${e.message}`;
             }
         }
 
@@ -834,10 +848,6 @@
             } catch(e) { console.warn('No se pudo actualizar en GitHub:', e.message); }
         }
 
-        function bloquearCaracteresCsv(e) {
-            if (e.key === ',' || e.key === '"' || e.key === "'") e.preventDefault();
-        }
-
         window.onload = function() { 
             loadConfig(); 
             updateTime(); 
@@ -846,6 +856,7 @@
                 const el = document.getElementById(id);
                 if (el) el.addEventListener('keydown', bloquearCaracteresCsv);
             });
+            dragElement(document.getElementById("calendarioFlotante"), document.getElementById("calendarioHeader"));
         };
     </script>
 </body>
