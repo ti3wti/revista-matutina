@@ -63,9 +63,9 @@
         .ee-overlay a { color: #58a6ff; font-size: 2rem; text-decoration: none; border: 2px solid #58a6ff; padding: 10px 20px; border-radius: 8px; transition: 0.3s; }
         .ee-overlay a:hover { background: #58a6ff; color: white; }
 
-        #calendarioFlotante { display: none; position: absolute; top: 150px; left: 100px; width: 820px; height: 620px; background: white; border: 2px solid #198754; box-shadow: 3px 3px 15px rgba(0,0,0,0.3); z-index: 9998; border-radius: 5px; resize: both; overflow: hidden; min-width: 400px; min-height: 300px; }
-        #calendarioHeader { padding: 5px 10px; cursor: move; background-color: #198754; color: white; font-size: 0.75rem; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
-        #calendarioIframe { width: 100%; height: calc(100% - 26px); border: none; }
+        #calendarioFlotante { display: none; position: absolute; top: 150px; left: 100px; width: 900px; height: 650px; background: white; border: 2px solid #198754; box-shadow: 3px 3px 15px rgba(0,0,0,0.3); z-index: 9998; border-radius: 5px; resize: both; overflow: hidden; min-width: 500px; min-height: 400px; }
+        #calendarioHeader { padding: 5px 10px; cursor: move; background-color: #198754; color: white; font-size: 0.75rem; font-weight: bold; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+        #calendarioIframe { width: 100%; height: calc(100% - 26px); border: none; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -113,10 +113,7 @@
         <div class="header-line">
             <div class="header-left">
                 <strong>Base de Datos ➔</strong>
-                <span id="dbStatus" style="font-size:0.85rem; color:#555; display:flex; flex-direction:column; align-items:center; line-height:1.2;">
-                    <span id="dbCount" style="font-weight:bold; color:green;"></span>
-                    <span id="dbLabel" style="color:#555;">cargando...</span>
-                </span>
+                <span id="dbStatus" style="font-size:0.85rem; color:green; font-weight:bold;"></span>
                 <input type="file" id="csvFileInput" accept=".csv" style="display:none;" title="Cargar CSV externo"/>
                 <button onclick="document.getElementById('csvFileInput').click()" style="background:#6c757d; font-size:0.75rem; padding:4px 8px; height:28px; white-space:nowrap;">Base de datos externa</button>
             </div>
@@ -185,8 +182,8 @@
             </div>
             <iframe id="calendarioIframe" 
                 src="https://ti3wti.github.io/CALENDARIO-MATUTINA/" 
-                scrolling="no"
-                style="margin-top:-88px; height:calc(100% - 26px + 88px); clip-path: inset(88px 260px 80px 0px);">
+                scrolling="auto"
+                style="width:100%; height:calc(100% - 26px); border:none; pointer-events:none;">
             </iframe>
         </div>
     </div>
@@ -794,11 +791,10 @@
                 }).filter(r => r.indicativo && r.indicativo !== 'Indicativo');
                 document.getElementById('searchInput').disabled = false;
                 sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) });
-                document.getElementById('dbCount').innerText = `✅ ${radioaficionados.length}`;
-                document.getElementById('dbLabel').innerText = 'estaciones cargadas';
+                document.getElementById('dbStatus').innerText = `✅ ${radioaficionados.length} estaciones`;
             } catch(e) {
-                document.getElementById('dbCount').innerText = '⚠️';
-                document.getElementById('dbLabel').innerText = `Error: ${e.message}`;
+                document.getElementById('dbStatus').innerText = `⚠️ Error: ${e.message}`;
+                document.getElementById('dbStatus').style.color = 'red';
             }
         }
 
