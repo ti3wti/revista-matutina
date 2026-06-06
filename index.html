@@ -65,7 +65,8 @@
 
         #calendarioFlotante { display: none; position: absolute; top: 150px; left: 50px; width: 860px; height: 600px; background: white; border: 2px solid #198754; box-shadow: 3px 3px 15px rgba(0,0,0,0.3); z-index: 9998; border-radius: 5px; resize: both; overflow: hidden; min-width: 500px; min-height: 350px; }
         #calendarioHeader { padding: 5px 10px; cursor: move; background-color: #198754; color: white; font-size: 0.75rem; font-weight: bold; display: flex; justify-content: space-between; align-items: center; user-select: none; }
-        #calendarioIframe { width: 100%; height: calc(100% - 26px); border: none; }
+        #calendarioIframe { position: absolute; top: 26px; left: 0; width: 100%; height: calc(100% - 26px); border: none; }
+        #calendarioDragOverlay { position: absolute; top: 26px; left: 0; width: 100%; height: calc(100% - 26px); z-index: 1; cursor: move; }
     </style>
 </head>
 <body>
@@ -180,7 +181,8 @@
                 📅 CALENDARIO DE EMISIONES
                 <span onclick="document.getElementById('toggleCalendario').checked=false; toggleCalendario();" style="cursor:pointer; font-size:1rem; padding:0 4px;">✕</span>
             </div>
-            <iframe id="calendarioIframe" src="https://ti3wti.github.io/CALENDARIO-MATUTINA/?embed=1" scrolling="auto"></iframe>
+            <div id="calendarioDragOverlay"></div>
+            <iframe id="calendarioIframe" src="https://ti3wti.github.io/CALENDARIO-MATUTINA/?embed=1" scrolling="no"></iframe>
         </div>
     </div>
 
@@ -404,10 +406,23 @@
         function dragElement(elmnt, header) {
             if (!elmnt || !header) return;
             var p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+            const overlay = elmnt.querySelector('[id$="DragOverlay"]');
             header.onmousedown = (e) => {
-                e.preventDefault(); p3 = e.clientX; p4 = e.clientY;
-                document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
-                document.onmousemove = (e) => { e.preventDefault(); p1 = p3 - e.clientX; p2 = p4 - e.clientY; p3 = e.clientX; p4 = e.clientY; elmnt.style.top = (elmnt.offsetTop - p2) + "px"; elmnt.style.left = (elmnt.offsetLeft - p1) + "px"; };
+                e.preventDefault();
+                p3 = e.clientX; p4 = e.clientY;
+                if (overlay) overlay.style.display = 'block';
+                document.onmouseup = () => {
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                    if (overlay) overlay.style.display = 'none';
+                };
+                document.onmousemove = (e) => {
+                    e.preventDefault();
+                    p1 = p3 - e.clientX; p2 = p4 - e.clientY;
+                    p3 = e.clientX; p4 = e.clientY;
+                    elmnt.style.top = (elmnt.offsetTop - p2) + "px";
+                    elmnt.style.left = (elmnt.offsetLeft - p1) + "px";
+                };
             }
         }
 
