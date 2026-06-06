@@ -6,7 +6,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitácora de Reportes v3.5- Revista Matutina</title>
+    <title>Bitácora de Reportes v3.6- Revista Matutina</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.2; background: #f4f4f9; }
@@ -79,7 +79,7 @@
 
     <div class="container">
         <div class="title-area">
-            <h1 id="main-title">Bitácora de Reportes v3.5 - </h1>
+            <h1 id="main-title">Bitácora de Reportes v3.6 - </h1>
             <input type="text" id="cfg-nombre-revista" value="Revista Matutina" onchange="saveConfig()" title="Haga clic para editar el nombre de la revista" />
         </div>
         
@@ -155,8 +155,8 @@
             <label>Vel. Viento:</label> <input type="text" id="rep-veloc-viento" style="width: 85px;" onkeydown="nextField(event, 'comentarios')" />
             <div class="input-row">
                 <div style="display: flex; flex-direction: column;">
-                    <div class="radio-group"><input type="radio" id="contactapor1" name="contact" value="RF" checked/><label>RF</label><input type="radio" id="contactapor2" name="contact" value="EchoLink" /><label>EL</label><input type="radio" id="contactapor3" name="contact" value="Whatsapp" /><label>WA</label></div>
-                    <span style="font-size: 0.65rem; font-weight: bold; color: #777; margin-top: 3px; text-align: center;"><i class="fa-solid fa-walkie-talkie"></i> RF: Radiofrecuencia &nbsp; <i class="fa-solid fa-mobile-screen-button"></i> EL: EchoLink &nbsp; <i class="fa-brands fa-whatsapp" style="color: #25D366; font-size: 0.75rem;"></i> WA: Whatsapp</span>
+                    <div class="radio-group"><input type="radio" id="contactapor1" name="contact" value="RF" checked/><label>RF</label><input type="radio" id="contactapor2" name="contact" value="EchoLink" /><label>EL</label><input type="radio" id="contactapor3" name="contact" value="Whatsapp" /><label>WA</label><input type="radio" id="contactapor4" name="contact" value="INF" /><label>INF</label></div>
+                    <span style="font-size: 0.65rem; font-weight: bold; color: #777; margin-top: 3px; text-align: center;"><i class="fa-solid fa-walkie-talkie"></i> RF: Radiofrecuencia &nbsp; <i class="fa-solid fa-mobile-screen-button"></i> EL: EchoLink &nbsp; <i class="fa-brands fa-whatsapp" style="color: #25D366; font-size: 0.75rem;"></i> WA: Whatsapp &nbsp; <i class="fa-solid fa-circle-exclamation" style="color: #dc3545;"></i> INF: Información</span>
                 </div>
                 <input type="text" id="comentarios" placeholder="Comentarios / Requerimientos" style="flex-grow: 1;" onkeydown="checkFinalEnter(event)" />
             </div>
@@ -280,6 +280,8 @@
                     iconStr = ' <i class="fa-solid fa-mobile-screen-button" style="color: #777;" title="EchoLink"></i>';
                 } else if (rep.indicativo.endsWith("-WA")) {
                     iconStr = ' <i class="fa-brands fa-whatsapp" style="color: #25D366;" title="WhatsApp"></i>';
+                } else if (rep.indicativo.endsWith("-INF")) {
+                    iconStr = ' <i class="fa-solid fa-circle-exclamation" style="color: #dc3545;" title="Información"></i>';
                 }
                 const tTemp = rep.temperatura === "N/I" ? "--" : rep.temperatura;
                 const tViento = rep.viento === "N/I" ? "--" : rep.viento;
@@ -312,7 +314,7 @@
             const method = document.querySelector('input[name="contact"]:checked').value;
             const nuevoReporte = { 
                 id: 0, 
-                indicativo: `${selectedRadioaficionado.indicativo}-${method === "RF" ? "RF" : (method === "EchoLink" ? "EL" : "WA")}`, 
+                indicativo: `${selectedRadioaficionado.indicativo}-${method === "RF" ? "RF" : (method === "EchoLink" ? "EL" : (method === "Whatsapp" ? "WA" : "INF"))}`, 
                 nombre: selectedRadioaficionado.nombre, 
                 grillaReporte: document.getElementById('rep-grilla').value.toUpperCase() || "N/I",
                 localidad: document.getElementById('rep-localidad').value || "",
