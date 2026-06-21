@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "21/6/2026",
+    "emision": "7863",
+    "revista": "Revista Matutina",
+    "operador": "TIØTRC-ti2cvj",
+    "nombreOp": "Asociación Turrealbeña de Radioaficionados",
+    "totalEstaciones": 33,
+    "duracion": "1h 27min",
+    "tempProm": "24.6",
+    "masLejano": {
+      "indicativo": "KF0VHD",
+      "nombre": "David Estrada",
+      "dist": 3342,
+      "grilla": "EM38TW"
+    },
+    "zonaActiva": [
+      "EJ79",
+      9
+    ],
+    "timestamp": "2026-06-21T15:32:57.029Z"
+  },
+  {
     "fecha": "18/6/2026",
     "emision": "005597",
     "revista": "18_005597_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
