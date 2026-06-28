@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "28/6/2026",
+    "emision": "7870",
+    "revista": "Revista Matutina",
+    "operador": "TI0RHU",
+    "nombreOp": "Asoc.Radioaficiòn Herediana - TI2CVJ",
+    "totalEstaciones": 36,
+    "duracion": "1h 46min",
+    "tempProm": "24.1",
+    "masLejano": {
+      "indicativo": "KF0UHD",
+      "nombre": "DAVID",
+      "dist": 4268,
+      "grilla": "EN47BT"
+    },
+    "zonaActiva": [
+      "EJ79",
+      10
+    ],
+    "timestamp": "2026-06-28T15:53:47.558Z"
+  },
+  {
     "fecha": "27/6/2026",
     "emision": "005606",
     "revista": "27_005606_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
