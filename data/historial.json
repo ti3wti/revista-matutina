@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "6/7/2026",
+    "emision": "005615",
+    "revista": "06_005615RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI2GC",
+    "nombreOp": "GUILLERMO",
+    "totalEstaciones": 14,
+    "duracion": "1h 22min",
+    "tempProm": "22.3",
+    "masLejano": {
+      "indicativo": "CM8SS",
+      "nombre": "JOSE LUIS FERNANDEZ",
+      "dist": 1458,
+      "grilla": "EL92ET"
+    },
+    "zonaActiva": [
+      "EK70",
+      5
+    ],
+    "timestamp": "2026-07-06T23:22:07.253Z"
+  },
+  {
     "fecha": "5/7/2026",
     "emision": "005614",
     "revista": "05_005614RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
