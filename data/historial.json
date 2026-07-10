@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "10/7/2026",
+    "emision": "7882",
+    "revista": "Revista Matutina TI",
+    "operador": "TI2CVJ",
+    "nombreOp": "Carlos Vindas",
+    "totalEstaciones": 24,
+    "duracion": "1h 37min",
+    "tempProm": "22.2",
+    "masLejano": {
+      "indicativo": "YN1FF",
+      "nombre": "FRANCISCO",
+      "dist": 347,
+      "grilla": "EK62UE"
+    },
+    "zonaActiva": [
+      "EJ79",
+      8
+    ],
+    "timestamp": "2026-07-10T14:10:49.684Z"
+  },
+  {
     "fecha": "9/7/2026",
     "emision": "005618",
     "revista": "09_005618_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
