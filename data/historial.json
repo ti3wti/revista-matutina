@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "11/7/2026",
+    "emision": "7883",
+    "revista": "Revista Matutina",
+    "operador": "TI2BSH",
+    "nombreOp": "Carlos",
+    "totalEstaciones": 15,
+    "duracion": "1h 03min",
+    "tempProm": "21.3",
+    "masLejano": {
+      "indicativo": "HP2JOD",
+      "nombre": "JOSE DURAN",
+      "dist": 563,
+      "grilla": "FJ09"
+    },
+    "zonaActiva": [
+      "EK70",
+      5
+    ],
+    "timestamp": "2026-07-11T14:40:35.248Z"
+  },
+  {
     "fecha": "10/7/2026",
     "emision": "005619",
     "revista": "10_005619_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
