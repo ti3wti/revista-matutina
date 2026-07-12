@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "12/7/2026",
+    "emision": "7884",
+    "revista": "Revista Matutina",
+    "operador": "TI0ARC/TI3WTI",
+    "nombreOp": "William",
+    "totalEstaciones": 28,
+    "duracion": "1h 33min",
+    "tempProm": "21.4",
+    "masLejano": {
+      "indicativo": "HJ6ZLJ",
+      "nombre": "LUIS EDUARDO",
+      "dist": 1259,
+      "grilla": "FJ34ET"
+    },
+    "zonaActiva": [
+      "EJ89",
+      10
+    ],
+    "timestamp": "2026-07-12T15:37:25.282Z"
+  },
+  {
     "fecha": "11/7/2026",
     "emision": "005620",
     "revista": "11_005620_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
