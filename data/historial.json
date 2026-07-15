@@ -1,6 +1,27 @@
 [
   {
     "fecha": "15/7/2026",
+    "emision": "005623",
+    "revista": "14_005623_RUEDA DE ORO_TI5RHB_ HORA UTC 22 A 23:15_Frecuencia 7130 MHZ-_TI3OMY",
+    "operador": "TI2GC",
+    "nombreOp": "GUILLERMO",
+    "totalEstaciones": 21,
+    "duracion": "10min 57s",
+    "tempProm": "23.4",
+    "masLejano": {
+      "indicativo": "HQ3LAG",
+      "nombre": "LUIS",
+      "dist": 610,
+      "grilla": "EK64IM"
+    },
+    "zonaActiva": [
+      "EK70",
+      6
+    ],
+    "timestamp": "2026-07-15T16:57:17.340Z"
+  },
+  {
+    "fecha": "15/7/2026",
     "emision": "7887",
     "revista": "Revista Matutina",
     "operador": "TI4AOS",
