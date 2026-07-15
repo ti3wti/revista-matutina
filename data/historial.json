@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "15/7/2026",
+    "emision": "7887",
+    "revista": "Revista Matutina",
+    "operador": "TI4AOS",
+    "nombreOp": "Alejandro",
+    "totalEstaciones": 34,
+    "duracion": "1h 30min",
+    "tempProm": "21.5",
+    "masLejano": {
+      "indicativo": "HP2JOD",
+      "nombre": "JOSE DURAN",
+      "dist": 565,
+      "grilla": "FJ09"
+    },
+    "zonaActiva": [
+      "EJ79",
+      11
+    ],
+    "timestamp": "2026-07-15T14:09:49.670Z"
+  },
+  {
     "fecha": "12/7/2026",
     "emision": "005621",
     "revista": "12_005621_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
