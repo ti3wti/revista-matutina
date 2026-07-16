@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "16/7/2026",
+    "emision": "005625",
+    "revista": "16_005625_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI2GC",
+    "nombreOp": "GUILLERMO",
+    "totalEstaciones": 21,
+    "duracion": "39min 33s",
+    "tempProm": "20.8",
+    "masLejano": {
+      "indicativo": "OA1CO",
+      "nombre": "EDDIE",
+      "dist": 2463,
+      "grilla": "FH19NA"
+    },
+    "zonaActiva": [
+      "EK70",
+      6
+    ],
+    "timestamp": "2026-07-16T23:22:25.525Z"
+  },
+  {
     "fecha": "15/7/2026",
     "emision": "005624",
     "revista": "15_005624_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
