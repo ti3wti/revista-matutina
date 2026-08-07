@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "7/8/2026",
+    "emision": "7910",
+    "revista": "Revista Matutina TI",
+    "operador": "TI2TID",
+    "nombreOp": "RODOLFO SEGURA",
+    "totalEstaciones": 35,
+    "duracion": "2h 13min",
+    "tempProm": "20.7",
+    "masLejano": {
+      "indicativo": "TI5GAA",
+      "nombre": "HEINER",
+      "dist": 6686,
+      "grilla": "EQ70SD"
+    },
+    "zonaActiva": [
+      "EJ79",
+      15
+    ],
+    "timestamp": "2026-08-07T14:47:36.732Z"
+  },
+  {
     "fecha": "6/8/2026",
     "emision": "05646",
     "revista": "6_005646_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
