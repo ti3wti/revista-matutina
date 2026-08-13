@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "13/8/2026",
+    "emision": "653",
+    "revista": "13_005653RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI2gc",
+    "nombreOp": "GUILLERMO",
+    "totalEstaciones": 19,
+    "duracion": "44min 19s",
+    "tempProm": "22.2",
+    "masLejano": {
+      "indicativo": "WT4Q",
+      "nombre": "JIM",
+      "dist": 3651,
+      "grilla": "FN31DK"
+    },
+    "zonaActiva": [
+      "EK70",
+      6
+    ],
+    "timestamp": "2026-08-13T23:04:52.365Z"
+  },
+  {
     "fecha": "10/8/2026",
     "emision": "05650",
     "revista": "10_005650_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
