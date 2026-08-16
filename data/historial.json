@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "16/8/2026",
+    "emision": "7919",
+    "revista": "Revista Matutina TI",
+    "operador": "TI0TRC",
+    "nombreOp": "Asociación Turrealbeña de Radioaficionados",
+    "totalEstaciones": 22,
+    "duracion": "1h 07min",
+    "tempProm": "21.4",
+    "masLejano": {
+      "indicativo": "TI5GAA",
+      "nombre": "HEINER",
+      "dist": 6700,
+      "grilla": "EQ70SD"
+    },
+    "zonaActiva": [
+      "EJ79",
+      10
+    ],
+    "timestamp": "2026-08-16T15:12:29.761Z"
+  },
+  {
     "fecha": "14/8/2026",
     "emision": "05654",
     "revista": "14_005654_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
