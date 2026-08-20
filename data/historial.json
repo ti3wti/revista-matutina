@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "20/8/2026",
+    "emision": "05660",
+    "revista": "20_005660_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI2gc",
+    "nombreOp": "GUILLERMO",
+    "totalEstaciones": 23,
+    "duracion": "1h 13min",
+    "tempProm": "22.3",
+    "masLejano": {
+      "indicativo": "CO8KBP",
+      "nombre": "LUIS ENRIQUE CABALLERO GUERRERO",
+      "dist": 1530,
+      "grilla": "FL20KN"
+    },
+    "zonaActiva": [
+      "EK70",
+      8
+    ],
+    "timestamp": "2026-08-20T23:19:29.750Z"
+  },
+  {
     "fecha": "19/8/2026",
     "emision": "792205659",
     "revista": "19_005659_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
