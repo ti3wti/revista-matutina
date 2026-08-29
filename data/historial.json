@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "29/8/2026",
+    "emision": "05669",
+    "revista": "29_005669_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI3AGM",
+    "nombreOp": "MARCOS",
+    "totalEstaciones": 13,
+    "duracion": "48min 45s",
+    "tempProm": "21.0",
+    "masLejano": {
+      "indicativo": "CM8SS",
+      "nombre": "JOSE LUIS FERNANDEZ",
+      "dist": 1458,
+      "grilla": "EL92ET"
+    },
+    "zonaActiva": [
+      "EJ89",
+      4
+    ],
+    "timestamp": "2026-08-29T23:08:14.441Z"
+  },
+  {
     "fecha": "28/8/2026",
     "emision": "05668",
     "revista": "28_005668_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
