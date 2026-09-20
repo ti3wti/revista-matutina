@@ -2,11 +2,11 @@
   {
     "fecha": "20/9/2026",
     "emision": "05691",
-    "revista": "05691_ RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "revista": "20_5691_ RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
     "operador": "TI2GC",
     "nombreOp": "MEMO",
     "totalEstaciones": 21,
-    "duracion": "1h 05min",
+    "duracion": "1h 07min",
     "tempProm": "21.6",
     "masLejano": {
       "indicativo": "CM8SS",
@@ -18,7 +18,7 @@
       "EJ89",
       6
     ],
-    "timestamp": "2026-09-20T23:07:16.035Z"
+    "timestamp": "2026-09-20T23:08:48.661Z"
   },
   {
     "fecha": "20/9/2026",
