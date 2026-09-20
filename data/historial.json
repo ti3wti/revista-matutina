@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "20/9/2026",
+    "emision": "7954",
+    "revista": "Revista Matutina TI",
+    "operador": "TI0TRC",
+    "nombreOp": "Asociación Turrealbeña de Radioaficionados",
+    "totalEstaciones": 28,
+    "duracion": "1h 12min",
+    "tempProm": "22.9",
+    "masLejano": {
+      "indicativo": "W2LAM",
+      "nombre": "Luis Malave",
+      "dist": 3521,
+      "grilla": "FN20SL"
+    },
+    "zonaActiva": [
+      "EJ79",
+      7
+    ],
+    "timestamp": "2026-09-20T15:17:19.031Z"
+  },
+  {
     "fecha": "19/9/2026",
     "emision": "05690",
     "revista": "19_005690_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
