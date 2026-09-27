@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "27/9/2026",
+    "emision": "7961",
+    "revista": "Revista Matutina TI",
+    "operador": "TI0RHU",
+    "nombreOp": "Asoc.Radioaficiòn Herediana",
+    "totalEstaciones": 34,
+    "duracion": "1h 35min",
+    "tempProm": "22.6",
+    "masLejano": {
+      "indicativo": "TI5GAA",
+      "nombre": "HEINER",
+      "dist": 1020,
+      "grilla": "EK79SD"
+    },
+    "zonaActiva": [
+      "EJ79",
+      10
+    ],
+    "timestamp": "2026-09-27T15:39:01.783Z"
+  },
+  {
     "fecha": "26/9/2026",
     "emision": "05697",
     "revista": "26_5697_ RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
