@@ -5,9 +5,9 @@
     "revista": "28_5699_ RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
     "operador": "TI2GC",
     "nombreOp": "MEMO",
-    "totalEstaciones": 23,
-    "duracion": "1h 29min",
-    "tempProm": "21.1",
+    "totalEstaciones": 24,
+    "duracion": "1h 31min",
+    "tempProm": "21.3",
     "masLejano": {
       "indicativo": "CM8SS",
       "nombre": "JOSE LUIS FERNANDEZ",
@@ -18,7 +18,7 @@
       "EJ89",
       6
     ],
-    "timestamp": "2026-09-28T23:30:28.438Z"
+    "timestamp": "2026-09-28T23:32:26.481Z"
   },
   {
     "fecha": "27/9/2026",
