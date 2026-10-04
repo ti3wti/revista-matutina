@@ -5,9 +5,9 @@
     "revista": "04_5705_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
     "operador": "TI2GC",
     "nombreOp": "MEMO",
-    "totalEstaciones": 11,
-    "duracion": "45min 17s",
-    "tempProm": "21.5",
+    "totalEstaciones": 19,
+    "duracion": "1h 27min",
+    "tempProm": "21.3",
     "masLejano": {
       "indicativo": "CM8SS",
       "nombre": "JOSE LUIS FERNANDEZ",
@@ -15,10 +15,10 @@
       "grilla": "EL92ET"
     },
     "zonaActiva": [
-      "EJ79",
-      3
+      "EK70",
+      5
     ],
-    "timestamp": "2026-10-04T22:45:07.607Z"
+    "timestamp": "2026-10-04T23:27:24.462Z"
   },
   {
     "fecha": "2/10/2026",
