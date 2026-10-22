@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "22/10/2026",
+    "emision": "05723",
+    "revista": "22_5723_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI2GC",
+    "nombreOp": "MEMO",
+    "totalEstaciones": 23,
+    "duracion": "46min 12s",
+    "tempProm": "21.0",
+    "masLejano": {
+      "indicativo": "CO8KBP",
+      "nombre": "LUIS ENRIQUE",
+      "dist": 1530,
+      "grilla": "FL20KN"
+    },
+    "zonaActiva": [
+      "EK70",
+      6
+    ],
+    "timestamp": "2026-10-22T23:31:52.752Z"
+  },
+  {
     "fecha": "21/10/2026",
     "emision": "05722",
     "revista": "21_5722_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
