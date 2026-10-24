@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "24/10/2026",
+    "emision": "7988",
+    "revista": "Revista Matutina",
+    "operador": "TI5LJR",
+    "nombreOp": "Leonel",
+    "totalEstaciones": 33,
+    "duracion": "1h 40min",
+    "tempProm": "22.3",
+    "masLejano": {
+      "indicativo": "TI7JCC",
+      "nombre": "Jose Luis Corrales",
+      "dist": 199,
+      "grilla": "EK71EB"
+    },
+    "zonaActiva": [
+      "EK70",
+      11
+    ],
+    "timestamp": "2026-10-24T15:22:34.608Z"
+  },
+  {
     "fecha": "22/10/2026",
     "emision": "05723",
     "revista": "22_5723_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
