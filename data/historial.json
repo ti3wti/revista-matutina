@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "25/10/2026",
+    "emision": "7989",
+    "revista": "Revista Matutina",
+    "operador": "TI0RHU",
+    "nombreOp": "Asociacion de Radioaficion Herediana",
+    "totalEstaciones": 30,
+    "duracion": "1h 19min",
+    "tempProm": "23.0",
+    "masLejano": {
+      "indicativo": "KF0VHD",
+      "nombre": "David Estrada",
+      "dist": 3321,
+      "grilla": "EM38TW"
+    },
+    "zonaActiva": [
+      "EJ79",
+      8
+    ],
+    "timestamp": "2026-10-25T15:23:41.459Z"
+  },
+  {
     "fecha": "24/10/2026",
     "emision": "05725",
     "revista": "24_5725_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
