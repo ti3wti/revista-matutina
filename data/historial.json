@@ -1,6 +1,27 @@
 [
   {
     "fecha": "26/10/2026",
+    "emision": "05627",
+    "revista": "26_5727_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI2GC",
+    "nombreOp": "MEMO",
+    "totalEstaciones": 25,
+    "duracion": "1h 28min",
+    "tempProm": "20.9",
+    "masLejano": {
+      "indicativo": "HI8GAG",
+      "nombre": "GUSTAVO",
+      "dist": 1787,
+      "grilla": "FK48WK"
+    },
+    "zonaActiva": [
+      "EK70",
+      7
+    ],
+    "timestamp": "2026-10-26T23:28:43.593Z"
+  },
+  {
+    "fecha": "26/10/2026",
     "emision": "05726",
     "revista": "25_5726_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
     "operador": "TI2GC",
