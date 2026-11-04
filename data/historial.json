@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "4/11/2026",
+    "emision": "05735",
+    "revista": "04_5735_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI2GC",
+    "nombreOp": "MEMO",
+    "totalEstaciones": 24,
+    "duracion": "1h 23min",
+    "tempProm": "20.1",
+    "masLejano": {
+      "indicativo": "KD2RV",
+      "nombre": "RAFAEL VARGAS",
+      "dist": 3514,
+      "grilla": "FN20NK"
+    },
+    "zonaActiva": [
+      "EK70",
+      6
+    ],
+    "timestamp": "2026-11-04T23:36:15.067Z"
+  },
+  {
     "fecha": "3/11/2026",
     "emision": "05734",
     "revista": "03_5734_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
