@@ -5,8 +5,8 @@
     "revista": "05_5736_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
     "operador": "TI2GC",
     "nombreOp": "MEMO",
-    "totalEstaciones": 19,
-    "duracion": "48min 07s",
+    "totalEstaciones": 20,
+    "duracion": "1h 06min",
     "tempProm": "20.9",
     "masLejano": {
       "indicativo": "CM8SS",
@@ -18,7 +18,7 @@
       "EK70",
       5
     ],
-    "timestamp": "2026-11-05T23:25:48.217Z"
+    "timestamp": "2026-11-05T23:44:15.415Z"
   },
   {
     "fecha": "4/11/2026",
