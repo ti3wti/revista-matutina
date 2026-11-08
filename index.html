@@ -87,7 +87,7 @@
             <div class="config-items">
                 <strong style="font-size: 1.1rem; margin-right: 5px; padding-bottom: 4px;">⚙️ Ajustes:</strong>
                 <div class="config-group"><label class="lbl-top">Emisión</label><input type="text" id="cfg-emision" placeholder="#7758" style="width: 55px; font-weight:bold; color:blue;" onchange="saveConfig()"></div>
-                <div class="config-group"><label class="lbl-top">Operador</label><input type="text" id="cfg-indicativo" placeholder="TI3WTI" style="width: 65px;" onchange="saveConfig()"></div>
+                <div class="config-group"><label class="lbl-top">Operador</label><input type="text" id="cfg-indicativo" placeholder="TI3WTI" style="width: 65px;" oninput="forzarMayusculasOperador(this)" onchange="autocompletarOperadorDesdeIndicativo(); saveConfig();"></div>
                 <div class="config-group"><label class="lbl-top">Nombre</label><input type="text" id="cfg-nombre" placeholder="William" style="width: 80px;" onchange="saveConfig()"></div>
                 <div class="config-group"><label class="lbl-top">Grilla</label><input type="text" id="cfg-grid" placeholder="EJ89bt" style="width: 55px;" onchange="saveConfig()"></div>
                 <div class="config-group"><label class="lbl-top">API Key</label><input type="password" id="cfg-aprskey" value="149248.FiKMjEqrNNWgniq" style="width: 120px;" onchange="saveConfig()"></div>
@@ -359,6 +359,30 @@
         // desplazamiento temporal a otra provincia, no es otro radioaficionado.
         function normalizarIndicativo(ind) {
             return (ind || '').toUpperCase().trim().replace(/-\d+$/, '');
+        }
+
+        // Fuerza mayúsculas mientras el operador escribe su indicativo,
+        // conservando la posición del cursor.
+        function forzarMayusculasOperador(input) {
+            const pos = input.selectionStart;
+            input.value = input.value.toUpperCase();
+            input.setSelectionRange(pos, pos);
+        }
+
+        // Al completar el indicativo del operador, carga automáticamente su
+        // nombre y grilla desde la base de datos (si existe). El operador
+        // puede editar ambos campos manualmente después de la carga.
+        function autocompletarOperadorDesdeIndicativo() {
+            const campoInd = document.getElementById('cfg-indicativo');
+            const ind = (campoInd.value || '').toUpperCase().trim();
+            campoInd.value = ind;
+            if (!ind) return;
+            const base = normalizarIndicativo(ind);
+            const encontrado = radioaficionados.find(r => normalizarIndicativo(r.indicativo) === base);
+            if (encontrado) {
+                document.getElementById('cfg-nombre').value = encontrado.nombre;
+                document.getElementById('cfg-grid').value = encontrado.grilla;
+            }
         }
 
         function addNewEntry() {
