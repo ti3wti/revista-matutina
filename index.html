@@ -6,7 +6,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitácora de Reportes v3.7 (ACT 7 NOV 2026)- Revista Matutina</title>
+    <title>Bitácora de Reportes v3.7 (07-nov-2026) - Revista Matutina</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.2; background: #f4f4f9; }
@@ -79,7 +79,7 @@
 
     <div class="container">
         <div class="title-area">
-            <h1 id="main-title">Bitácora de Reportes v3.6 - </h1>
+            <h1 id="main-title">Bitácora de Reportes v3.7 (07-nov-2026) - </h1>
             <input type="text" id="cfg-nombre-revista" value="Revista Matutina" onchange="saveConfig()" title="Haga clic para editar el nombre de la revista" />
         </div>
 
@@ -128,6 +128,18 @@
 
         <h2 id="searchTitle">Resultados de la búsqueda</h2>
         <div id="selectionDisplay"></div>
+        <button id="btnSolicitarCorreccion" onclick="abrirSolicitudCorreccion()" style="display:none; background:#6c757d; font-size:0.8rem; padding:6px 10px; margin:4px 0 10px 0;">✏️ Solicitar corrección</button>
+        <div id="correccionForm" style="display:none; background:#f8d7da; padding:12px; border-radius:5px; margin:8px 0; border:1px solid #f5c2c7;">
+            <h4 style="margin:0 0 8px 0;">Solicitar corrección de datos — <span id="correccionIndicativo"></span></h4>
+            <p style="font-size:0.8rem; color:#555; margin:0 0 8px 0;">Deje en blanco lo que no desea cambiar. Esto NO modifica la base de datos: solo genera un correo para que el administrador revise y aplique el cambio.</p>
+            <input type="text" id="correccionNombre" placeholder="Nombre propuesto" style="width:220px; margin:3px;" />
+            <input type="text" id="correccionGrilla" placeholder="Grilla propuesta" style="width:100px; margin:3px;" />
+            <input type="text" id="correccionLocalidad" placeholder="Localidad propuesta" style="width:200px; margin:3px;" />
+            <input type="text" id="correccionComentario" placeholder="Comentario (opcional)" style="width:300px; margin:3px;" />
+            <br>
+            <button type="button" onclick="enviarSolicitudCorreccion()" style="background:#dc3545; margin-top:6px;">📧 Enviar solicitud por correo</button>
+            <button type="button" onclick="document.getElementById('correccionForm').style.display='none'" style="background:#6c757d; margin-top:6px;">Cancelar</button>
+        </div>
         <table id="searchResultsTable"><thead id="searchTableHeader" style="display:none;"><tr><th>Indicativo</th><th>Nombre</th><th>Seleccionar</th></tr></thead><tbody id="searchTableBody"></tbody></table>
         <div id="addNewEntryForm" style="display:none;"><h3>Colega no encontrado. ¿Desea agregarlo?</h3><input type="text" id="newIndicativo" placeholder="Indicativo" style="width: 120px;" /><input type="text" id="newNombre" placeholder="Nombre completo" style="width: 250px !important;" /><input type="text" id="newGrilla" placeholder="Grilla (opcional)" style="width: 80px !important;" /><input type="text" id="newLocalidad" placeholder="Localidad (opcional)" style="width: 200px !important;" /><button type="button" onclick="addNewEntry()" style="background-color: green; font-weight: bold;">GUARDAR</button></div>
 
@@ -343,22 +355,39 @@
             if (idxLista >= 0) { listaEspera.splice(idxLista, 1); renderListaEspera(); }
         }
 
+        // Quita el sufijo -N (ej. "-2") del indicativo: ese guion solo indica
+        // desplazamiento temporal a otra provincia, no es otro radioaficionado.
+        function normalizarIndicativo(ind) {
+            return (ind || '').toUpperCase().trim().replace(/-\d+$/, '');
+        }
+
         function addNewEntry() {
             const ind = document.getElementById('newIndicativo').value.trim().toUpperCase();
             const nom = document.getElementById('newNombre').value.trim().toUpperCase();
             const gri = document.getElementById('newGrilla').value.trim().toUpperCase();
             const loc = document.getElementById('newLocalidad').value.trim();
             if (ind === "" || nom === "") return;
-            radioaficionados.push({ indicativo: ind, nombre: nom, grilla: gri, localidad: loc });
-            document.getElementById('statsButton').disabled = false;
-            sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) });
-            appendToGitHubCSV(ind, nom, gri, loc);
+
             document.getElementById('newIndicativo').value = '';
             document.getElementById('newNombre').value = '';
             document.getElementById('newGrilla').value = '';
             document.getElementById('newLocalidad').value = '';
             document.getElementById('searchInput').value = '';
             document.getElementById('addNewEntryForm').style.display = "none";
+
+            // Evitar duplicados: si ya existe el mismo indicativo (ignorando el
+            // sufijo -N), se usa ese registro existente en vez de crear uno nuevo.
+            const base = normalizarIndicativo(ind);
+            const existente = radioaficionados.find(r => normalizarIndicativo(r.indicativo) === base);
+            if (existente) {
+                selectRadioaficionado(existente.indicativo, existente.nombre, existente.grilla, existente.localidad);
+                return;
+            }
+
+            radioaficionados.push({ indicativo: ind, nombre: nom, grilla: gri, localidad: loc });
+            document.getElementById('statsButton').disabled = false;
+            sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) });
+            appendToGitHubCSV(ind, nom, gri, loc);
             selectRadioaficionado(ind, nom, gri, loc);
         }
 
@@ -485,7 +514,8 @@
                 const term = document.getElementById('searchInput').value.toLowerCase();
                 const tbody = document.getElementById('searchTableBody');
                 if (term === "") { tbody.innerHTML = ''; return; }
-                const res = radioaficionados.filter(r => r.indicativo.toLowerCase().includes(term) || r.nombre.toLowerCase().includes(term));
+                const termBase = normalizarIndicativo(term).toLowerCase();
+                const res = radioaficionados.filter(r => r.indicativo.toLowerCase().includes(term) || r.nombre.toLowerCase().includes(term) || (termBase && normalizarIndicativo(r.indicativo).toLowerCase() === termBase));
                 if (res.length > 0) {
                     document.getElementById('searchTableHeader').style.display = '';
                     tbody.innerHTML = res.slice(0, 50).map(r => {
@@ -508,6 +538,7 @@
             selectedRadioaficionado = { indicativo: i, nombre: n, grilla: g, localidad: l };
             document.getElementById('selectionDisplay').innerHTML = `SELECCIONADO: ${i} - ${n}`;
             document.getElementById('selectionDisplay').style.display = "block";
+            document.getElementById('btnSolicitarCorreccion').style.display = "inline-block";
             document.getElementById('searchTableBody').innerHTML = '';
             document.getElementById('searchTableHeader').style.display = 'none';
             document.getElementById('searchInput').value = '';
@@ -577,6 +608,42 @@
             } catch(e) {}
         }
 
+        // ── Solicitud de correccion de datos (no edita la base, solo envia correo) ──
+        function abrirSolicitudCorreccion() {
+            if (!selectedRadioaficionado) return;
+            document.getElementById('correccionIndicativo').innerText = selectedRadioaficionado.indicativo;
+            document.getElementById('correccionNombre').value = '';
+            document.getElementById('correccionGrilla').value = '';
+            document.getElementById('correccionLocalidad').value = '';
+            document.getElementById('correccionComentario').value = '';
+            document.getElementById('correccionForm').style.display = 'block';
+        }
+
+        function enviarSolicitudCorreccion() {
+            if (!selectedRadioaficionado) return;
+            const nuevoNombre = document.getElementById('correccionNombre').value.trim();
+            const nuevaGrilla = document.getElementById('correccionGrilla').value.trim();
+            const nuevaLocalidad = document.getElementById('correccionLocalidad').value.trim();
+            const comentario = document.getElementById('correccionComentario').value.trim();
+
+            let cuerpo = "Solicitud de correccion de datos\n\n";
+            cuerpo += `Indicativo: ${selectedRadioaficionado.indicativo}\n\n`;
+            cuerpo += "--- Datos actuales ---\n";
+            cuerpo += `Nombre: ${selectedRadioaficionado.nombre}\n`;
+            cuerpo += `Grilla: ${selectedRadioaficionado.grilla || ''}\n`;
+            cuerpo += `Localidad: ${selectedRadioaficionado.localidad || ''}\n\n`;
+            cuerpo += "--- Cambio propuesto ---\n";
+            cuerpo += `Nombre: ${nuevoNombre || '(sin cambio)'}\n`;
+            cuerpo += `Grilla: ${nuevaGrilla || '(sin cambio)'}\n`;
+            cuerpo += `Localidad: ${nuevaLocalidad || '(sin cambio)'}\n`;
+            if (comentario) cuerpo += `\nComentario: ${comentario}\n`;
+
+            const asunto = `Correccion de datos - ${selectedRadioaficionado.indicativo}`;
+            const mailto = `mailto:wmarincr@gmail.com?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+            window.location.href = mailto;
+            document.getElementById('correccionForm').style.display = 'none';
+        }
+
         function checkGridAndMoveMap() {
             if (!selectedRadioaficionado) return;
             const gridVal = document.getElementById('rep-grilla').value.trim();
@@ -591,6 +658,8 @@
             document.getElementById('searchTableBody').innerHTML = '';
             document.getElementById('searchTableHeader').style.display = 'none';
             document.getElementById('addNewEntryForm').style.display = "none";
+            document.getElementById('btnSolicitarCorreccion').style.display = "none";
+            document.getElementById('correccionForm').style.display = "none";
             ['temperatura', 'viento', 'presion', 'rep-grilla', 'rep-localidad', 'rep-veloc-viento', 'comentarios'].forEach(id => document.getElementById(id).value = '');
             document.getElementById('contactapor1').checked = true;
             sendToPublic('LIMPIAR');
