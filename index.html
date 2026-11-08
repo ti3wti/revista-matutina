@@ -87,7 +87,7 @@
             <div class="config-items">
                 <strong style="font-size: 1.1rem; margin-right: 5px; padding-bottom: 4px;">⚙️ Ajustes:</strong>
                 <div class="config-group"><label class="lbl-top">Emisión</label><input type="text" id="cfg-emision" placeholder="#7758" style="width: 55px; font-weight:bold; color:blue;" onchange="saveConfig()"></div>
-                <div class="config-group"><label class="lbl-top">Operador</label><input type="text" id="cfg-indicativo" placeholder="TI3WTI" style="width: 65px;" oninput="forzarMayusculasOperador(this)" onchange="autocompletarOperadorDesdeIndicativo(); saveConfig();"></div>
+                <div class="config-group"><label class="lbl-top">Operador</label><input type="text" id="cfg-indicativo" placeholder="TI3WTI" style="width: 65px;" onfocus="this.select()" oninput="forzarMayusculasOperador(this)" onchange="autocompletarOperadorDesdeIndicativo(); saveConfig();"></div>
                 <div class="config-group"><label class="lbl-top">Nombre</label><input type="text" id="cfg-nombre" placeholder="William" style="width: 80px;" onchange="saveConfig()"></div>
                 <div class="config-group"><label class="lbl-top">Grilla</label><input type="text" id="cfg-grid" placeholder="EJ89bt" style="width: 55px;" onchange="saveConfig()"></div>
                 <div class="config-group"><label class="lbl-top">API Key</label><input type="password" id="cfg-aprskey" value="149248.FiKMjEqrNNWgniq" style="width: 120px;" onchange="saveConfig()"></div>
