@@ -11,7 +11,7 @@
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.2; background: #f4f4f9; }
         .container { width: 95%; max-width: 1200px; margin: 0 auto; background: white; padding: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 4px; position: relative; }
-        
+
         .title-area { display: flex; align-items: center; gap: 10px; margin: 10px 0 5px 0; }
         h1 { margin: 0; font-size: 1.6rem; color: #333; cursor: pointer; white-space: nowrap; }
         #cfg-nombre-revista { font-size: 1.6rem; font-weight: bold; color: #0d6efd; border: none; border-bottom: 2px dashed #ccc; background: transparent; width: 100%; outline: none; padding: 0 5px; }
@@ -22,12 +22,12 @@
         .config-group { display: flex; flex-direction: column; gap: 3px; justify-content: flex-end; }
         .config-group label.lbl-top { font-size: 0.75rem; font-weight: bold; color: #555; text-transform: uppercase; min-height: 14px;}
         .config-bar input[type="text"], .config-bar input[type="password"], .config-bar select { padding: 5px; border: 1px solid #ccc; border-radius: 4px; height: 28px; box-sizing: border-box; }
-        
+
         .header-line { display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; padding: 5px 10px; border-radius: 4px; margin-bottom: 10px; border: 1px solid #ddd; }
         .header-left { display: flex; align-items: center; gap: 10px; flex-grow: 1; }
         #current-time { width: 135px; text-align: center; font-weight: bold; font-size: 1.1rem; padding: 5px; border: 2px solid #333; transition: background-color 0.5s; }
         input[type="file"], input[type="number"] { padding: 8px; margin: 3px 0; border: 1px solid #ccc; border-radius: 4px; }
-        
+
         #csvFileInput { width: 400px; }
         #searchInput { padding: 8px; width: 85%; border: 1px solid #ccc; border-radius: 4px; }
         #clearButton { padding: 8px; background-color: #dc3545; color: white; border: none; cursor: pointer; margin-left: 5px; border-radius: 4px;}
@@ -40,7 +40,7 @@
         .radio-group { display: flex; align-items: center; gap: 5px; border: 1px solid #ddd; padding: 5px 10px; border-radius: 4px; background-color: #f9f9f9; }
         .button-group { display: flex; gap: 10px; margin-top: 10px; margin-bottom: 15px; }
         #addNewEntryForm { background: #fff3cd; padding: 15px; border-radius: 5px; margin: 10px 0; border: 1px solid #ffeeba; }
-        
+
         .conn-container { display: flex; flex-direction: column; align-items: center; margin-left: auto; justify-content: flex-end;}
         #borradorFlotante { display: none; position: absolute; top: 250px; left: 850px; width: 300px; height: 200px; background-color: #fff9c4; border: 1px solid #fbc02d; box-shadow: 3px 3px 10px rgba(0,0,0,0.2); z-index: 9999; border-radius: 5px; resize: both; overflow: hidden; min-width: 150px; min-height: 100px; }
         #borradorHeader { padding: 5px; cursor: move; background-color: #fbc02d; color: #333; font-size: 0.75rem; font-weight: bold; }
@@ -51,7 +51,7 @@
 
         .grid-shortcuts { display: flex; flex-direction: column; gap: 4px; margin-bottom: 5px; }
         .grid-row { display: flex; gap: 4px; flex-wrap: wrap; }
-        .btn-grid { 
+        .btn-grid {
             background: #e1e4e8; border: 1px solid #d1d5da; border-radius: 3px;
             padding: 4px 8px; font-size: 0.8rem; font-weight: bold; cursor: pointer;
             color: #24292e; transition: 0.1s; font-family: monospace;
@@ -82,7 +82,7 @@
             <h1 id="main-title">Bitácora de Reportes v3.6 - </h1>
             <input type="text" id="cfg-nombre-revista" value="Revista Matutina" onchange="saveConfig()" title="Haga clic para editar el nombre de la revista" />
         </div>
-        
+
         <div class="config-bar">
             <div class="config-items">
                 <strong style="font-size: 1.1rem; margin-right: 5px; padding-bottom: 4px;">⚙️ Ajustes:</strong>
@@ -125,15 +125,15 @@
             <input type="text" id="current-time" readonly>
         </div>
         <div style="display: flex; align-items: center;"><input type="text" id="searchInput" placeholder="Escriba indicativo o nombre para filtrar..." oninput="searchIndicativos()" disabled /><button id="clearButton" onclick="clearSearch()">Borrar búsqueda</button></div>
-        
+
         <h2 id="searchTitle">Resultados de la búsqueda</h2>
         <div id="selectionDisplay"></div>
         <table id="searchResultsTable"><thead id="searchTableHeader" style="display:none;"><tr><th>Indicativo</th><th>Nombre</th><th>Seleccionar</th></tr></thead><tbody id="searchTableBody"></tbody></table>
         <div id="addNewEntryForm" style="display:none;"><h3>Colega no encontrado. ¿Desea agregarlo?</h3><input type="text" id="newIndicativo" placeholder="Indicativo" style="width: 120px;" /><input type="text" id="newNombre" placeholder="Nombre completo" style="width: 250px !important;" /><input type="text" id="newGrilla" placeholder="Grilla (opcional)" style="width: 80px !important;" /><input type="text" id="newLocalidad" placeholder="Localidad (opcional)" style="width: 200px !important;" /><button type="button" onclick="addNewEntry()" style="background-color: green; font-weight: bold;">GUARDAR</button></div>
-        
+
         <div id="reportForm" style="display:none;">
             <h3>Ingresar reporte</h3>
-            
+
             <div class="grid-shortcuts">
                 <div class="grid-row">
                     <button type="button" class="btn-grid" onclick="setQuickGrid('EK70')">EK70</button>
@@ -163,7 +163,7 @@
             <button id="addReportButton" onclick="addReport()" style="width: 100%; margin-top: 10px; background-color: #0d6efd; font-size: 1.1rem; font-weight: bold;">AÑADIR REPORTE</button>
         </div>
         <div class="button-group"><button id="statsButton" onclick="mostrarEstadisticas()" disabled>📊 Estadísticas</button><button id="exportPdfButton" onclick="exportPDF()" disabled>Exportar Bitácora a PDF</button><button onclick="window.open('historial.html','_blank')" style="background:#6c757d;">📋 Historial</button></div>
-        
+
         <div id="listaEsperaPanel" style="display:none; background:#e8f4fd; border:1px solid #0d6efd; border-radius:6px; padding:10px; margin-bottom:10px;">
             <div style="font-weight:bold; color:#0d6efd; margin-bottom:8px; font-size:0.9rem;">📋 Lista de Espera</div>
             <div id="listaEsperaItems" style="display:flex; flex-direction:column; gap:5px;"></div>
@@ -193,7 +193,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script>
         let radioaficionados = []; let selectedRadioaficionado = null; let reportCount = 0; let reportes = []; let publicWin = null; let isPublicWinReady = false;
-        let searchTimeout = null; 
+        let searchTimeout = null;
 
         function setQuickGrid(valor) {
             const input = document.getElementById('rep-grilla');
@@ -238,7 +238,7 @@
                 document.getElementById('cfg-nombre').value = cfg.nom || 'William';
                 document.getElementById('cfg-grid').value = cfg.grid || 'EJ89bt';
                 document.getElementById('cfg-aprskey').value = (cfg.aprsKey && cfg.aprsKey.trim() !== "") ? cfg.aprsKey : '149248.FiKMjEqrNNWgniq';
-                document.getElementById('cfg-aprs-enable').checked = cfg.aprsEnable !== false; 
+                document.getElementById('cfg-aprs-enable').checked = cfg.aprsEnable !== false;
                 document.getElementById('cfg-map-type').value = cfg.mapType || 'gray';
                 document.getElementById('cfg-nombre-revista').value = cfg.nombreRevista || 'Revista Matutina';
             } else {
@@ -312,18 +312,18 @@
         function addReport() {
             if (!selectedRadioaficionado) return;
             const method = document.querySelector('input[name="contact"]:checked').value;
-            const nuevoReporte = { 
-                id: 0, 
-                indicativo: `${selectedRadioaficionado.indicativo}-${method === "RF" ? "RF" : (method === "EchoLink" ? "EL" : (method === "Whatsapp" ? "WA" : "INF"))}`, 
-                nombre: selectedRadioaficionado.nombre, 
+            const nuevoReporte = {
+                id: 0,
+                indicativo: `${selectedRadioaficionado.indicativo}-${method === "RF" ? "RF" : (method === "EchoLink" ? "EL" : (method === "Whatsapp" ? "WA" : "INF"))}`,
+                nombre: selectedRadioaficionado.nombre,
                 grillaReporte: document.getElementById('rep-grilla').value.toUpperCase() || "N/I",
                 localidad: document.getElementById('rep-localidad').value || "",
-                temperatura: document.getElementById('temperatura').value || "N/I", 
-                viento: document.getElementById('viento').value || "N/I", 
-                presion: document.getElementById('presion').value || "N/I", 
-                velocViento: document.getElementById('rep-veloc-viento').value || "N/I", 
-                comentarios: document.getElementById('comentarios').value.toUpperCase() || "SIN REQ.", 
-                fechaHora: document.getElementById('current-time').value 
+                temperatura: document.getElementById('temperatura').value || "N/I",
+                viento: document.getElementById('viento').value || "N/I",
+                presion: document.getElementById('presion').value || "N/I",
+                velocViento: document.getElementById('rep-veloc-viento').value || "N/I",
+                comentarios: document.getElementById('comentarios').value.toUpperCase() || "SIN REQ.",
+                fechaHora: document.getElementById('current-time').value
             };
             // Actualizar grilla y localidad en la base de datos si se ingresaron
             const grilla = nuevoReporte.grillaReporte;
@@ -357,7 +357,7 @@
             document.getElementById('newNombre').value = '';
             document.getElementById('newGrilla').value = '';
             document.getElementById('newLocalidad').value = '';
-            document.getElementById('searchInput').value = ''; 
+            document.getElementById('searchInput').value = '';
             document.getElementById('addNewEntryForm').style.display = "none";
             selectRadioaficionado(ind, nom, gri, loc);
         }
@@ -367,7 +367,7 @@
         function toggleCalendario() {
             document.getElementById('calendarioFlotante').style.display = document.getElementById('toggleCalendario').checked ? 'block' : 'none';
         }
-        
+
         let listaEspera = [];
 
         function toggleListaEspera() {
@@ -450,10 +450,10 @@
         if (calFlotante) new ResizeObserver(scaleCalendarioIframe).observe(calFlotante);
 
         function saveConfig() {
-            const cfg = { 
-                emision: document.getElementById('cfg-emision').value, ind: document.getElementById('cfg-indicativo').value, 
-                nom: document.getElementById('cfg-nombre').value, grid: document.getElementById('cfg-grid').value, 
-                aprsKey: document.getElementById('cfg-aprskey').value, aprsEnable: document.getElementById('cfg-aprs-enable').checked, 
+            const cfg = {
+                emision: document.getElementById('cfg-emision').value, ind: document.getElementById('cfg-indicativo').value,
+                nom: document.getElementById('cfg-nombre').value, grid: document.getElementById('cfg-grid').value,
+                aprsKey: document.getElementById('cfg-aprskey').value, aprsEnable: document.getElementById('cfg-aprs-enable').checked,
                 mapType: document.getElementById('cfg-map-type').value, nombreRevista: document.getElementById('cfg-nombre-revista').value
             };
             localStorage.setItem('revista_config', JSON.stringify(cfg));
@@ -463,60 +463,60 @@
         function abrirPantallaPublica() { if (publicWin && !publicWin.closed) publicWin.focus(); else { isPublicWinReady = false; publicWin = window.open('publico.html', 'PantallaPublica', 'width=1024,height=768'); } }
         setInterval(() => { const s = document.getElementById('conn-status'); if (publicWin && !publicWin.closed) { s.innerText = "Conectado ✅"; s.style.color = "green"; if (!isPublicWinReady) { isPublicWinReady = true; setTimeout(() => { saveConfig(); const savedLogo = localStorage.getItem('revista_logo'); if(savedLogo) sendToPublic('UPDATE_LOGO', { logoBase64: savedLogo }); updateResultsTable(); if (radioaficionados.length > 0) sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) }); }, 1500); } } else { s.innerText = "Desconectado"; s.style.color = "red"; isPublicWinReady = false; } }, 1000);
         function sendToPublic(type, payload = {}) { if (publicWin && !publicWin.closed) publicWin.postMessage({ type: type, ...payload }, '*'); }
-        
-        document.getElementById('csvFileInput').addEventListener('change', function (e) { 
-            const reader = new FileReader(); 
-            reader.onload = function (e) { 
-                radioaficionados = e.target.result.trim().split('\n').map(line => { 
-                    const parts = line.split(',').map(item => item.trim()); 
-                    return { indicativo: parts[0], nombre: parts[1] || '', grilla: parts[2] || '', localidad: parts[3] || '' }; 
-                }).filter(r => r.indicativo && r.indicativo !== 'Indicativo'); 
-                document.getElementById('searchInput').disabled = false; 
-                sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) }); 
-            }; 
-            reader.readAsText(e.target.files[0]); 
+
+        document.getElementById('csvFileInput').addEventListener('change', function (e) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                radioaficionados = e.target.result.trim().split('\n').map(line => {
+                    const parts = line.split(',').map(item => item.trim());
+                    return { indicativo: parts[0], nombre: parts[1] || '', grilla: parts[2] || '', localidad: parts[3] || '' };
+                }).filter(r => r.indicativo && r.indicativo !== 'Indicativo');
+                document.getElementById('searchInput').disabled = false;
+                sendToPublic('CSV_DATA', { callsigns: radioaficionados.map(r => r.indicativo) });
+            };
+            reader.readAsText(e.target.files[0]);
         });
-        
-        function searchIndicativos() { 
+
+        function searchIndicativos() {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
                 document.getElementById('addNewEntryForm').style.display = "none";
                 document.getElementById('searchTableHeader').style.display = 'none';
-                const term = document.getElementById('searchInput').value.toLowerCase(); 
-                const tbody = document.getElementById('searchTableBody'); 
+                const term = document.getElementById('searchInput').value.toLowerCase();
+                const tbody = document.getElementById('searchTableBody');
                 if (term === "") { tbody.innerHTML = ''; return; }
-                const res = radioaficionados.filter(r => r.indicativo.toLowerCase().includes(term) || r.nombre.toLowerCase().includes(term)); 
+                const res = radioaficionados.filter(r => r.indicativo.toLowerCase().includes(term) || r.nombre.toLowerCase().includes(term));
                 if (res.length > 0) {
                     document.getElementById('searchTableHeader').style.display = '';
                     tbody.innerHTML = res.slice(0, 50).map(r => {
                         const sel = `selectRadioaficionado('${r.indicativo}', '${r.nombre.replace(/'/g,"\\'")}', '${r.grilla||''}', '${(r.localidad||'').replace(/'/g,"\\'")}')`;
                         const lista = `agregarListaEspera('${r.indicativo}', '${r.nombre.replace(/'/g,"\\'")}', '${r.grilla||''}', '${(r.localidad||'').replace(/'/g,"\\'")}')`;
-                        const btnLista = document.getElementById('toggleListaEspera').checked ? 
+                        const btnLista = document.getElementById('toggleListaEspera').checked ?
                             `<button onclick="${lista}" style="background:#0d6efd; margin-left:5px;">→ Lista de espera</button>` : '';
                         return `<tr><td>${r.indicativo}</td><td>${r.nombre}</td><td><button onclick="${sel}">Seleccionar</button>${btnLista}</td></tr>`;
                     }).join('');
                 } else {
                     tbody.innerHTML = '';
-                    document.getElementById('addNewEntryForm').style.display = "block"; 
+                    document.getElementById('addNewEntryForm').style.display = "block";
                     document.getElementById('newIndicativo').value = term.toUpperCase();
                 }
             }, 200);
         }
-        
-        function selectRadioaficionado(i, n, g, l) { 
+
+        function selectRadioaficionado(i, n, g, l) {
             g = g || ''; l = l || '';
-            selectedRadioaficionado = { indicativo: i, nombre: n, grilla: g, localidad: l }; 
-            document.getElementById('selectionDisplay').innerHTML = `SELECCIONADO: ${i} - ${n}`; 
-            document.getElementById('selectionDisplay').style.display = "block"; 
-            document.getElementById('searchTableBody').innerHTML = ''; 
+            selectedRadioaficionado = { indicativo: i, nombre: n, grilla: g, localidad: l };
+            document.getElementById('selectionDisplay').innerHTML = `SELECCIONADO: ${i} - ${n}`;
+            document.getElementById('selectionDisplay').style.display = "block";
+            document.getElementById('searchTableBody').innerHTML = '';
             document.getElementById('searchTableHeader').style.display = 'none';
-            document.getElementById('searchInput').value = ''; 
+            document.getElementById('searchInput').value = '';
             document.getElementById('reportForm').style.display = "block";
             document.getElementById('rep-grilla').value = g;
             document.getElementById('rep-localidad').value = l;
             // Limpiar campos meteorológicos
             ['temperatura','viento','presion','rep-veloc-viento'].forEach(id => document.getElementById(id).value = '');
-            setTimeout(() => document.getElementById('rep-grilla').focus(), 100); 
+            setTimeout(() => document.getElementById('rep-grilla').focus(), 100);
             sendToPublic('SELECCION', { indicativo: i, nombre: n, grid: g, localidad: l });
             // Si no tiene grilla o localidad en el CSV, consultar QRZ
             if (!g || !l) fetchQrzGridAndLocalidad(i, g, l);
@@ -563,7 +563,7 @@
                 const state = get('state');
                 const country = get('country');
                 let qrzLoc = addr2;
-                if (state && state !== addr2) qrzLoc += (qrzLoc ? ', ' : '') + state;
+                if (state && state !== addr2) qrzLoc += (qrzLoc ? ' - ' : '') + state;
                 if (country && country.toUpperCase() !== 'COSTA RICA') qrzLoc += (qrzLoc ? ' - ' : '') + country;
                 if (!grillaActual && qrzGrid) {
                     document.getElementById('rep-grilla').value = qrzGrid;
@@ -576,7 +576,7 @@
                 }
             } catch(e) {}
         }
-        
+
         function checkGridAndMoveMap() {
             if (!selectedRadioaficionado) return;
             const gridVal = document.getElementById('rep-grilla').value.trim();
@@ -584,20 +584,28 @@
             sendToPublic('SELECCION', { indicativo: selectedRadioaficionado.indicativo, nombre: selectedRadioaficionado.nombre, grid: gridVal, localidad: locVal });
         }
 
-        function clearSearch() { 
-            document.getElementById('searchInput').value = ''; 
-            document.getElementById('selectionDisplay').style.display = "none"; 
-            document.getElementById('reportForm').style.display = "none"; 
-            document.getElementById('searchTableBody').innerHTML = ''; 
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('selectionDisplay').style.display = "none";
+            document.getElementById('reportForm').style.display = "none";
+            document.getElementById('searchTableBody').innerHTML = '';
             document.getElementById('searchTableHeader').style.display = 'none';
             document.getElementById('addNewEntryForm').style.display = "none";
-            ['temperatura', 'viento', 'presion', 'rep-grilla', 'rep-localidad', 'rep-veloc-viento', 'comentarios'].forEach(id => document.getElementById(id).value = ''); 
+            ['temperatura', 'viento', 'presion', 'rep-grilla', 'rep-localidad', 'rep-veloc-viento', 'comentarios'].forEach(id => document.getElementById(id).value = '');
             document.getElementById('contactapor1').checked = true;
-            sendToPublic('LIMPIAR'); 
+            sendToPublic('LIMPIAR');
         }
-        
+
         function nextField(e, n) { if (e.key === "Enter") { e.preventDefault(); document.getElementById(n).focus(); } }
         function checkFinalEnter(e) { if (e.key === "Enter") { e.preventDefault(); addReport(); } }
+
+        // Bloquea coma y comilla al digitar en campos que terminan en el CSV
+        // (nombre, localidad, comentarios), para no volver a corromper columnas.
+        function bloquearCaracteresCsv(e) {
+            if (e.key === ',' || e.key === '"') {
+                e.preventDefault();
+            }
+        }
 
         function calcStats() {
             if (reportes.length === 0) return null;
@@ -677,9 +685,9 @@
             sendToPublic('ESTADISTICAS', { stats: s });
         }
 
-        function exportPDF() { 
-            const { jsPDF } = window.jspdf; 
-            const doc = new jsPDF(); 
+        function exportPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
             const nombreRevista = document.getElementById('cfg-nombre-revista').value;
             const emision = document.getElementById('cfg-emision').value || "";
             const operador = document.getElementById('cfg-indicativo').value;
@@ -711,9 +719,9 @@
                 statsY += statsLines.length > 0 ? statsLines.length * 4.5 + 3 : 0;
                 doc.setTextColor(0, 0, 0);
             }
-            doc.autoTable({ 
-                head: [["#", "Hora", "Indicativo", "Nombre", "Grilla", "Ubicación", "Temp", "Hum", "Pres", "Viento", "Comentarios"]], 
-                body: reportes.map(r => [r.id, r.fechaHora, r.indicativo, r.nombre, (r.grillaReporte === "N/I" ? "--" : r.grillaReporte), (r.localidad || "--"), (r.temperatura === "N/I" ? "--" : r.temperatura), (r.viento === "N/I" ? "--" : r.viento), (r.presion === "N/I" ? "--" : r.presion), (r.velocViento === "N/I" ? "--" : r.velocViento), r.comentarios]), 
+            doc.autoTable({
+                head: [["#", "Hora", "Indicativo", "Nombre", "Grilla", "Ubicación", "Temp", "Hum", "Pres", "Viento", "Comentarios"]],
+                body: reportes.map(r => [r.id, r.fechaHora, r.indicativo, r.nombre, (r.grillaReporte === "N/I" ? "--" : r.grillaReporte), (r.localidad || "--"), (r.temperatura === "N/I" ? "--" : r.temperatura), (r.viento === "N/I" ? "--" : r.viento), (r.presion === "N/I" ? "--" : r.presion), (r.velocViento === "N/I" ? "--" : r.velocViento), r.comentarios]),
                 startY: statsY,
                 styles: { fontSize: 7, cellPadding: 2, overflow: 'linebreak' },
                 headStyles: { fontSize: 7, fillColor: [31, 111, 235] },
@@ -730,7 +738,7 @@
                     9: { cellWidth: 12 },
                     10: { cellWidth: 'auto' }
                 }
-            }); 
+            });
             doc.save(`Bitacora_${nombreRevista}_${fechaActual}.pdf`);
             // Guardar en historial de GitHub
             guardarHistorial(nombreRevista, emision, operador, nombreOp, fechaActual);
@@ -843,10 +851,16 @@
             return { sha: jsonGet.sha, content: currentContent };
         }
 
+        // Quita comas y comillas de un campo antes de guardarlo en el CSV
+        // (asi nunca se corre una columna, sin importar de donde vino el texto).
+        function sanearCampoCsv(valor) {
+            return (valor || '').toString().replace(/[",]/g, '').trim();
+        }
+
         async function appendToGitHubCSV(indicativo, nombre, grilla, localidad) {
             try {
                 const { sha, content } = await getGitHubContent();
-                const newLine = `${indicativo},${nombre},${grilla||''},${localidad||''}`;
+                const newLine = `${indicativo},${sanearCampoCsv(nombre)},${grilla||''},${sanearCampoCsv(localidad)}`;
                 const newContent = content.trimEnd() + `\n${newLine}`;
                 const encoded = btoa(unescape(encodeURIComponent(newContent)));
                 await fetch(GITHUB_API, {
@@ -864,7 +878,7 @@
                 const updatedLines = lines.map(line => {
                     const parts = line.split(',');
                     if (parts[0].trim() === radioaficionado.indicativo) {
-                        return `${radioaficionado.indicativo},${radioaficionado.nombre},${radioaficionado.grilla||''},${radioaficionado.localidad||''}`;
+                        return `${radioaficionado.indicativo},${sanearCampoCsv(radioaficionado.nombre)},${radioaficionado.grilla||''},${sanearCampoCsv(radioaficionado.localidad)}`;
                     }
                     return line;
                 });
@@ -878,9 +892,9 @@
             } catch(e) { console.warn('No se pudo actualizar en GitHub:', e.message); }
         }
 
-        window.onload = function() { 
-            loadConfig(); 
-            updateTime(); 
+        window.onload = function() {
+            loadConfig();
+            updateTime();
             loadCSVFromGitHub();
             ['rep-localidad','newNombre','newLocalidad','comentarios'].forEach(id => {
                 const el = document.getElementById(id);
