@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "8/11/2026",
+    "emision": "8003",
+    "revista": "Revista Matutina",
+    "operador": "TI2JMM",
+    "nombreOp": "Jaime",
+    "totalEstaciones": 27,
+    "duracion": "1h 10min",
+    "tempProm": "22.8",
+    "masLejano": {
+      "indicativo": "TI5GAA",
+      "nombre": "HEINER",
+      "dist": 1030,
+      "grilla": "EK79SD"
+    },
+    "zonaActiva": [
+      "EJ79",
+      7
+    ],
+    "timestamp": "2026-11-08T15:18:32.275Z"
+  },
+  {
     "fecha": "7/11/2026",
     "emision": "05738",
     "revista": "07_5738_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
