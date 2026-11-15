@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "15/11/2026",
+    "emision": "8010",
+    "revista": "Revista Matutina TI",
+    "operador": "TI0TRC",
+    "nombreOp": "ASOCIACION TURRIALBEÑA DE RADIOAFICIONADOS ",
+    "totalEstaciones": 26,
+    "duracion": "1h 17min",
+    "tempProm": "24.0",
+    "masLejano": {
+      "indicativo": "WP4TWT",
+      "nombre": "LUIS",
+      "dist": 2137,
+      "grilla": "FK78CD"
+    },
+    "zonaActiva": [
+      "EJ79",
+      6
+    ],
+    "timestamp": "2026-11-15T15:21:33.847Z"
+  },
+  {
     "fecha": "14/11/2026",
     "emision": "05745",
     "revista": "14_5745_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
