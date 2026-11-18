@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "18/11/2026",
+    "emision": "8013",
+    "revista": "Revista Matutina TI",
+    "operador": "TI2OX",
+    "nombreOp": "Carlos Castillo",
+    "totalEstaciones": 30,
+    "duracion": "1h 44min",
+    "tempProm": "21.2",
+    "masLejano": {
+      "indicativo": "HP3CPQ",
+      "nombre": "Ricardo Andrade",
+      "dist": 231,
+      "grilla": "EJ88NG"
+    },
+    "zonaActiva": [
+      "EJ79",
+      9
+    ],
+    "timestamp": "2026-11-18T14:18:44.575Z"
+  },
+  {
     "fecha": "17/11/2026",
     "emision": "05748",
     "revista": "17_005748_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
