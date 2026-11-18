@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "17/11/2026",
+    "emision": "05748",
+    "revista": "17_005748_RUEDA DE ORO_TI5RHB_HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI2GC",
+    "nombreOp": "GUILLERMO",
+    "totalEstaciones": 20,
+    "duracion": "10min 46s",
+    "tempProm": "17.4",
+    "masLejano": {
+      "indicativo": "HI8EHH",
+      "nombre": "EDUARDO HEREDIA",
+      "dist": 1787,
+      "grilla": "FK48WK"
+    },
+    "zonaActiva": [
+      "EK70",
+      4
+    ],
+    "timestamp": "2026-11-18T04:04:22.101Z"
+  },
+  {
     "fecha": "15/11/2026",
     "emision": "05746",
     "revista": "15_5746_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
