@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "19/11/2026",
+    "emision": "05750",
+    "revista": "19_5750_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI2GC",
+    "nombreOp": "MEMO",
+    "totalEstaciones": 20,
+    "duracion": "1h 30min",
+    "tempProm": "21.2",
+    "masLejano": {
+      "indicativo": "HI3FJD",
+      "nombre": "FERMÍN DURÁN",
+      "dist": 1780,
+      "grilla": "FK49MN"
+    },
+    "zonaActiva": [
+      "EK70",
+      5
+    ],
+    "timestamp": "2026-11-19T23:30:02.862Z"
+  },
+  {
     "fecha": "18/11/2026",
     "emision": "05749",
     "revista": "18_5749_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
