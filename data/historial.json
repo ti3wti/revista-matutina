@@ -1,5 +1,21 @@
 [
   {
+    "fecha": "21/11/2026",
+    "emision": "05752",
+    "revista": "21_5752_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI3AGM",
+    "nombreOp": "MARCO GONZALEZ",
+    "totalEstaciones": 12,
+    "duracion": "1h 06min",
+    "tempProm": "22.0",
+    "masLejano": null,
+    "zonaActiva": [
+      "EK70",
+      4
+    ],
+    "timestamp": "2026-11-21T23:08:06.342Z"
+  },
+  {
     "fecha": "20/11/2026",
     "emision": "05751",
     "revista": "20_5751_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
