@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "22/11/2026",
+    "emision": "8017",
+    "revista": "Revista Matutina TI",
+    "operador": "TI0RHU",
+    "nombreOp": "Asoc. Radioaficion Herediana",
+    "totalEstaciones": 19,
+    "duracion": "1h 02min",
+    "tempProm": "23.1",
+    "masLejano": {
+      "indicativo": "HP3CPQ",
+      "nombre": "Ricardo Andrade",
+      "dist": 240,
+      "grilla": "EJ88NG"
+    },
+    "zonaActiva": [
+      "EJ79",
+      6
+    ],
+    "timestamp": "2026-11-22T14:41:41.079Z"
+  },
+  {
     "fecha": "21/11/2026",
     "emision": "05752",
     "revista": "21_5752_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
