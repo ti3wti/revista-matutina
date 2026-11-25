@@ -1,5 +1,26 @@
 [
   {
+    "fecha": "25/11/2026",
+    "emision": "05756",
+    "revista": "25_5756_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
+    "operador": "TI2GC",
+    "nombreOp": "GUILLERMO CENTENO HERNANDEZ",
+    "totalEstaciones": 21,
+    "duracion": "1h 25min",
+    "tempProm": "22.0",
+    "masLejano": {
+      "indicativo": "CO8KBP",
+      "nombre": "LUIS ENRIQUE",
+      "dist": 1530,
+      "grilla": "FL20KN"
+    },
+    "zonaActiva": [
+      "EJ89",
+      5
+    ],
+    "timestamp": "2026-11-25T23:26:48.974Z"
+  },
+  {
     "fecha": "24/11/2026",
     "emision": "05755",
     "revista": "24_5755_RUEDA DE ORO_TI5RHB_ HORA UTC:22 A 23:15_FRECUENCIA 7130 MHZ_TI3OMY",
